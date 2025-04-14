@@ -1,10 +1,10 @@
 package level;
 
-import hud.LoginHUD;
+import frame.LoginFrame;
 
 public class LoginLevel extends LevelBase {
     public LoginLevel() {
-        hud = new LoginHUD("Login Level");
+        frame = new LoginFrame("Login Level",600,600);
 
     }
 }

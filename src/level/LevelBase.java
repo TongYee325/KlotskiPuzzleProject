@@ -1,9 +1,9 @@
 package level;
 
-import hud.HUDBase;
+import frame.FrameBase;
 
 public class LevelBase {
-    protected HUDBase hud;
+    protected FrameBase frame;
     public LevelBase() {
     }
 
