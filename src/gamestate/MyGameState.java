@@ -6,8 +6,9 @@ public class MyGameState extends GameStateBase {
 
     private int currentLevel = 0;
     private LevelBase level;
+
     public MyGameState() {
-        LevelBase level = new LevelBase();
+
     }
 
     public void startLevel(int levelIndex){
@@ -15,9 +16,13 @@ public class MyGameState extends GameStateBase {
         switch (currentLevel){
             case 0:
                 level = new LoginLevel();
+                LoginLevel loginLevel = (LoginLevel) level;
+                loginLevel.LevelInit();
                 break;
         }
     }
+
+
 
     public LevelBase getLevel() {
         return level;
