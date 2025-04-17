@@ -38,6 +38,7 @@ public class FrameBase extends JFrame {
         if (rlevel != null) {
             rlevel = null;
         }
+
         setVisible(false);
         dispose();
     }
