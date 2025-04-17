@@ -56,10 +56,14 @@ public class LoginFrame extends FrameBase {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+
     @Override
-    public void update(){
+    public void Init(){
         submitBtn.setVisible(true);
         registerBtn.setVisible(true);
+        username.setVisible(true);
+        password.setVisible(true);
+
     }
 
 

@@ -15,9 +15,9 @@ public class FrameBase extends JFrame {
     private LevelBase rlevel;
 
     public FrameBase(LevelBase level,String title, int width, int height) {
+        super(title);
         rlevel = level;
         if(title!=null) this.title=title;
-        setTitle(this.title);//设置窗口标题
         this.width=width;
         this.height=height;
         setSize(width, height);//设置尺寸
@@ -32,6 +32,9 @@ public class FrameBase extends JFrame {
         setLocation(x,y);
     }
     public void update(){
+
+    }
+    public void Init(){
 
     }
     public void clear() {

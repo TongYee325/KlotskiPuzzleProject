@@ -17,7 +17,7 @@ public class LoginLevel extends LevelBase {
     }
     @Override
     public void levelInit(){
-        loginFrame.update();
+        loginFrame.Init();
     }
     @Override
     public void nextLevel(){
