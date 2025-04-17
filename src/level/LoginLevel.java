@@ -1,20 +1,30 @@
 package level;
 
 import frame.LoginFrame;
+import gamestate.MyGameState;
 
 public class LoginLevel extends LevelBase {
     private final int LoginLevelWidth=600;
     private final int LoginLevelHeight=600;
     private final String LoginLevelText="Login Level";
     private LoginFrame loginFrame;
-    public LoginLevel() {
+    private MyGameState rGameState;
+
+    public LoginLevel(MyGameState gameState) {
         super();
-        loginFrame = new LoginFrame(LoginLevelText,LoginLevelWidth,LoginLevelHeight);
-
-
+        rGameState=gameState;
+        loginFrame = new LoginFrame(this,LoginLevelText,LoginLevelWidth,LoginLevelHeight);
     }
-    public void LevelInit(){
+    @Override
+    public void levelInit(){
         loginFrame.update();
     }
-
+    @Override
+    public void nextLevel(){
+        rGameState.startLevel(1);//切换至下一Level
+    }
+    @Override
+    public void levelDestroy(){
+        loginFrame.clear();
+    }
 }

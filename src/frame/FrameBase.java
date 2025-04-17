@@ -1,5 +1,9 @@
 package frame;
 
+
+
+import level.LevelBase;
+
 import javax.swing.*;
 
 public class FrameBase extends JFrame {
@@ -8,8 +12,10 @@ public class FrameBase extends JFrame {
     protected int x;
     protected int y;
     protected String title="default title";
+    private LevelBase rlevel;
 
-    public FrameBase(String title, int width, int height) {
+    public FrameBase(LevelBase level,String title, int width, int height) {
+        rlevel = level;
         if(title!=null) this.title=title;
         setTitle(this.title);//设置窗口标题
         this.width=width;
@@ -25,6 +31,17 @@ public class FrameBase extends JFrame {
         this.y=(FrameUtil.getScreenDimensions()[1]-height)/2;
         setLocation(x,y);
     }
+    public void update(){
+
+    }
+    public void clear() {
+        if (rlevel != null) {
+            rlevel = null;
+        }
+        setVisible(false);
+        dispose();
+    }
+
 
 
 
@@ -57,4 +74,7 @@ public class FrameBase extends JFrame {
     }
 
 
+    public LevelBase getRlevel() {
+        return rlevel;
+    }
 }

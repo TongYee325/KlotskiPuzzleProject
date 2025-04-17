@@ -9,7 +9,5 @@ public class Main {
         MyGameController gameController = new MyGameController();
         gameState.startLevel(0);
 
-
-
     }
 }

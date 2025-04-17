@@ -3,6 +3,8 @@ package frame;
 
 
 import level.AccountManager;
+import level.LoginLevel;
+import level.MenuLevel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +18,8 @@ public class LoginFrame extends FrameBase {
     private JButton registerBtn;
     private JPanel textPanel;
 
-    public LoginFrame(String title, int width, int height) {
-        super(title, width, height);
+    public LoginFrame(LoginLevel loginLevel,String title, int width, int height) {
+        super(loginLevel,title, width, height);
         this.setLayout(null);
         Point center = new Point(this.getWidth() / 2, this.getHeight() / 2);
         Point userLocation = new Point(center.x-width/4, center.y-height/3);
@@ -35,7 +37,12 @@ public class LoginFrame extends FrameBase {
 
         submitBtn.addActionListener(e -> {
 
-            System.out.println(AccountManager.checkPassword(username.getText(), password.getText()));//检查用户名与密码
+            if(AccountManager.checkPassword(username.getText(), password.getText())){//检查用户名与密码
+                LoginLevel rlevel = (LoginLevel)  super.getRlevel();
+                rlevel.nextLevel();
+            }else {
+                System.out.println("Wrong Username or Password");
+            }
 
 
         });
@@ -49,6 +56,7 @@ public class LoginFrame extends FrameBase {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    @Override
     public void update(){
         submitBtn.setVisible(true);
         registerBtn.setVisible(true);
