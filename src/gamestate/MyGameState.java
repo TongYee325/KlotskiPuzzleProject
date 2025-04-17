@@ -27,6 +27,8 @@ public class MyGameState extends GameStateBase {
                 case 1:
                     level = new MenuLevel(this);
                     break;
+                    case 2:
+                        level =new GameLevel(this);
         }
         if(level!=null){
             level.levelInit();

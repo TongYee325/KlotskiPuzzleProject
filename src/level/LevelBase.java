@@ -1,9 +1,19 @@
 package level;
 
 
+import frame.FrameBase;
+import gamestate.MyGameState;
 
 public class LevelBase {
-    public LevelBase() {
+    private MyGameState rGameState;
+
+
+
+
+    private FrameBase rFrame;
+
+    public LevelBase(MyGameState gameState) {
+        rGameState=  gameState;
     }
     public void levelInit(){
 
@@ -14,5 +24,17 @@ public class LevelBase {
     public void levelStart(){}
 
     public void levelDestroy(){
+    }
+
+
+    public void setrFrame(FrameBase rFrame) {
+        this.rFrame = rFrame;
+    }
+    public FrameBase getrFrame() {
+        return rFrame;
+    }
+
+    public MyGameState getrGameState() {
+        return rGameState;
     }
 }
