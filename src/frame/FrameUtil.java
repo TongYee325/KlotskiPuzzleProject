@@ -46,4 +46,12 @@ public class FrameUtil {
         return button;
     }
 
+    public static JPasswordField createJPasswordField(JFrame frame, Point location, int width, int height) {
+        JPasswordField jPasswordField = new JPasswordField();
+        jPasswordField.setSize(width, height);
+        jPasswordField.setLocation(location);
+        frame.add(jPasswordField);
+        return jPasswordField;
+    }
+
 }

@@ -9,7 +9,7 @@ import java.awt.*;
 
 public class LoginFrame extends FrameBase {
     private JTextField username;
-    private JTextField password;
+    private JPasswordField password;
 
     private JButton submitBtn;
     private JButton registerBtn;
@@ -26,7 +26,7 @@ public class LoginFrame extends FrameBase {
         //todo:add hint test box
 
         username = FrameUtil.createJTextField(this, new Point((int) (userLocation.getX()+userLabel.getWidth()), (int) userLocation.getY()), 200, 40);
-        password = FrameUtil.createJTextField(this, new Point((int) (passwordLocation.getX()+passLabel.getWidth()), (int) passwordLocation.getY()), 200, 40);
+        password = FrameUtil.createJPasswordField(this, new Point((int) (passwordLocation.getX()+passLabel.getWidth()), (int) passwordLocation.getY()), 200, 40);
 
         Point buttonLocation = new Point(center.x, center.y);
         submitBtn = FrameUtil.createButton(this, "Confirm", new Point((int) (buttonLocation.getX()-width/4.0), (int) buttonLocation.getY()), 100, 40);
