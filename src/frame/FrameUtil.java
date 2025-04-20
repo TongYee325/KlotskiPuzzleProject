@@ -10,7 +10,7 @@ public class FrameUtil {
     public static int[] getScreenDimensions() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenSize = toolkit.getScreenSize();
-        return new int[]{screenSize.width,screenSize.height};
+        return new int[]{screenSize.width, screenSize.height};
     }
 
     public static JLabel createJLabel(JFrame frame, Point location, int width, int height, String text) {

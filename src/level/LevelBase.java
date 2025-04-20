@@ -11,20 +11,21 @@ public class LevelBase {
     private FrameBase rFrame;
 
     public LevelBase(MyGameState gameState) {
-        rGameState=  gameState;
+        rGameState = gameState;
     }
 
-    public void levelInit(){
-
-    }
-
-    public void nextLevel(){
+    public void levelInit() {
 
     }
 
-    public void levelStart(){}
+    public void nextLevel() {
 
-    public void levelDestroy(){
+    }
+
+    public void levelStart() {
+    }
+
+    public void levelDestroy() {
     }
 
     public void setrFrame(FrameBase rFrame) {
