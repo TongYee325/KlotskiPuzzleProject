@@ -8,7 +8,6 @@ public class Main {
         KGameMode gameMode = new KGameMode();
         MyGameController gameController = new MyGameController();
         myGameState.startLevel(0);
-        System.out.println("hello world!");
 
     }
 }
