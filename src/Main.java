@@ -4,10 +4,10 @@ import gamestate.*;
 
 public class Main {
     public static void main(String[] args) {
-        MyGameState mygameState = new MyGameState();
+        MyGameState myGameState = new MyGameState();
         KGameMode gameMode = new KGameMode();
         MyGameController gameController = new MyGameController();
-        mygameState.startLevel(0);
+        myGameState.startLevel(0);
 
     }
 }

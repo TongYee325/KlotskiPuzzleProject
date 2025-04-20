@@ -36,8 +36,6 @@ public class MyGameState extends GameStateBase {
         }
     }
 
-
-
     public LevelBase getLevel() {
         return level;
     }

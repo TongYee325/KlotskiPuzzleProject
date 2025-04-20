@@ -4,15 +4,12 @@ package frame;
 
 import level.AccountManager;
 import level.LoginLevel;
-import level.MenuLevel;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class LoginFrame extends FrameBase {
     private JTextField username;
     private JTextField password;
-
 
     private JButton submitBtn;
     private JButton registerBtn;
@@ -43,19 +40,14 @@ public class LoginFrame extends FrameBase {
             }else {
                 System.out.println("Wrong Username or Password");
             }
-
-
         });
         registerBtn.addActionListener(e -> {
             System.out.println(AccountManager.registerAccount(username.getText(), password.getText()));//注册
-
-
         });
 
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
-
 
     @Override
     public void Init(){
