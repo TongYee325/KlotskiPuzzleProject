@@ -4,6 +4,7 @@ package frame;
 import level.LevelBase;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class FrameBase extends JFrame {
     protected int width;
@@ -23,6 +24,7 @@ public class FrameBase extends JFrame {
         setInMid();//默认居中
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//默认窗口可以关闭
         setVisible(true);//设置窗口是否可见
+        setResizable(false);
     }
 
     public void setInMid() {
@@ -31,13 +33,8 @@ public class FrameBase extends JFrame {
         setLocation(x, y);
     }
 
-    public void update() {
 
-    }
 
-    public void Init() {
-
-    }
 
     public void clear() {
         if (rlevel != null) {

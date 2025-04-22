@@ -14,10 +14,6 @@ public class MenuLevel extends LevelBase {
         super.setrFrame(new MenuFrame(this, MenuLevelText, MenuLevelWidth, MenuLevelHeight));
     }
 
-    @Override
-    public void levelInit() {
-        super.getrFrame().update();
-    }
 
     @Override
     public void nextLevel() {

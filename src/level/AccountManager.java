@@ -8,7 +8,8 @@ import java.util.Properties;
 
 public class AccountManager {
 
-    public static boolean registerAccount(String username, String password) {
+    public static boolean registerAccount(String username, char[] passwordChar) {
+        String password=new String(passwordChar);
         if (!isValidUsername(username)) {
             return false;
         }
@@ -43,7 +44,8 @@ public class AccountManager {
     }
 
     // 检查密码是否匹配（需与 registerAccount 的加密逻辑一致）
-    public static boolean checkPassword(String username, String password) {
+    public static boolean checkPassword(String username, char[] passwordChar) {
+        String password=new String(passwordChar);
         if (!isValidUsername(username)) {
             return false;
         }

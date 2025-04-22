@@ -13,10 +13,6 @@ public class LoginLevel extends LevelBase {
         super.setrFrame(new LoginFrame(this, LoginLevelText, LoginLevelWidth, LoginLevelHeight));
     }
 
-    @Override
-    public void levelInit() {
-        super.getrFrame().Init();
-    }
 
     @Override
     public void nextLevel() {
