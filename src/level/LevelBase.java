@@ -7,9 +7,6 @@ import gamestate.MyGameState;
 public class LevelBase {
     private MyGameState rGameState;
 
-
-    private FrameBase rFrame;
-
     public LevelBase(MyGameState gameState) {
         rGameState = gameState;
     }
@@ -26,14 +23,6 @@ public class LevelBase {
     }
 
     public void levelDestroy() {
-    }
-
-    public void setrFrame(FrameBase rFrame) {
-        this.rFrame = rFrame;
-    }
-
-    public FrameBase getrFrame() {
-        return rFrame;
     }
 
     public MyGameState getrGameState() {

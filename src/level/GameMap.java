@@ -1,0 +1,40 @@
+package level;
+
+public class GameMap{
+
+    public int[][] getMapIndex() {
+        return mapIndex;
+    }
+
+    private int [][]mapIndex= {
+            {3,7,7,4},
+            {3,7,7,4},
+            {5,2,2,6},
+            {5,1,1,6},
+            {1,0,0,1},
+    };
+
+    public int getMapCol() {
+        return mapCol;
+    }
+
+    public int getMapRow() {
+        return mapRow;
+    }
+
+    private int mapCol=4;
+    private int mapRow=5;
+    public GameMap(){
+
+    }
+
+    public GameMap (int[][] designedMap){
+        mapIndex=designedMap;
+    }
+
+    public GameMap(int columns, int rows) {
+        mapIndex = new int[columns][rows];
+        this.mapCol = columns;
+        this.mapRow = rows;
+    }
+}

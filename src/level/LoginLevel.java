@@ -7,10 +7,11 @@ public class LoginLevel extends LevelBase {
     private final int LoginLevelWidth = 600;
     private final int LoginLevelHeight = 600;
     private final String LoginLevelText = "Login Level";
+    private LoginFrame loginFrame;
 
     public LoginLevel(MyGameState gameState) {
         super(gameState);
-        super.setrFrame(new LoginFrame(this, LoginLevelText, LoginLevelWidth, LoginLevelHeight));
+        loginFrame =new LoginFrame(this, LoginLevelText, LoginLevelWidth, LoginLevelHeight);
     }
 
 
@@ -21,6 +22,6 @@ public class LoginLevel extends LevelBase {
 
     @Override
     public void levelDestroy() {
-        super.getrFrame().clear();
+        loginFrame.clear();
     }
 }

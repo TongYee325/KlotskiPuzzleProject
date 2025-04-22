@@ -1,6 +1,7 @@
 package frame;
 
 import frame.block.*;
+import level.GameMap;
 import level.LevelBase;
 
 import javax.swing.*;
@@ -9,36 +10,40 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class GameFrame extends FrameBase {
-    private GamePanel gamePanel;
 
-    public GameFrame(LevelBase level, String title, int width, int height) {
+    private GamePanel gamePanel;
+    private GameMap map;
+
+    public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
         super(level, title, width, height);
-        this.setLayout(new BorderLayout());
-        gamePanel = new GamePanel();
-        this.add(gamePanel, BorderLayout.CENTER);
+        BorderLayout layout = new BorderLayout();
+        this.setLayout(layout);
+        map = gameMap;
+        JPanel mainPanel = new JPanel(null);
+        this.add(mainPanel, BorderLayout.CENTER);
+        gamePanel = new GamePanel(map);
+        mainPanel.add(gamePanel);
 
         JButton restartButton = new JButton("Restart");
-        //todo
         this.add(restartButton, BorderLayout.SOUTH);
-
+        restartButton.addActionListener(e -> {
+            gamePanel = new GamePanel(map);
+            mainPanel.add(gamePanel);
+        });
         setLocationRelativeTo(null);
         setVisible(true);
+
     }
+    public void initialGame(){
+        gamePanel.initialGame();
+
+    }
+
+
+
+
 }
 
-class GamePanel extends JPanel {
 
-    private static final int CELL_SIZE = 60;
-
-    public GamePanel() {
-
-    }
-
-    @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        //todo
-    }
-}
 
 
