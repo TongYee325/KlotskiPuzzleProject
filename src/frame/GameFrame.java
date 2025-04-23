@@ -1,6 +1,8 @@
 package frame;
 
+import controller.MyGameController;
 import frame.block.*;
+import level.GameLevel;
 import level.GameMap;
 import level.LevelBase;
 
@@ -17,9 +19,12 @@ public class GameFrame extends FrameBase {
 
     private GamePanel gamePanel;
     private GameMap map;
+    private LevelBase rlevel;
 
     public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
         super(level, title, width, height);
+        rlevel = level;
+
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
         map = gameMap;
@@ -33,14 +38,21 @@ public class GameFrame extends FrameBase {
         JButton restartButton = new JButton("Restart");
         this.add(restartButton, BorderLayout.SOUTH);
         restartButton.addActionListener(e -> {
+            if(gamePanel!=null){
+                mainPanel.remove(gamePanel);
+                gamePanel=null;
+            }
             gamePanel = new GamePanel(map);
             mainPanel.add(gamePanel);
+            ((GameLevel) rlevel).getController().updateFrame();
+            gamePanel.requestFocusInWindow();
+            gamePanel.initialGame();
         });
         setLocationRelativeTo(null);
         setVisible(true);
 
     }
-    public void initialGame(){
+    public void initialGame() {
         gamePanel.initialGame();
 
     }

@@ -23,7 +23,17 @@ public class GamePanel extends JPanel {
     }
 
     private int[][] panelMap;
+
+    public Block getSelectedBlock() {
+        return selectedBlock;
+    }
+
     private Block selectedBlock;
+
+    public ArrayList<Block> getBlocks() {
+        return blocks;
+    }
+
     private ArrayList<Block> blocks;
 
     private static final int CELL_SIZE = 60;
@@ -59,7 +69,6 @@ public class GamePanel extends JPanel {
     {5,1,1,6},
     {1,0,0,1},*/
     public void initialGame() {
-
         blocks = new ArrayList<Block>();
         //copy a map
         int[][] mapIndex = new int[map.getMapRow()][map.getMapCol()];
@@ -111,13 +120,19 @@ public class GamePanel extends JPanel {
                     mapIndex[i + 1][j + 1] = 0;
                 }
                 if (box != null) {
-                    box.setLocation(j * BLOCK_SIZE + 2, i * BLOCK_SIZE + 2);
+                    box.setLocation(box.getCol()* BLOCK_SIZE + 2, box.getRow()* BLOCK_SIZE + 2);
                     blocks.add(box);
                     this.add(box);
                 }
             }
         }
         repaint();
+    }
+
+    public void refreshSelectedBlock() {
+        if(selectedBlock != null) {
+            selectedBlock.setLocation(selectedBlock.getCol()* BLOCK_SIZE + 2, selectedBlock.getRow()* BLOCK_SIZE + 2);
+        }
     }
 
     @Override
@@ -188,9 +203,9 @@ public class GamePanel extends JPanel {
 
     }
 
-    protected void afterMove() {}
-
-
+    protected void afterMove() {
+        //todo log
+    }
 
     public MyGameController getGameController() {
         return controller;
@@ -199,4 +214,5 @@ public class GamePanel extends JPanel {
     public void setGameController(MyGameController gameController) {
         this.controller = gameController;
     }
+
 }

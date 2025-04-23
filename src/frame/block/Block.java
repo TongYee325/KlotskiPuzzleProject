@@ -38,6 +38,7 @@ public class Block extends JComponent {
         this.repaint();
     }
 
+
     public int getRow() {
         return row;
     }
