@@ -1,5 +1,6 @@
 package level;
 
+import controller.MyGameController;
 import frame.GameFrame;
 import gamestate.MyGameState;
 
@@ -16,7 +17,7 @@ public class GameLevel extends LevelBase {
 
         gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);
         gameFrame.initialGame();
-
+        MyGameController gameController = new MyGameController(gameFrame.getGamePanel(),gameMap);
     }
 
 }

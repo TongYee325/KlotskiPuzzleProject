@@ -1,5 +1,6 @@
 package level;
 
+import controller.MyGameController;
 import frame.LoginFrame;
 import gamestate.MyGameState;
 

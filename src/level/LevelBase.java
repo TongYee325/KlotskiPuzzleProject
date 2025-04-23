@@ -1,14 +1,21 @@
 package level;
 
 
-import frame.FrameBase;
+import controller.MyGameController;
 import gamestate.MyGameState;
 
 public class LevelBase {
     private MyGameState rGameState;
+    protected MyGameController rGameController;
+
+    public LevelBase(MyGameState gameState, MyGameController gameController) {
+
+        this.rGameState = gameState;
+        this.rGameController = gameController;
+    }
 
     public LevelBase(MyGameState gameState) {
-        rGameState = gameState;
+        this.rGameState = gameState;
     }
 
     public void levelInit() {

@@ -1,8 +1,10 @@
 package gamestate;
 
+import controller.MyGameController;
 import level.*;
 
 public class MyGameState extends GameStateBase {
+
 
     private int currentLevel = 0;
     private LevelBase level;
@@ -43,5 +45,6 @@ public class MyGameState extends GameStateBase {
     public int getCurrentLevel() {
         return currentLevel;
     }
+
 
 }

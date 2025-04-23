@@ -11,6 +11,10 @@ import java.util.ArrayList;
 
 public class GameFrame extends FrameBase {
 
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
     private GamePanel gamePanel;
     private GameMap map;
 
@@ -19,10 +23,12 @@ public class GameFrame extends FrameBase {
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
         map = gameMap;
-        JPanel mainPanel = new JPanel(null);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(null);
         this.add(mainPanel, BorderLayout.CENTER);
         gamePanel = new GamePanel(map);
         mainPanel.add(gamePanel);
+
 
         JButton restartButton = new JButton("Restart");
         this.add(restartButton, BorderLayout.SOUTH);
@@ -38,9 +44,6 @@ public class GameFrame extends FrameBase {
         gamePanel.initialGame();
 
     }
-
-
-
 
 }
 

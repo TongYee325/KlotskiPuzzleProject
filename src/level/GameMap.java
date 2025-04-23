@@ -37,4 +37,8 @@ public class GameMap{
         this.mapCol = columns;
         this.mapRow = rows;
     }
+
+    public int getMapID(int x , int y){
+        return mapIndex[x][y];
+    }
 }
