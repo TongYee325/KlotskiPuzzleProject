@@ -5,9 +5,21 @@ import level.*;
 
 public class MyGameState extends GameStateBase {
 
-
+    private String currentUserId; // 当前登录用户ID（游客或注册用户）
     private int currentLevel = 0;
     private LevelBase level;
+    private MyGameState gameState;
+
+
+    // 设置当前用户
+    public void setCurrentUser(String userId) {
+        this.currentUserId = userId;
+    }
+
+    // 判断是否为游客用户
+    public boolean isGuestUser() {
+        return currentUserId != null && currentUserId.startsWith("Guest_");
+    }
 
     public MyGameState() {
 

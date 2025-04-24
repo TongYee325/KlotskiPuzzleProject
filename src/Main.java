@@ -9,7 +9,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             KGameMode gameMode = new KGameMode();
             MyGameState myGameState = new MyGameState();
-            myGameState.startLevel(2);
+            myGameState.startLevel(0);
         });
     }
 }

@@ -4,6 +4,8 @@ import controller.MyGameController;
 import frame.GameFrame;
 import gamestate.MyGameState;
 
+import javax.swing.*;
+
 public class GameLevel extends LevelBase {
     private final int GameLevelWidth = 600;
     private final int GameLevelHeight = 600;

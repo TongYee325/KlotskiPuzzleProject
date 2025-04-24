@@ -2,13 +2,16 @@ package frame;
 
 
 import level.AccountManager;
+import level.LevelBase;
 import level.LoginLevel;
+import gamestate.MyGameState;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
 public class LoginFrame extends FrameBase {
+    private final MyGameState gameState;
     private JTextField username;
     private JPasswordField password;
 
@@ -16,8 +19,9 @@ public class LoginFrame extends FrameBase {
     private JButton registerBtn;
     private JPanel textPanel;
 
-    public LoginFrame(LoginLevel loginLevel, String title, int width, int height) {
+    public LoginFrame(LoginLevel loginLevel, MyGameState gameState, String title, int width, int height) {
         super(loginLevel, title, width, height);
+        this.gameState = gameState;
         this.setLayout(null);
         Point center = new Point(this.getWidth() / 2, this.getHeight() / 2);
         Point userLocation = new Point(center.x - width / 4, center.y - height / 3);
