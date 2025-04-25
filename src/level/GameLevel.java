@@ -15,7 +15,6 @@ public class GameLevel extends LevelBase {
 
 
 
-
     public GameLevel(MyGameState gameState) {
         super(gameState);
         gameController = new MyGameController(this,gameState.getMyLogSystem());//为游戏关卡新建控制器

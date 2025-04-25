@@ -19,7 +19,8 @@ public class MyGameState extends GameStateBase {
     }
 
     public void startLevel(int levelIndex) {
-        if (levelIndex == currentLevel && levelIndex != 0) {//传入关卡与当前关卡一样时，不做任何处理
+        if (levelIndex == currentLevel && levelIndex != 0) {
+            //传入关卡与当前关卡一样时，不做任何处理
             return;
         }
         if (level != null) {

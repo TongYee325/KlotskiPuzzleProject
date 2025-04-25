@@ -20,6 +20,7 @@ public class GameMap{
         {5,0,0,6},
         {1,1,1,1},
     };
+    //可在这里修改地图
 
     public int getMapCol() {
         return mapCol;
