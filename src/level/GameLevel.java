@@ -7,6 +7,7 @@ import gamestate.MyGameState;
 import javax.swing.*;
 
 public class GameLevel extends LevelBase {
+
     private final int GameLevelWidth = 600;
     private final int GameLevelHeight = 600;
     private final String GameLevelText = "Game Level";
@@ -31,7 +32,7 @@ public class GameLevel extends LevelBase {
 
     public GameLevel(MyGameState gameState) {
         super(gameState);
-        gameController = new MyGameController(this);//为游戏关卡新建控制器
+        gameController = new MyGameController(this,gameState.getMyLogSystem());//为游戏关卡新建控制器
         gameMap =  new GameMap();
         gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);
         gameController.updateFrame();//更新游戏控制器，使其控制新建的Frame中的GamePanel

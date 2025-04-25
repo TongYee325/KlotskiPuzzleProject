@@ -4,7 +4,11 @@ import controller.MyGameController;
 import level.*;
 
 public class MyGameState extends GameStateBase {
+    public LogSystem getMyLogSystem() {
+        return myLogSystem;
+    }
 
+    private LogSystem myLogSystem;
     private String currentUserId; // 当前登录用户ID（游客或注册用户）
     private int currentLevel = 0;
     private LevelBase level;
@@ -22,6 +26,7 @@ public class MyGameState extends GameStateBase {
     }
 
     public MyGameState() {
+        myLogSystem = new LogSystem();
 
     }
 

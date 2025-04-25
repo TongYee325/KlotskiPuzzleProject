@@ -3,21 +3,25 @@ package controller;
 import frame.GamePanel;
 import level.GameLevel;
 import level.GameMap;
+import level.LogSystem;
 
 public class MyGameController extends GameControllerBase {
     private  GamePanel view;
     private  GameMap startMap;
     private  GameLevel gameLevel;
+    private LogSystem myLogSystem;
 
-    public MyGameController(GameLevel gameLevel) {
+    public MyGameController(GameLevel gameLevel, LogSystem myLogSystem) {
         this.gameLevel = gameLevel;
+        this.myLogSystem = myLogSystem;
     }
 
     public void restartGame() {
         System.out.println("Do restart game here");
     }
 
-    public boolean doMove(int row, int col, int direction) {//0右1左2上3下
+    public boolean doMove(int row, int col, int direction) {
+        //0右1左2上3下
         // 1. 验证起始位置有效性
         if (!isValidPosition(row, col)) {
             return false;
@@ -85,6 +89,7 @@ public class MyGameController extends GameControllerBase {
         return row >= 0 && row < startMap.getMapRow() &&
                 col >= 0 && col < startMap.getMapCol();
     }
+
     // 辅助方法：获取方块尺寸
     private int[] getBlockSize(int blockType) {
         switch (blockType) {
@@ -99,6 +104,7 @@ public class MyGameController extends GameControllerBase {
                 return new int[]{1, 2};
         }
     }
+
     // 边界检测
     private boolean canMoveBoundaryCheck(int row, int col,
                                          int width, int height,
@@ -115,6 +121,7 @@ public class MyGameController extends GameControllerBase {
         return newRow >= 0 && endRow < startMap.getMapRow() &&
                 newCol >= 0 && endCol < startMap.getMapCol();
     }
+
     // 碰撞检测
     private boolean canMoveCollisionCheck(int row, int col,
                                           int width, int height,
@@ -164,10 +171,9 @@ public class MyGameController extends GameControllerBase {
         for (int r = newRow; r < newRow + height; r++) {
             for (int c = newCol; c < newCol + width; c++) {
                 view.getPanelMap()[r][c] = blockType;
-
-
             }
         }
+        logStepInfo(col,row,newCol,newRow,blockType);//记录
         view.getSelectedBlock().setRow(newRow);//设置Block的位置
         view.getSelectedBlock().setCol(newCol);
         view.refreshSelectedBlock();//更新block
@@ -178,6 +184,10 @@ public class MyGameController extends GameControllerBase {
         this.view=gameLevel.getGameFrame().getGamePanel();
         this.startMap=gameLevel.getGameMap();
         view.setGameController(this);
+    }
+
+    private void logStepInfo(int startX, int startY, int endX, int endY,int id) {
+        myLogSystem.addStep(startX,startY,endX,endY,id);
     }
 }
 

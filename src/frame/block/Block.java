@@ -12,7 +12,12 @@ public class Block extends JComponent {
     private boolean isSelected;
 
 
-    public Block(Color color, int row, int col) {
+    private int id;
+
+
+    public Block(Color color, int row, int col,int id) {
+        super();
+        this.id =id;
         this.color = color;
         this.row = row;
         this.col = col;
@@ -54,4 +59,9 @@ public class Block extends JComponent {
     public void setCol(int col) {
         this.col = col;
     }
+
+    public int getId() {
+        return id;
+    }
+
 }

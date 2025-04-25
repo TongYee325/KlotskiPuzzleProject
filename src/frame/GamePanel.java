@@ -2,7 +2,9 @@ package frame;
 
 import controller.MyGameController;
 import frame.block.Block;
+import level.GameLevel;
 import level.GameMap;
+import level.LogSystem;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -12,33 +14,28 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
-
-
+    private final int TARGET_X=1;
+    private final int TARGET_Y=3;
+    private GameFrame gameFrame;
     private MyGameController controller;
     private final int BLOCK_SIZE = 60;
     private GameMap map;
 
-    public int[][] getPanelMap() {
-        return panelMap;
-    }
+
 
     private int[][] panelMap;
 
-    public Block getSelectedBlock() {
-        return selectedBlock;
-    }
 
     private Block selectedBlock;
+    private Block CaoCaoBlock;
 
-    public ArrayList<Block> getBlocks() {
-        return blocks;
-    }
 
     private ArrayList<Block> blocks;
 
     private static final int CELL_SIZE = 60;
 
-    public GamePanel(GameMap gameMap) {
+    public GamePanel(GameMap gameMap,GameFrame gameFrame) {
+        this.gameFrame = gameFrame;
         enableEvents(AWTEvent.KEY_EVENT_MASK);
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         this.setFocusable(true);
@@ -83,41 +80,42 @@ public class GamePanel extends JPanel {
             for (int j = 0; j < mapIndex[0].length; j++) {
                 Block box = null;
                 if (mapIndex[i][j] == 1) {
-                    box = new Block(Color.ORANGE, i, j);
+                    box = new Block(Color.ORANGE, i, j,1);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE);
                     mapIndex[i][j] = 0;
                 } else if (mapIndex[i][j] == 2) {
-                    box = new Block(Color.PINK, i, j);
+                    box = new Block(Color.PINK, i, j,2);
                     box.setSize(BLOCK_SIZE * 2, BLOCK_SIZE);
                     mapIndex[i][j] = 0;
                     mapIndex[i][j + 1] = 0;
                 } else if (mapIndex[i][j] == 3) {
-                    box = new Block(Color.YELLOW, i, j);
+                    box = new Block(Color.YELLOW, i, j,3);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 4) {
-                    box = new Block(Color.cyan, i, j);
+                    box = new Block(Color.cyan, i, j,4);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 5) {
-                    box = new Block(Color.RED, i, j);
+                    box = new Block(Color.RED, i, j,5);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 }else if (mapIndex[i][j] == 6) {
-                    box = new Block(Color.PINK, i, j);
+                    box = new Block(Color.PINK, i, j,6);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 }  else if (mapIndex[i][j] == 7) {
-                    box = new Block(Color.BLUE, i, j);
+                    box = new Block(Color.BLUE, i, j,7);
                     box.setSize(BLOCK_SIZE * 2, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                     mapIndex[i][j + 1] = 0;
                     mapIndex[i + 1][j + 1] = 0;
+                    CaoCaoBlock =box;
                 }
                 if (box != null) {
                     box.setLocation(box.getCol()* BLOCK_SIZE + 2, box.getRow()* BLOCK_SIZE + 2);
@@ -204,8 +202,19 @@ public class GamePanel extends JPanel {
     }
 
     protected void afterMove() {
-        //todo log
+        if(CaoCaoBlock.getRow()==TARGET_Y && CaoCaoBlock.getCol()==TARGET_X) {
+            System.out.println("You Win!");
+            gameFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();
+            gameFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();
+        }
+
     }
+
+
+
+
+
+
 
     public MyGameController getGameController() {
         return controller;
@@ -213,6 +222,18 @@ public class GamePanel extends JPanel {
 
     public void setGameController(MyGameController gameController) {
         this.controller = gameController;
+    }
+
+    public Block getSelectedBlock() {
+        return selectedBlock;
+    }
+
+    public int[][] getPanelMap() {
+        return panelMap;
+    }
+
+    public ArrayList<Block> getBlocks() {
+        return blocks;
     }
 
 }
