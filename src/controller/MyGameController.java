@@ -180,10 +180,10 @@ public class MyGameController extends GameControllerBase {
         view.repaint(); // 刷新界面
     }
 
-    public void updateFrame() {
+    public void updateControlledPanelAccordingToLevel() {
         this.view=gameLevel.getGameFrame().getGamePanel();
         this.startMap=gameLevel.getGameMap();
-        view.setGameController(this);
+        this.view.setrController(this);
     }
 
     private void logStepInfo(int startX, int startY, int endX, int endY,int id) {

@@ -7,7 +7,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            KGameMode gameMode = new KGameMode();
+            //KGameMode gameMode = new KGameMode();
             MyGameState myGameState = new MyGameState();
             myGameState.startLevel(2);
         });

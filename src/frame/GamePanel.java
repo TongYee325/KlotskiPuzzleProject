@@ -4,7 +4,6 @@ import controller.MyGameController;
 import frame.block.Block;
 import level.GameLevel;
 import level.GameMap;
-import level.LogSystem;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -14,28 +13,28 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
+    //胜利条件
     private final int TARGET_X=1;
     private final int TARGET_Y=3;
-    private GameFrame gameFrame;
-    private MyGameController controller;
-    private final int BLOCK_SIZE = 60;
-    private GameMap map;
+
+    private GameFrame rFrame;
 
 
 
+    private MyGameController rController;
+
+
+    private GameMap rMap;
     private int[][] panelMap;
-
 
     private Block selectedBlock;
     private Block CaoCaoBlock;
-
-
     private ArrayList<Block> blocks;
+    private final int BLOCK_SIZE = 60;
 
-    private static final int CELL_SIZE = 60;
-
-    public GamePanel(GameMap gameMap,GameFrame gameFrame) {
-        this.gameFrame = gameFrame;
+    public GamePanel(GameMap gameMap,GameFrame rFrame) {
+        this.rFrame = rFrame;
+        this.rController = ((GameLevel) this.rFrame.getRlevel()).getController();
         enableEvents(AWTEvent.KEY_EVENT_MASK);
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         this.setFocusable(true);
@@ -43,10 +42,10 @@ public class GamePanel extends JPanel {
         this.setFocusable(true);
         this.setLayout(null);
         this.selectedBlock = null;
-        map = gameMap;
-        panelMap =new int[map.getMapRow()][map.getMapCol()];
+        this.rMap = gameMap;
+        this.panelMap =new int[rMap.getMapRow()][rMap.getMapCol()];
         this.setBackground(Color.ORANGE);
-        this.setBounds(20,20,map.getMapCol() * BLOCK_SIZE + 4, map.getMapRow() * BLOCK_SIZE + 4);
+        this.setBounds(20,20, rMap.getMapCol() * BLOCK_SIZE + 4, rMap.getMapRow() * BLOCK_SIZE + 4);
 
     }
 
@@ -68,11 +67,11 @@ public class GamePanel extends JPanel {
     public void initialGame() {
         blocks = new ArrayList<Block>();
         //copy a map
-        int[][] mapIndex = new int[map.getMapRow()][map.getMapCol()];
+        int[][] mapIndex = new int[rMap.getMapRow()][rMap.getMapCol()];
         for (int i = 0; i < mapIndex.length; i++) {
             for (int j = 0; j < mapIndex[0].length; j++) {
-                mapIndex[i][j] = map.getMapID(i, j);
-                panelMap[i][j] = map.getMapID(i, j);
+                mapIndex[i][j] = rMap.getMapID(i, j);
+                panelMap[i][j] = rMap.getMapID(i, j);
             }
         }
         //build Component
@@ -150,7 +149,6 @@ public class GamePanel extends JPanel {
         super.processMouseEvent(e);
         if (e.getID()==MouseEvent.MOUSE_PRESSED) {
             doMousePressed(e.getPoint());
-        } else if(e.getID()==MouseEvent.MOUSE_RELEASED) {
         }
     }
 
@@ -173,28 +171,31 @@ public class GamePanel extends JPanel {
 
     protected void doMoveRight() {
         if (selectedBlock != null) {
-            if (controller.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 0)) {
+            if (rController.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 0)) {
                 afterMove();
             }
         };
     }
+
     protected void doMoveLeft() {
         if (selectedBlock != null) {
-            if (controller.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 1)) {
+            if (rController.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 1)) {
                 afterMove();
             }
         }
     }
+
     protected void doMoveUp() {
         if (selectedBlock != null) {
-            if (controller.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 2)) {
+            if (rController.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 2)) {
                 afterMove();
             }
         }
     }
+
     protected void doMoveDown() {
         if (selectedBlock != null) {
-            if (controller.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 3)) {
+            if (rController.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 3)) {
                 afterMove();
             }
         }
@@ -204,8 +205,8 @@ public class GamePanel extends JPanel {
     protected void afterMove() {
         if(CaoCaoBlock.getRow()==TARGET_Y && CaoCaoBlock.getCol()==TARGET_X) {
             System.out.println("You Win!");
-            gameFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();
-            gameFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();
+            rFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();
+            rFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();
         }
 
     }
@@ -216,12 +217,8 @@ public class GamePanel extends JPanel {
 
 
 
-    public MyGameController getGameController() {
-        return controller;
-    }
-
-    public void setGameController(MyGameController gameController) {
-        this.controller = gameController;
+    public MyGameController getrController() {
+        return rController;
     }
 
     public Block getSelectedBlock() {
@@ -234,6 +231,10 @@ public class GamePanel extends JPanel {
 
     public ArrayList<Block> getBlocks() {
         return blocks;
+    }
+
+    public void setrController(MyGameController rController) {
+        this.rController = rController;
     }
 
 }
