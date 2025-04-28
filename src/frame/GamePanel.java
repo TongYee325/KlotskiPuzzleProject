@@ -65,6 +65,9 @@ public class GamePanel extends JPanel {
     {5,1,1,6},
     {1,0,0,1},*/
     public void initialGame() {
+        this.requestFocusInWindow();
+
+
         blocks = new ArrayList<Block>();
         //copy a map
         int[][] mapIndex = new int[rMap.getMapRow()][rMap.getMapCol()];

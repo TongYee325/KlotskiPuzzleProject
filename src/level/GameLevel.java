@@ -11,6 +11,8 @@ public class GameLevel extends LevelBase {
     private final String GameLevelText = "Game Level";
     private GameMap gameMap;
     private GameFrame gameFrame;
+
+
     private MyGameController gameController;
 
 
@@ -27,6 +29,11 @@ public class GameLevel extends LevelBase {
 
     private void initialGame() {
         gameFrame.initialGame();
+    }
+
+
+    public MyGameController getGameController() {
+        return gameController;
     }
 
     public GameMap getGameMap() {

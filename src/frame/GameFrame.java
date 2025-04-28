@@ -29,16 +29,16 @@ public class GameFrame extends FrameBase {
         JButton restartButton = new JButton("Restart");
         this.add(restartButton, BorderLayout.SOUTH);
         restartButton.addActionListener(e -> {
-            //rlevel.getrGameState().getMyLogSystem().printAllSteps();
-
+            //print and clear log
+            rlevel.getrGameState().getMyLogSystem().printAllSteps();
+            rlevel.getrGameState().getMyLogSystem().clearSteps();
             if(gamePanel!=null){
                 mainPanel.remove(gamePanel);
                 gamePanel=null;
             }
             gamePanel = new GamePanel(rMap,this);
             mainPanel.add(gamePanel);
-/*            ((GameLevel) rlevel).getController().updateFrame();*/
-            gamePanel.requestFocusInWindow();
+            ((GameLevel) rlevel).getGameController().updateControlledPanelAccordingToLevel();
             gamePanel.initialGame();
         });
         setLocationRelativeTo(null);

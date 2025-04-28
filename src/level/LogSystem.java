@@ -23,6 +23,10 @@ public class LogSystem {
         System.out.println("Total Steps: "+totalSteps.size());
     }
 
+    public void clearSteps(){
+        totalSteps.clear();
+    }
+
 }
 class Step{
     private int startx;
