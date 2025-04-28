@@ -30,7 +30,6 @@ public class MenuFrame extends FrameBase {
         });
         loadGameBtn.addActionListener(e -> {
             getRlevel().getrGameState().loadGameData();
-            //todo load game logic
         });
     }
 }

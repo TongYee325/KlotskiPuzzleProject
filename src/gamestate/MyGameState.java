@@ -56,6 +56,11 @@ public class MyGameState extends GameStateBase {
         return currentUserId != null && currentUserId.startsWith("Guest_");
     }
 
+    public void saveGameData(){
+        mySaveManager.saveGame();
+    }
+
+
     public void loadGameData() {
         GameSave gamesave = mySaveManager.loadGame();
         if (gamesave != null) {
@@ -71,7 +76,8 @@ public class MyGameState extends GameStateBase {
                     //传入关卡与当前关卡一样时，不做任何处理
                     return;
                 }
-                switch (levelIndex) {
+                currentLevel = levelIndex;
+                switch (currentLevel) {
                     case 2:
                         level = new GameLevel(this);
                         ((GameLevel) level).loadGame(panelMap);

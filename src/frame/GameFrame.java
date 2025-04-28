@@ -35,7 +35,7 @@ public class GameFrame extends FrameBase {
         JButton saveButton = new JButton("Save");
         saveButton.setVisible(true);
         saveButton.addActionListener(e -> {
-            rlevel.getrGameState().getMySaveManager().saveGame();
+            rlevel.getrGameState().saveGameData();
         });
         toolsPanel.add(saveButton);
 
