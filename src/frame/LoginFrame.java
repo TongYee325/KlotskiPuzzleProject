@@ -49,6 +49,7 @@ public class LoginFrame extends FrameBase {
         submitBtn.addActionListener(e -> {
 
             if (AccountManager.checkPassword(username.getText(), password.getPassword())) {//检查用户名与密码
+                if(username.getText()!=null){getRlevel().getrGameState().setCurrentUser(username.getText());}//存入当前userID
                 LoginLevel rlevel = (LoginLevel) super.getRlevel();
                 rlevel.nextLevel();
             } else {

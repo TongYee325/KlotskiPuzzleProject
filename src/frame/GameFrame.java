@@ -25,6 +25,18 @@ public class GameFrame extends FrameBase {
         gamePanel = new GamePanel(rMap,this);
         mainPanel.add(gamePanel);
 
+        JPanel toolsPanel = new JPanel();
+        toolsPanel.setLayout(new GridLayout(2, 1));
+        toolsPanel.setBackground(Color.WHITE);
+        mainPanel.add(toolsPanel);
+        toolsPanel.setBounds(width*55/100,height*10/100,width/3,height/3);
+        JButton saveButton = new JButton("Save");
+        saveButton.setVisible(true);
+        saveButton.addActionListener(e -> {
+            rlevel.getrGameState().getMySaveManager().saveGame();
+        });
+        toolsPanel.add(saveButton);
+
 
         JButton restartButton = new JButton("Restart");
         this.add(restartButton, BorderLayout.SOUTH);
@@ -51,6 +63,9 @@ public class GameFrame extends FrameBase {
 
     }
 
+    public void loadGame() {
+        gamePanel.loadGame();
+    }
 
 
 

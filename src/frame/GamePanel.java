@@ -129,11 +129,19 @@ public class GamePanel extends JPanel {
         repaint();
     }
 
+    public void loadGame() {
+    }
+
     public void refreshSelectedBlock() {
         if(selectedBlock != null) {
             selectedBlock.setLocation(selectedBlock.getCol()* BLOCK_SIZE + 2, selectedBlock.getRow()* BLOCK_SIZE + 2);
         }
     }
+
+
+
+
+
 
     @Override
     protected void processKeyEvent(KeyEvent e) {

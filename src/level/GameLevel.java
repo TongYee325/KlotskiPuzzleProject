@@ -23,13 +23,19 @@ public class GameLevel extends LevelBase {
         gameMap =  new GameMap();//创建游戏地图
         gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);//创建游戏帧
         gameController.updateControlledPanelAccordingToLevel();//更新游戏控制器，使其控制新建的Frame中的GamePanel*/
-        this.initialGame();//初始化游戏
+
     }
 
 
-    private void initialGame() {
+
+    public void levelInit() {
         gameFrame.initialGame();
     }
+
+    public void loadGame() {
+        gameFrame.loadGame();
+    }
+
 
 
     public MyGameController getGameController() {

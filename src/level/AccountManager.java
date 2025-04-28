@@ -15,7 +15,7 @@ public class AccountManager {
         }
 
         // 修改路径为 user/[username]/data
-        Path userDir = Paths.get("user", username, "data"); // 🌟 关键修改点
+        Path userDir = Paths.get("user", username, "data");
         try {
             // 创建目录（父目录 user/[username] 也会被自动创建）
             Files.createDirectories(userDir);
@@ -78,9 +78,9 @@ public class AccountManager {
         }
     }
 
-    // 校验用户名合法性（防止路径遍历攻击）
+    // 校验用户名是否合法
     private static boolean isValidUsername(String username) {
-        return username != null && username.matches("^[a-zA-Z0-9_-]{3,20}$");
+        return username != null && username.matches("^[a-zA-Z0-9_-]{3,20}$");//使用正则match检验，合法字符包含 a-z A-Z 0-9 _ - 字符长度需在3-20个
     }
 
     // 密码哈希方法

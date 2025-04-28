@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class LogSystem {
     private ArrayList<Step> totalSteps;
+
+
     public LogSystem() {
         totalSteps = new ArrayList<Step>();
 
@@ -27,23 +29,10 @@ public class LogSystem {
         totalSteps.clear();
     }
 
-}
-class Step{
-    private int startx;
-    private int starty;
-    private int endx;
-    private int endy;
-    private int id;
-    public Step(int startx,int starty, int endx,int endy,int id) {
-        this.startx = startx;
-        this.starty = starty;
-        this.endx = endx;
-        this.endy = endy;
-        this.id = id;
+
+
+    public ArrayList<Step> getTotalSteps() {
+        return totalSteps;
     }
 
-    @Override
-    public String toString() {
-        return String.format(" %d from [%d,%d] to [%d,%d]", id,startx,starty, endx,endy);
-    }
 }

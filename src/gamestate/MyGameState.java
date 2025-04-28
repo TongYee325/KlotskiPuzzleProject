@@ -1,11 +1,16 @@
 package gamestate;
 
-import controller.MyGameController;
+import Save.SaveManager;
 import level.*;
 
 public class MyGameState extends GameStateBase {
     private LogSystem myLogSystem;
-    private String currentUserId; // 当前登录用户ID（游客或注册用户）
+
+
+    private SaveManager mySaveManager;
+
+
+    private String currentUserId; // 当前登录用户ID(null指游客)
     private int currentLevel = 0;
     private LevelBase level;
 
@@ -15,6 +20,7 @@ public class MyGameState extends GameStateBase {
 
     public MyGameState() {
         myLogSystem = new LogSystem();
+        mySaveManager = new SaveManager(this);
 
     }
 
@@ -49,12 +55,23 @@ public class MyGameState extends GameStateBase {
         return currentUserId != null && currentUserId.startsWith("Guest_");
     }
 
+    public void loadGameData() {
+
+    }
 
 
+    public SaveManager getMySaveManager() {
+        return mySaveManager;
+    }
+
+    public String getCurrentUserId() {
+        return currentUserId;
+    }
 
     // 设置当前用户
     public void setCurrentUser(String userId) {
         this.currentUserId = userId;
+        mySaveManager.updateSavePathAccordingToUserName(userId);
     }
 
     public LevelBase getLevel() {

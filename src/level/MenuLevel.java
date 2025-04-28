@@ -16,6 +16,8 @@ public class MenuLevel extends LevelBase {
     }
 
 
+    public void levelInit() {}
+
     @Override
     public void nextLevel() {
         super.getrGameState().startLevel(2);//切换至下一Level
