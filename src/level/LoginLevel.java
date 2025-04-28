@@ -44,7 +44,7 @@ public class LoginLevel extends LevelBase {
 /*
         String guestUserId = generateGuestUserId(); // 生成临时游客ID
 */
-        getrGameState().setCurrentUser(null); // 游客不需要ID，传入null
+        //getrGameState().setCurrentUser(null); // 游客不需要ID，传入null
         nextLevel(); // 进入游戏主界面
     }
     private void handleUserLogin() {
@@ -68,6 +68,6 @@ public class LoginLevel extends LevelBase {
 
     @Override
     public void levelDestroy() {
-        loginFrame.clear();
+       // loginFrame.clear();
     }
 }

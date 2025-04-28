@@ -1,6 +1,7 @@
 package level;
 
 import java.util.ArrayList;
+import java.util.logging.ErrorManager;
 
 public class LogSystem {
     private ArrayList<Step> totalSteps;
@@ -34,5 +35,7 @@ public class LogSystem {
     public ArrayList<Step> getTotalSteps() {
         return totalSteps;
     }
+
+
 
 }

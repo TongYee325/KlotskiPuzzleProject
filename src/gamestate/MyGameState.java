@@ -52,7 +52,7 @@ public class MyGameState extends GameStateBase {
 
     // 判断是否为游客用户
     public boolean isGuestUser() {
-        return currentUserId != null && currentUserId.startsWith("Guest_");
+        return currentUserId == null || currentUserId.startsWith("Guest_");
     }
 
     public void loadGameData() {
