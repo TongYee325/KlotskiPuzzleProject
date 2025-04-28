@@ -59,6 +59,7 @@ public class LoginLevel extends LevelBase {
 
     @Override
     public void levelInit() {
+
     }
 
     @Override
@@ -68,6 +69,6 @@ public class LoginLevel extends LevelBase {
 
     @Override
     public void levelDestroy() {
-       // loginFrame.clear();
+       loginFrame.clear();
     }
 }
