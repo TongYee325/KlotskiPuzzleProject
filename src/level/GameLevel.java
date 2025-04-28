@@ -32,8 +32,8 @@ public class GameLevel extends LevelBase {
         gameFrame.initialGame();
     }
 
-    public void loadGame() {
-        gameFrame.loadGame();
+    public void loadGame(int[][] panelMap) {
+        gameFrame.loadGame(panelMap);
     }
 
 

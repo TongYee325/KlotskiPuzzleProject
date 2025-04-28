@@ -1,7 +1,10 @@
 package gamestate;
 
+import Save.GameSave;
 import Save.SaveManager;
 import level.*;
+
+import java.util.ArrayList;
 
 public class MyGameState extends GameStateBase {
     private LogSystem myLogSystem;
@@ -13,9 +16,6 @@ public class MyGameState extends GameStateBase {
     private String currentUserId; // 当前登录用户ID(null指游客)
     private int currentLevel = 0;
     private LevelBase level;
-
-
-
 
 
     public MyGameState() {
@@ -43,6 +43,7 @@ public class MyGameState extends GameStateBase {
                 break;
             case 2:
                 level = new GameLevel(this);
+                break;
         }
         if (level != null) {
             level.levelInit();
@@ -56,7 +57,34 @@ public class MyGameState extends GameStateBase {
     }
 
     public void loadGameData() {
+        GameSave gamesave = mySaveManager.loadGame();
+        if (gamesave != null) {
+            //将存档数据转化为可用数据
+            int[][] panelMap = gamesave.getPanelMap();
+            int levelIndex = gamesave.getCurrentLevelIndex();
+            ArrayList<Step> totalSteps = gamesave.getTotalSteps();
 
+
+            myLogSystem.setTotalSteps(totalSteps);
+            if (levelIndex >= 2) {
+                if (levelIndex == currentLevel) {
+                    //传入关卡与当前关卡一样时，不做任何处理
+                    return;
+                }
+                switch (levelIndex) {
+                    case 2:
+                        level = new GameLevel(this);
+                        ((GameLevel) level).loadGame(panelMap);
+
+
+                        break;
+                        //todo add more level
+                    default:
+                        break;
+
+                }
+            }
+        }
     }
 
 

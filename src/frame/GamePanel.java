@@ -129,8 +129,71 @@ public class GamePanel extends JPanel {
         repaint();
     }
 
-    public void loadGame() {
+    public void initialGame(int[][] panelMap) {
+        this.panelMap = panelMap;
+        this.requestFocusInWindow();
+
+        blocks = new ArrayList<Block>();
+        //copy a map
+        int[][] mapIndex = new int[panelMap.length][panelMap[0].length];
+        for (int i = 0; i < mapIndex.length; i++) {
+            for (int j = 0; j < mapIndex[0].length; j++) {
+                mapIndex[i][j] = panelMap[i][j];
+            }
+        }
+        //build Component
+        for (int i = 0; i < mapIndex.length; i++) {
+            for (int j = 0; j < mapIndex[0].length; j++) {
+                Block box = null;
+                if (mapIndex[i][j] == 1) {
+                    box = new Block(Color.ORANGE, i, j,1);
+                    box.setSize(BLOCK_SIZE, BLOCK_SIZE);
+                    mapIndex[i][j] = 0;
+                } else if (mapIndex[i][j] == 2) {
+                    box = new Block(Color.PINK, i, j,2);
+                    box.setSize(BLOCK_SIZE * 2, BLOCK_SIZE);
+                    mapIndex[i][j] = 0;
+                    mapIndex[i][j + 1] = 0;
+                } else if (mapIndex[i][j] == 3) {
+                    box = new Block(Color.YELLOW, i, j,3);
+                    box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
+                    mapIndex[i][j] = 0;
+                    mapIndex[i + 1][j] = 0;
+                } else if (mapIndex[i][j] == 4) {
+                    box = new Block(Color.cyan, i, j,4);
+                    box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
+                    mapIndex[i][j] = 0;
+                    mapIndex[i + 1][j] = 0;
+                } else if (mapIndex[i][j] == 5) {
+                    box = new Block(Color.RED, i, j,5);
+                    box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
+                    mapIndex[i][j] = 0;
+                    mapIndex[i + 1][j] = 0;
+                }else if (mapIndex[i][j] == 6) {
+                    box = new Block(Color.PINK, i, j,6);
+                    box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
+                    mapIndex[i][j] = 0;
+                    mapIndex[i + 1][j] = 0;
+                }  else if (mapIndex[i][j] == 7) {
+                    box = new Block(Color.BLUE, i, j,7);
+                    box.setSize(BLOCK_SIZE * 2, BLOCK_SIZE * 2);
+                    mapIndex[i][j] = 0;
+                    mapIndex[i + 1][j] = 0;
+                    mapIndex[i][j + 1] = 0;
+                    mapIndex[i + 1][j + 1] = 0;
+                    CaoCaoBlock =box;
+                }
+                if (box != null) {
+                    box.setLocation(box.getCol()* BLOCK_SIZE + 2, box.getRow()* BLOCK_SIZE + 2);
+                    blocks.add(box);
+                    this.add(box);
+                }
+            }
+        }
+        repaint();
     }
+
+
 
     public void refreshSelectedBlock() {
         if(selectedBlock != null) {
