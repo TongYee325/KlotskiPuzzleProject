@@ -51,11 +51,6 @@ public class MyGameState extends GameStateBase {
         }
     }
 
-    // 判断是否为游客用户
-    public boolean isGuestUser() {
-        return currentUserId == null || currentUserId.startsWith("Guest_");
-    }
-
     public void saveGameData(){
         mySaveManager.saveGame();
     }
@@ -104,6 +99,10 @@ public class MyGameState extends GameStateBase {
 
     // 设置当前用户
     public void setCurrentUser(String userId) {
+        if(userId ==null) {
+            currentUserId = null;
+            return;
+        }
         this.currentUserId = userId;
         mySaveManager.updateSavePathAccordingToUserName(userId);
     }
