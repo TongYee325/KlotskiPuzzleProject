@@ -9,6 +9,9 @@ import java.util.ArrayList;
 public class GameSave implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+
+
     //存储的数据
     private int [][]panelMap;//现在的棋盘状态
     private ArrayList<Step> totalSteps;//已走数据
@@ -20,4 +23,15 @@ public class GameSave implements Serializable {
         this.currentLevelIndex = currentLevelIndex;
     }
 
+    public int[][] getPanelMap() {
+        return panelMap;
+    }
+
+    public ArrayList<Step> getTotalSteps() {
+        return totalSteps;
+    }
+
+    public int getCurrentLevelIndex() {
+        return currentLevelIndex;
+    }
 }

@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameFrame extends FrameBase {
+
+
     private GamePanel gamePanel;
     private GameMap rMap;
     private LevelBase rlevel;
@@ -33,7 +35,7 @@ public class GameFrame extends FrameBase {
         JButton saveButton = new JButton("Save");
         saveButton.setVisible(true);
         saveButton.addActionListener(e -> {
-            rlevel.getrGameState().getMySaveManager().saveGame();
+            rlevel.getrGameState().saveGameData();
         });
         toolsPanel.add(saveButton);
 
@@ -63,8 +65,8 @@ public class GameFrame extends FrameBase {
 
     }
 
-    public void loadGame() {
-        gamePanel.loadGame();
+    public void loadGame(int [][] panelMap) {
+        gamePanel.initialGame(panelMap);
     }
 
 
@@ -72,6 +74,7 @@ public class GameFrame extends FrameBase {
     public GamePanel getGamePanel() {
         return gamePanel;
     }
+
 
 }
 

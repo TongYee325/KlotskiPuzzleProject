@@ -41,7 +41,6 @@ public class SaveManager {
     }
 
     private void saveData(GameSave gameSave) {
-        //todo fix
         try {
             Files.createDirectories(savePath);
             Path dataPath = savePath.resolve("save.dat");

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.logging.ErrorManager;
 
 public class LogSystem {
+
+
     private ArrayList<Step> totalSteps;
 
 
@@ -30,7 +32,9 @@ public class LogSystem {
         totalSteps.clear();
     }
 
-
+    public void setTotalSteps(ArrayList<Step> totalSteps) {
+        this.totalSteps = totalSteps;
+    }
 
     public ArrayList<Step> getTotalSteps() {
         return totalSteps;
