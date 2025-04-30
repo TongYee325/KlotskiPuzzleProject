@@ -50,6 +50,7 @@ public class SaveManager {
                 System.out.println("Error saving game");
             }
         } catch (IOException e) {
+            System.out.println("Error saving game");
             throw new RuntimeException(e);
         }
     }

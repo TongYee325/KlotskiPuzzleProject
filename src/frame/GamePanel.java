@@ -194,7 +194,6 @@ public class GamePanel extends JPanel {
     }
 
 
-
     public void refreshSelectedBlock() {
         if(selectedBlock != null) {
             selectedBlock.setLocation(selectedBlock.getCol()* BLOCK_SIZE + 2, selectedBlock.getRow()* BLOCK_SIZE + 2);
@@ -204,11 +203,10 @@ public class GamePanel extends JPanel {
 
 
 
-
-
     @Override
     protected void processKeyEvent(KeyEvent e) {
         super.processKeyEvent(e);
+        System.out.println(e.getKeyChar());
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> doMoveRight();
