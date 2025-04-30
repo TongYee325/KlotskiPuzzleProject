@@ -6,6 +6,7 @@ import java.util.logging.ErrorManager;
 public class LogSystem {
 
 
+    private long elapsedTime;
     private ArrayList<Step> totalSteps;
 
 
@@ -30,6 +31,15 @@ public class LogSystem {
 
     public void clearSteps(){
         totalSteps.clear();
+    }
+
+
+    public long getElapsedTime() {
+        return elapsedTime;
+    }
+
+    public void setElapsedTime(long elapsedTime) {
+        this.elapsedTime = elapsedTime;
     }
 
     public void setTotalSteps(ArrayList<Step> totalSteps) {

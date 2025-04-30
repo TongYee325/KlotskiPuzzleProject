@@ -19,10 +19,7 @@ public class GamePanel extends JPanel {
 
     private GameFrame rFrame;
 
-
-
     private MyGameController rController;
-
 
     private GameMap rMap;
     private int[][] panelMap;
@@ -31,6 +28,8 @@ public class GamePanel extends JPanel {
     private Block CaoCaoBlock;
     private ArrayList<Block> blocks;
     private final int BLOCK_SIZE = 60;
+
+
 
     public GamePanel(GameMap gameMap,GameFrame rFrame) {
         this.rFrame = rFrame;

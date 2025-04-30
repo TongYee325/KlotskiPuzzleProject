@@ -11,8 +11,20 @@ public class GameFrame extends FrameBase {
 
 
     private GamePanel gamePanel;
+    private JPanel mainPanel;
+    private JPanel toolsPanel;
+    private JPanel movePanel;
+    private JPanel infoPanel;
     private GameMap rMap;
     private LevelBase rlevel;
+
+    private long startTime;
+
+
+
+    private long elapsedTime;
+    private Timer gameTimer;
+    private JLabel timeLabel;
 
     public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
         super(level, title, width, height);
@@ -28,13 +40,13 @@ public class GameFrame extends FrameBase {
 
     private void setPanels(int width, int height) {
         //main panel是主要面板，包含了game panel
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         mainPanel.setLayout(null);
         this.add(mainPanel, BorderLayout.CENTER);
         gamePanel = new GamePanel(rMap,this);
         mainPanel.add(gamePanel);
         //tools panel 包含save和restart按钮，用来存档和重启游戏
-        JPanel toolsPanel = new JPanel();
+        toolsPanel = new JPanel();
         toolsPanel.setLayout(new GridLayout(2, 1));
         toolsPanel.setBackground(Color.WHITE);
         mainPanel.add(toolsPanel);
@@ -61,7 +73,7 @@ public class GameFrame extends FrameBase {
             gamePanel.initialGame();
         });
         //move button panel包含四个按钮，上下左右
-        JPanel movePanel = new JPanel();
+        movePanel = new JPanel();
         movePanel.setLayout(null);
         mainPanel.add(movePanel);
         movePanel.setBounds(20, height *60/100, 300*80/100, 200*80/100);
@@ -84,22 +96,80 @@ public class GameFrame extends FrameBase {
         movePanel.add(leftbtn);
         movePanel.add(downbtn);
         movePanel.add(rightbtn);
+        //info panel 记录游戏开始时间和总共走的步数
+        infoPanel = new JPanel();
+        mainPanel.add(infoPanel);
+        infoPanel.setLayout(new GridLayout(2, 1));
+        JLabel stepsLabel = new JLabel("Steps : 0 ");
+        infoPanel.add(stepsLabel);
+        timeLabel = new JLabel(formatTime(elapsedTime));
+        infoPanel.add(timeLabel);
+        infoPanel.setBounds(width *55/100, height *60/100, width /3, height /5);
+
+
+    }
+
+
+    private void setTimer(){
+
+        //设置开始计时，以ms为单位
+        startTime = System.currentTimeMillis()-elapsedTime;//如果有存档的话，这么做的目的是统一时间
+        gameTimer = new Timer(1000, e -> updateTimer());
+        gameTimer.start();
+    }
+
+    private void updateTimer(){
+        if (startTime > 0) {
+            elapsedTime = System.currentTimeMillis() - startTime;
+            SwingUtilities.invokeLater(() -> {
+                timeLabel.setText(formatTime(elapsedTime));
+            });
+        }
+    }
+
+    private String formatTime(long elapsedTime) {
+        long seconds = (elapsedTime / 1000) % 60;
+        long minutes = (elapsedTime / (1000 * 60));
+        long hours = (elapsedTime / (1000 * 60 * 60));
+        if(minutes ==0&&hours==0){return String.format("Time : %02d ", seconds);}
+        if(hours==0){return String.format("Time : %02d:%02d ", minutes, seconds);}
+        return String.format("Time : %02d:%02d:%02d ", hours, minutes, seconds);
+    }
+
+    private void stopTimer(){
+        if (gameTimer != null) {
+            gameTimer.stop();
+        }
+        startTime = 0;
     }
 
     public void initialGame() {
         gamePanel.initialGame();
-
+        setTimer();//开始计时
     }
 
     public void loadGame(int [][] panelMap) {
         gamePanel.initialGame(panelMap);
     }
 
+    public void frameDestroyed() {
+        stopTimer();//停止计时
+        this.removeAll();
+    }
 
+
+    public void setElapsedTime(long elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    }
+
+    public long getElapsedTime() {
+        return elapsedTime;
+    }
 
     public GamePanel getGamePanel() {
         return gamePanel;
     }
+
 
 
 }
