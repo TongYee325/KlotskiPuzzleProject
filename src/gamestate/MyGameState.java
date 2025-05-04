@@ -63,7 +63,6 @@ public class MyGameState extends GameStateBase {
             int[][] panelMap = gamesave.getPanelMap();
             int levelIndex = gamesave.getCurrentLevelIndex();
             ArrayList<Step> totalSteps = gamesave.getTotalSteps();
-            long elapsedTime = gamesave.getElapsedTime();
 
 
             myLogSystem.setTotalSteps(totalSteps);
@@ -77,12 +76,10 @@ public class MyGameState extends GameStateBase {
                     case 2:
                         level = new GameLevel(this);
                         ((GameLevel) level).loadGame(panelMap);
-                        ((GameLevel) level).getGameFrame().setElapsedTime(elapsedTime);
-                        level.levelInit();
 
 
                         break;
-                        //todo add more level
+                    //todo add more level
                     default:
                         break;
 
@@ -123,3 +120,4 @@ public class MyGameState extends GameStateBase {
     }
 
 }
+
