@@ -35,7 +35,7 @@ public class LoginFrame extends FrameBase {
         int hintX = (width - 300) / 2;
         int hintY = 20;
         Point hintLocation = new Point(hintX, hintY);
-        JLabel hintLabel = FrameUtil.createJLabel(this, hintLocation, 300, 40, "用户名和密码仅限0-9a-zA-Z");
+        JLabel hintLabel = FrameUtil.createJLabel(this, hintLocation, 300, 40, "用户名和密码仅限0-9，a-z，A-Z");
         this.add(hintLabel);
 
         username = FrameUtil.createJTextField(this, new Point((int) (userLocation.getX() + userLabel.getWidth()), (int) userLocation.getY()), 200, 40);
