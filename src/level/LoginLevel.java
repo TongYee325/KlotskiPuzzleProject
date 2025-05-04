@@ -25,16 +25,27 @@ public class LoginLevel extends LevelBase {
         mainLoginFrame.setLocationRelativeTo(null);
         mainLoginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // 使用 GridBagLayout 布局
+        mainLoginFrame.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
         // 添加按钮等组件
         JButton guestLoginButton = new JButton("游客登录");
-        guestLoginButton.addActionListener(e -> handleGuestLogin());
-        mainLoginFrame.add(guestLoginButton);
+        guestLoginButton.setPreferredSize(new Dimension(200, 50)); // 设置按钮大小
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        mainLoginFrame.add(guestLoginButton, gbc);
 
         JButton userLoginButton = new JButton("注册/登录");
-        userLoginButton.addActionListener(e -> handleUserLogin());
-        mainLoginFrame.add(userLoginButton);
+        userLoginButton.setPreferredSize(new Dimension(200, 50)); // 设置按钮大小
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        mainLoginFrame.add(userLoginButton, gbc);
 
-        mainLoginFrame.setLayout(new FlowLayout());
+        guestLoginButton.addActionListener(e -> handleGuestLogin());
+        userLoginButton.addActionListener(e -> handleUserLogin());
+
         mainLoginFrame.setVisible(true);
     }
 
