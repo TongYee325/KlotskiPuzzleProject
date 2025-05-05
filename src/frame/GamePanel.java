@@ -63,6 +63,8 @@ public class GamePanel extends JPanel {
     {5,2,2,6},
     {5,1,1,6},
     {1,0,0,1},*/
+
+    //初始化游戏，根据给定地图生成对应图形。若传入panelMap地图，则关卡为加载游戏形式。
     public void initialGame() {
         this.requestFocusInWindow();
 
@@ -192,7 +194,6 @@ public class GamePanel extends JPanel {
         repaint();
     }
 
-
     public void refreshMovedBlock(Block movedBlock) {
         if (movedBlock != null) {
             movedBlock.setLocation(movedBlock.getCol() * BLOCK_SIZE + 2, movedBlock.getRow() * BLOCK_SIZE + 2);
@@ -200,6 +201,7 @@ public class GamePanel extends JPanel {
     }
 
 
+    //处理鼠标键盘事件响应
     @Override
     protected void processKeyEvent(KeyEvent e) {
         super.processKeyEvent(e);
@@ -239,6 +241,7 @@ public class GamePanel extends JPanel {
         }
     }
 
+    //移动逻辑，通过调用controller中doMove函数实现
     protected void doMoveRight(Block movedBlock,boolean needLog) {
         if (movedBlock != null) {
             if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 0,needLog)) {
@@ -283,6 +286,7 @@ public class GamePanel extends JPanel {
 
     }
 
+    //撤销逻辑，通过复用移动逻辑实现，、
     public void revoke() {
         //撤销功能
         Block lastMovedBlock=null;
@@ -314,6 +318,13 @@ public class GamePanel extends JPanel {
     }
 
 
+
+
+
+
+
+
+    //Getter & Setter --------------------------------------------------------------------------------------------------
     public MyGameController getrController() {
         return rController;
     }

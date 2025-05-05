@@ -21,6 +21,7 @@ public class Step implements Serializable {
         return String.format(" %d from [%d,%d] to [%d,%d]", id,startx,starty, endx,endy);
     }
 
+    //转为int型direction信息，便于与撤回算法统一
     public int castToDirection() {
         if(startx==endx && endy>starty) {
             //down
@@ -38,4 +39,5 @@ public class Step implements Serializable {
             return -1;
         }
     }
+
 }

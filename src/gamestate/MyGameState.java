@@ -63,9 +63,10 @@ public class MyGameState extends GameStateBase {
             int[][] panelMap = gamesave.getPanelMap();
             int levelIndex = gamesave.getCurrentLevelIndex();
             ArrayList<Step> totalSteps = gamesave.getTotalSteps();
-
+            long elapsedTime = gamesave.getElapsedTime();
 
             myLogSystem.setTotalSteps(totalSteps);
+            myLogSystem.setElapsedTime(elapsedTime);
             if (levelIndex >= 2) {
                 if (levelIndex == currentLevel) {
                     //传入关卡与当前关卡一样时，不做任何处理
@@ -106,6 +107,10 @@ public class MyGameState extends GameStateBase {
         this.currentUserId = userId;
         mySaveManager.updateSavePathAccordingToUserName(userId);
     }
+
+
+
+
 
     public LevelBase getLevel() {
         return level;

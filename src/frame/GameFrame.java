@@ -9,21 +9,20 @@ import java.awt.*;
 
 public class GameFrame extends FrameBase {
 
-
+    //面板数据
     private GamePanel gamePanel;
     private JPanel mainPanel;
     private JPanel toolsPanel;
     private JPanel movePanel;
     private JPanel infoPanel;
+    //游戏初始地图
     private GameMap rMap;
+    //关卡指针
     private LevelBase rlevel;
-
+    //步数显示
     private JLabel stepLabel;
-
+    //计时
     private long startTime;
-
-
-
     private long elapsedTime;
     private Timer gameTimer;
     private JLabel timeLabel;
@@ -37,10 +36,9 @@ public class GameFrame extends FrameBase {
         setPanels(width, height);
         setLocationRelativeTo(null);
         setVisible(true);
-
     }
 
-    private void setPanels(int width, int height) {
+    private void setPanels(int width, int height) {//面板配置
         //main panel是主要面板，包含了game panel
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
@@ -114,13 +112,38 @@ public class GameFrame extends FrameBase {
         timeLabel = new JLabel(formatTime(elapsedTime));
         infoPanel.add(timeLabel);
         infoPanel.setBounds(width *55/100, height *60/100, width /3, height /5);
-
+        updateStep();
 
     }
 
 
-    private void setTimer(){
 
+    public void initialGame() {
+        gamePanel.initialGame();
+        setTimer();//开始计时
+    }
+
+    private void gameRestart() {
+        timerRestart();
+        updateStep();
+    }
+
+
+    public void loadGame(int [][] panelMap) {
+        gamePanel.initialGame(panelMap);
+        loadGameTimer();
+        setTimer();
+
+    }
+
+    //更新步数
+    public void updateStep(){
+        stepLabel.setText(String.format("Steps : %d",rlevel.getrGameState().getMyLogSystem().getTotalSteps().size()));
+    }
+
+    //计时部分-----------------------------------------------------------------------------------------------------------
+
+    private void setTimer(){
         //设置开始计时，以ms为单位
         startTime = System.currentTimeMillis()-elapsedTime;//如果有存档的话，这么做的目的是统一时间
         gameTimer = new Timer(1000, e -> updateTimer());
@@ -151,17 +174,12 @@ public class GameFrame extends FrameBase {
         }
     }
 
-    public void initialGame() {
-        gamePanel.initialGame();
-        setTimer();//开始计时
+    private void loadGameTimer() {
+        this.elapsedTime=rlevel.getrGameState().getMyLogSystem().getElapsedTime();
+        timeLabel.setText(formatTime(elapsedTime));
     }
 
-    public void gameRestart() {
-        timerRestart();
-        updateStep();
-    }
-
-    public void timerRestart() {
+    private void timerRestart() {
         timeLabel.setText(formatTime(0));
         elapsedTime = 0;
         startTime = System.currentTimeMillis();
@@ -170,19 +188,17 @@ public class GameFrame extends FrameBase {
         gameTimer.start();
     }
 
-    public void loadGame(int [][] panelMap) {
-        gamePanel.initialGame(panelMap);
-    }
-
+    //计时部分^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     public void frameDestroyed() {
         stopTimer();//停止计时
         this.removeAll();
     }
 
-    //更新步数
-    public void updateStep(){
-        stepLabel.setText(String.format("Steps : %d",rlevel.getrGameState().getMyLogSystem().getTotalSteps().size()));
-    }
+
+
+
+
+
 
     public void setElapsedTime(long elapsedTime) {
         this.elapsedTime = elapsedTime;

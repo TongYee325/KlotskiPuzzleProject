@@ -1,5 +1,5 @@
 package level;
-
+//废案，不会用，暂时弃用搁置
 public enum BlockName {
     EXIT(0),        // 空白
     SOLDIER(1),     // 小兵

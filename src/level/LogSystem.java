@@ -41,6 +41,19 @@ public class LogSystem {
         movedBlocks.add(block);
     }
 
+    //撤销操作删除最后一个记录
+    public void revoke() {
+        if(movedBlocks.isEmpty()||totalSteps.isEmpty()){return;}
+        totalSteps.removeLast();
+        movedBlocks.removeLast();
+    }
+
+
+
+
+
+
+    //Getter & Setter---------------------------------------------------------------------------------------------------
     public Block getLastMovedBlock() {
         if(movedBlocks.isEmpty()){return null;}
         return movedBlocks.getLast();
@@ -50,14 +63,6 @@ public class LogSystem {
         if(movedBlocks.isEmpty()||totalSteps.isEmpty()){return -1;}
         return totalSteps.getLast().castToDirection();
     }
-
-    public void revoke()
-    {
-        if(movedBlocks.isEmpty()||totalSteps.isEmpty()){return;}
-        totalSteps.removeLast();
-        movedBlocks.removeLast();
-    }
-
 
     public long getElapsedTime() {
         return elapsedTime;
