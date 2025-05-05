@@ -70,7 +70,8 @@ public class GameFrame extends FrameBase {
             gamePanel = new GamePanel(rMap,this);
             mainPanel.add(gamePanel);
             ((GameLevel) rlevel).getGameController().updateControlledPanelAccordingToLevel();
-            gamePanel.initialGame();
+            initialGame();
+            timerRestart();
         });
         //move button panel包含四个按钮，上下左右
         movePanel = new JPanel();
@@ -140,12 +141,19 @@ public class GameFrame extends FrameBase {
         if (gameTimer != null) {
             gameTimer.stop();
         }
-        startTime = 0;
     }
 
     public void initialGame() {
         gamePanel.initialGame();
         setTimer();//开始计时
+    }
+
+    public void timerRestart() {
+        elapsedTime = 0;
+        startTime = System.currentTimeMillis();
+        stopTimer();
+        gameTimer = new Timer(1000, e -> updateTimer());
+        gameTimer.start();
     }
 
     public void loadGame(int [][] panelMap) {
