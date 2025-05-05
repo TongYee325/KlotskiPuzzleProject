@@ -1,5 +1,7 @@
 package level;
 
+import frame.block.Block;
+
 import java.util.ArrayList;
 import java.util.logging.ErrorManager;
 
@@ -8,10 +10,12 @@ public class LogSystem {
 
     private long elapsedTime;
     private ArrayList<Step> totalSteps;
+    private ArrayList<Block> movedBlocks;
 
 
     public LogSystem() {
         totalSteps = new ArrayList<Step>();
+        movedBlocks = new ArrayList<Block>();
 
     }
 
@@ -31,6 +35,27 @@ public class LogSystem {
 
     public void clearSteps(){
         totalSteps.clear();
+    }
+
+    public void addBlock(Block block) {
+        movedBlocks.add(block);
+    }
+
+    public Block getLastMovedBlock() {
+        if(movedBlocks.isEmpty()){return null;}
+        return movedBlocks.getLast();
+    }
+
+    public int getLastMovedDirection() {
+        if(movedBlocks.isEmpty()||totalSteps.isEmpty()){return -1;}
+        return totalSteps.getLast().castToDirection();
+    }
+
+    public void revoke()
+    {
+        if(movedBlocks.isEmpty()||totalSteps.isEmpty()){return;}
+        totalSteps.removeLast();
+        movedBlocks.removeLast();
     }
 
 

@@ -20,4 +20,22 @@ public class Step implements Serializable {
     public String toString() {
         return String.format(" %d from [%d,%d] to [%d,%d]", id,startx,starty, endx,endy);
     }
+
+    public int castToDirection() {
+        if(startx==endx && endy>starty) {
+            //down
+            return 3;
+        }else if(startx==endx && endy<starty) {
+            //up
+            return 2;
+        }else if(endx>startx && endy==starty) {
+            //right
+            return 0;
+        }else if(endx<startx && endy==starty) {
+            //left
+            return 1;
+        }else{
+            return -1;
+        }
+    }
 }

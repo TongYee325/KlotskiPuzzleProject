@@ -45,9 +45,9 @@ public class GameFrame extends FrameBase {
         this.add(mainPanel, BorderLayout.CENTER);
         gamePanel = new GamePanel(rMap,this);
         mainPanel.add(gamePanel);
-        //tools panel 包含save和restart按钮，用来存档和重启游戏
+        //tools panel 包含save、restart、revoke按钮，用来存档和重启游戏和撤销
         toolsPanel = new JPanel();
-        toolsPanel.setLayout(new GridLayout(2, 1));
+        toolsPanel.setLayout(new GridLayout(3, 1));
         toolsPanel.setBackground(Color.WHITE);
         mainPanel.add(toolsPanel);
         toolsPanel.setBounds(width *55/100, height *10/100, width /3, height /3);
@@ -73,6 +73,11 @@ public class GameFrame extends FrameBase {
             initialGame();
             timerRestart();
         });
+        JButton revokeButton = new JButton("Revoke");
+        toolsPanel.add(revokeButton);
+        revokeButton.addActionListener(e -> {
+            gamePanel.revoke();
+        });
         //move button panel包含四个按钮，上下左右
         movePanel = new JPanel();
         movePanel.setLayout(null);
@@ -90,10 +95,10 @@ public class GameFrame extends FrameBase {
         JButton downbtn = new JButton("Down");
         JButton leftbtn = new JButton("Left");
         JButton rightbtn = new JButton("Right");
-        upbtn.addActionListener(e -> gamePanel.doMoveUp());
-        downbtn.addActionListener(e -> gamePanel.doMoveDown());
-        leftbtn.addActionListener(e -> gamePanel.doMoveLeft());
-        rightbtn.addActionListener(e -> gamePanel.doMoveRight());
+        upbtn.addActionListener(e -> gamePanel.doMoveUp(gamePanel.getSelectedBlock(),true));
+        downbtn.addActionListener(e -> gamePanel.doMoveDown(gamePanel.getSelectedBlock(),true));
+        leftbtn.addActionListener(e -> gamePanel.doMoveLeft(gamePanel.getSelectedBlock(),true));
+        rightbtn.addActionListener(e -> gamePanel.doMoveRight(gamePanel.getSelectedBlock(),true));
         movePanel.add(leftbtn);
         movePanel.add(downbtn);
         movePanel.add(rightbtn);

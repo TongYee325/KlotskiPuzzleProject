@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
     //胜利条件
-    private final int TARGET_X=1;
-    private final int TARGET_Y=3;
+    private final int TARGET_X = 1;
+    private final int TARGET_Y = 3;
 
     private GameFrame rFrame;
 
@@ -24,14 +24,14 @@ public class GamePanel extends JPanel {
     private GameMap rMap;
     private int[][] panelMap;
 
+
     private Block selectedBlock;
     private Block CaoCaoBlock;
     private ArrayList<Block> blocks;
     private final int BLOCK_SIZE = 60;
 
 
-
-    public GamePanel(GameMap gameMap,GameFrame rFrame) {
+    public GamePanel(GameMap gameMap, GameFrame rFrame) {
         this.rFrame = rFrame;
         this.rController = ((GameLevel) this.rFrame.getRlevel()).getController();
         enableEvents(AWTEvent.KEY_EVENT_MASK);
@@ -42,9 +42,9 @@ public class GamePanel extends JPanel {
         this.setLayout(null);
         this.selectedBlock = null;
         this.rMap = gameMap;
-        this.panelMap =new int[rMap.getMapRow()][rMap.getMapCol()];
+        this.panelMap = new int[rMap.getMapRow()][rMap.getMapCol()];
         this.setBackground(Color.ORANGE);
-        this.setBounds(20,20, rMap.getMapCol() * BLOCK_SIZE + 4, rMap.getMapRow() * BLOCK_SIZE + 4);
+        this.setBounds(20, 20, rMap.getMapCol() * BLOCK_SIZE + 4, rMap.getMapRow() * BLOCK_SIZE + 4);
 
     }
 
@@ -81,45 +81,45 @@ public class GamePanel extends JPanel {
             for (int j = 0; j < mapIndex[0].length; j++) {
                 Block box = null;
                 if (mapIndex[i][j] == 1) {
-                    box = new Block(Color.ORANGE, i, j,1);
+                    box = new Block(Color.ORANGE, i, j, 1);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE);
                     mapIndex[i][j] = 0;
                 } else if (mapIndex[i][j] == 2) {
-                    box = new Block(Color.PINK, i, j,2);
+                    box = new Block(Color.PINK, i, j, 2);
                     box.setSize(BLOCK_SIZE * 2, BLOCK_SIZE);
                     mapIndex[i][j] = 0;
                     mapIndex[i][j + 1] = 0;
                 } else if (mapIndex[i][j] == 3) {
-                    box = new Block(Color.YELLOW, i, j,3);
+                    box = new Block(Color.YELLOW, i, j, 3);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 4) {
-                    box = new Block(Color.cyan, i, j,4);
+                    box = new Block(Color.cyan, i, j, 4);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 5) {
-                    box = new Block(Color.RED, i, j,5);
+                    box = new Block(Color.RED, i, j, 5);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
-                }else if (mapIndex[i][j] == 6) {
-                    box = new Block(Color.PINK, i, j,6);
+                } else if (mapIndex[i][j] == 6) {
+                    box = new Block(Color.PINK, i, j, 6);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
-                }  else if (mapIndex[i][j] == 7) {
-                    box = new Block(Color.BLUE, i, j,7);
+                } else if (mapIndex[i][j] == 7) {
+                    box = new Block(Color.BLUE, i, j, 7);
                     box.setSize(BLOCK_SIZE * 2, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                     mapIndex[i][j + 1] = 0;
                     mapIndex[i + 1][j + 1] = 0;
-                    CaoCaoBlock =box;
+                    CaoCaoBlock = box;
                 }
                 if (box != null) {
-                    box.setLocation(box.getCol()* BLOCK_SIZE + 2, box.getRow()* BLOCK_SIZE + 2);
+                    box.setLocation(box.getCol() * BLOCK_SIZE + 2, box.getRow() * BLOCK_SIZE + 2);
                     blocks.add(box);
                     this.add(box);
                 }
@@ -145,45 +145,45 @@ public class GamePanel extends JPanel {
             for (int j = 0; j < mapIndex[0].length; j++) {
                 Block box = null;
                 if (mapIndex[i][j] == 1) {
-                    box = new Block(Color.ORANGE, i, j,1);
+                    box = new Block(Color.ORANGE, i, j, 1);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE);
                     mapIndex[i][j] = 0;
                 } else if (mapIndex[i][j] == 2) {
-                    box = new Block(Color.PINK, i, j,2);
+                    box = new Block(Color.PINK, i, j, 2);
                     box.setSize(BLOCK_SIZE * 2, BLOCK_SIZE);
                     mapIndex[i][j] = 0;
                     mapIndex[i][j + 1] = 0;
                 } else if (mapIndex[i][j] == 3) {
-                    box = new Block(Color.YELLOW, i, j,3);
+                    box = new Block(Color.YELLOW, i, j, 3);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 4) {
-                    box = new Block(Color.cyan, i, j,4);
+                    box = new Block(Color.cyan, i, j, 4);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 5) {
-                    box = new Block(Color.RED, i, j,5);
+                    box = new Block(Color.RED, i, j, 5);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
-                }else if (mapIndex[i][j] == 6) {
-                    box = new Block(Color.PINK, i, j,6);
+                } else if (mapIndex[i][j] == 6) {
+                    box = new Block(Color.PINK, i, j, 6);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
-                }  else if (mapIndex[i][j] == 7) {
-                    box = new Block(Color.BLUE, i, j,7);
+                } else if (mapIndex[i][j] == 7) {
+                    box = new Block(Color.BLUE, i, j, 7);
                     box.setSize(BLOCK_SIZE * 2, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                     mapIndex[i][j + 1] = 0;
                     mapIndex[i + 1][j + 1] = 0;
-                    CaoCaoBlock =box;
+                    CaoCaoBlock = box;
                 }
                 if (box != null) {
-                    box.setLocation(box.getCol()* BLOCK_SIZE + 2, box.getRow()* BLOCK_SIZE + 2);
+                    box.setLocation(box.getCol() * BLOCK_SIZE + 2, box.getRow() * BLOCK_SIZE + 2);
                     blocks.add(box);
                     this.add(box);
                 }
@@ -193,13 +193,11 @@ public class GamePanel extends JPanel {
     }
 
 
-    public void refreshSelectedBlock() {
-        if(selectedBlock != null) {
-            selectedBlock.setLocation(selectedBlock.getCol()* BLOCK_SIZE + 2, selectedBlock.getRow()* BLOCK_SIZE + 2);
+    public void refreshMovedBlock(Block movedBlock) {
+        if (movedBlock != null) {
+            movedBlock.setLocation(movedBlock.getCol() * BLOCK_SIZE + 2, movedBlock.getRow() * BLOCK_SIZE + 2);
         }
     }
-
-
 
 
     @Override
@@ -208,17 +206,18 @@ public class GamePanel extends JPanel {
         System.out.println(e.getKeyChar());
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             switch (e.getKeyCode()) {
-                case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> doMoveRight();
-                case KeyEvent.VK_LEFT, KeyEvent.VK_A -> doMoveLeft();
-                case KeyEvent.VK_UP, KeyEvent.VK_W -> doMoveUp();
-                case KeyEvent.VK_DOWN, KeyEvent.VK_S -> doMoveDown();
+                case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> doMoveRight(selectedBlock,true);
+                case KeyEvent.VK_LEFT, KeyEvent.VK_A -> doMoveLeft(selectedBlock,true);
+                case KeyEvent.VK_UP, KeyEvent.VK_W -> doMoveUp(selectedBlock,true);
+                case KeyEvent.VK_DOWN, KeyEvent.VK_S -> doMoveDown(selectedBlock,true);
             }
         }
     }
+
     @Override
     protected void processMouseEvent(MouseEvent e) {
         super.processMouseEvent(e);
-        if (e.getID()==MouseEvent.MOUSE_PRESSED) {
+        if (e.getID() == MouseEvent.MOUSE_PRESSED) {
             doMousePressed(e.getPoint());
         }
     }
@@ -240,33 +239,34 @@ public class GamePanel extends JPanel {
         }
     }
 
-    protected void doMoveRight() {
-        if (selectedBlock != null) {
-            if (rController.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 0)) {
+    protected void doMoveRight(Block movedBlock,boolean needLog) {
+        if (movedBlock != null) {
+            if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 0,needLog)) {
                 afterMove();
             }
-        };
+        }
+        ;
     }
 
-    protected void doMoveLeft() {
-        if (selectedBlock != null) {
-            if (rController.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 1)) {
+    protected void doMoveLeft(Block movedBlock,boolean needLog) {
+        if (movedBlock != null) {
+            if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 1,needLog)) {
                 afterMove();
             }
         }
     }
 
-    protected void doMoveUp() {
-        if (selectedBlock != null) {
-            if (rController.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 2)) {
+    protected void doMoveUp(Block movedBlock,boolean needLog) {
+        if (movedBlock != null) {
+            if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 2,needLog)) {
                 afterMove();
             }
         }
     }
 
-    protected void doMoveDown() {
-        if (selectedBlock != null) {
-            if (rController.doMove(selectedBlock.getRow(), selectedBlock.getCol(), 3)) {
+    protected void doMoveDown(Block movedBlock,boolean needLog) {
+        if (movedBlock != null) {
+            if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 3,needLog)) {
                 afterMove();
             }
         }
@@ -274,7 +274,7 @@ public class GamePanel extends JPanel {
     }
 
     protected void afterMove() {
-        if(CaoCaoBlock.getRow()==TARGET_Y && CaoCaoBlock.getCol()==TARGET_X) {
+        if (CaoCaoBlock.getRow() == TARGET_Y && CaoCaoBlock.getCol() == TARGET_X) {
             System.out.println("You Win!");
             rFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();
             rFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();
@@ -282,10 +282,35 @@ public class GamePanel extends JPanel {
 
     }
 
+    public void revoke() {
+        //撤销功能
+        Block lastMovedBlock=null;
+        int lastMovedDirection = -1;
+        lastMovedBlock=rFrame.getRlevel().getrGameState().getMyLogSystem().getLastMovedBlock();
+        lastMovedDirection=rFrame.getRlevel().getrGameState().getMyLogSystem().getLastMovedDirection();
 
+        if (lastMovedDirection != -1 && lastMovedBlock != null) {
+            switch (lastMovedDirection) {
+                case 0:
+                    doMoveLeft(lastMovedBlock,false);
+                    break;
+                case 1:
+                    doMoveRight(lastMovedBlock,false);
+                    break;
+                case 2:
+                    doMoveDown(lastMovedBlock,false);
+                    break;
+                case 3:
+                    doMoveUp(lastMovedBlock,false);
+                    break;
+                default:
+                    break;
 
-
-
+            }
+        }
+        rFrame.getRlevel().getrGameState().getMyLogSystem().revoke();
+        this.requestFocusInWindow();
+    }
 
 
     public MyGameController getrController() {

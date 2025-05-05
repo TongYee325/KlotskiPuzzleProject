@@ -1,6 +1,7 @@
 package controller;
 
 import frame.GamePanel;
+import frame.block.Block;
 import level.GameLevel;
 import level.GameMap;
 import level.LogSystem;
@@ -20,7 +21,7 @@ public class MyGameController extends GameControllerBase {
         System.out.println("Do restart game here");
     }
 
-    public boolean doMove(int row, int col, int direction) {
+    public boolean doMove(Block movedBlock,int row, int col, int direction,boolean needLog) {
         //0右1左2上3下
         // 1. 验证起始位置有效性
         if (!isValidPosition(row, col)) {
@@ -59,7 +60,7 @@ public class MyGameController extends GameControllerBase {
         }
 
         // 7. 执行移动
-        performMove(row, col, width, height, dx, dy, blockType);
+        performMove(movedBlock,row, col, width, height, dx, dy, blockType,needLog);
         return true;
 
 
@@ -67,22 +68,7 @@ public class MyGameController extends GameControllerBase {
 
 
 
-        /*if (map.getMapID(row, col) == 1) {
-            int nextRow = row + direction.getRow();
-            int nextCol = col + direction.getCol();
-            if (model.checkInHeightSize(nextRow) && model.checkInWidthSize(nextCol)) {
-                if (model.getId(nextRow, nextCol) == 0) {
-                    model.getMatrix()[row][col] = 0;
-                    model.getMatrix()[nextRow][nextCol] = 1;
-                    BoxComponent box = view.getSelectedBox();
-                    box.setRow(nextRow);
-                    box.setCol(nextCol);
-                    box.setLocation(box.getCol() * view.getGRID_SIZE() + 2, box.getRow() * view.getGRID_SIZE() + 2);
-                    box.repaint();
-                    return true;
-                }
-            }
-        }*/
+
     }
 
     private boolean isValidPosition(int row, int col) {
@@ -154,10 +140,12 @@ public class MyGameController extends GameControllerBase {
     }
 
     // 执行实际移动操作
-    private void performMove(int row, int col,
+    private void performMove(Block movedBlock,
+                             int row, int col,
                              int width, int height,
                              int dx, int dy,
-                             int blockType) {
+                             int blockType,
+                             boolean needLog) {
         // 清除原位置
         for (int r = row; r < row + height; r++) {
             for (int c = col; c < col + width; c++) {
@@ -173,10 +161,13 @@ public class MyGameController extends GameControllerBase {
                 view.getPanelMap()[r][c] = blockType;
             }
         }
-        logStepInfo(col,row,newCol,newRow,blockType);//记录
-        view.getSelectedBlock().setRow(newRow);//设置Block的位置
-        view.getSelectedBlock().setCol(newCol);
-        view.refreshSelectedBlock();//更新block
+        if(needLog){
+            logStepInfo(col,row,newCol,newRow,blockType,view.getSelectedBlock());//记录
+        }
+
+        movedBlock.setRow(newRow);//设置Block的位置
+        movedBlock.setCol(newCol);
+        view.refreshMovedBlock(movedBlock);//更新block
         view.repaint(); // 刷新界面
     }
 
@@ -186,8 +177,9 @@ public class MyGameController extends GameControllerBase {
         this.view.setrController(this);
     }
 
-    private void logStepInfo(int startX, int startY, int endX, int endY,int id) {
+    private void logStepInfo(int startX, int startY, int endX, int endY, int id, Block block) {
         myLogSystem.addStep(startX,startY,endX,endY,id);
+        myLogSystem.addBlock(block);
     }
 }
 
