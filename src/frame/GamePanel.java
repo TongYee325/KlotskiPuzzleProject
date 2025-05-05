@@ -2,6 +2,7 @@ package frame;
 
 import controller.MyGameController;
 import frame.block.Block;
+import frame.block.VictoryDialog;
 import level.GameLevel;
 import level.GameMap;
 
@@ -29,6 +30,7 @@ public class GamePanel extends JPanel {
     private Block CaoCaoBlock;
     private ArrayList<Block> blocks;
     private final int BLOCK_SIZE = 60;
+    private boolean isGameOver = false; // 标记游戏是否结束
 
 
     public GamePanel(GameMap gameMap, GameFrame rFrame) {
@@ -242,48 +244,67 @@ public class GamePanel extends JPanel {
     }
 
     //移动逻辑，通过调用controller中doMove函数实现
-    protected void doMoveRight(Block movedBlock,boolean needLog) {
-        if (movedBlock != null) {
-            if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 0,needLog)) {
-                afterMove();
-            }
+    protected void doMoveRight(Block movedBlock, boolean needLog) {
+        if (isGameOver) { // 检查游戏是否结束
+            return;
         }
-        ;
-    }
-
-    protected void doMoveLeft(Block movedBlock,boolean needLog) {
         if (movedBlock != null) {
-            if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 1,needLog)) {
+            if (rController.doMove(movedBlock, movedBlock.getRow(), movedBlock.getCol(), 0, needLog)) {
                 afterMove();
             }
         }
     }
 
-    protected void doMoveUp(Block movedBlock,boolean needLog) {
+    protected void doMoveLeft(Block movedBlock, boolean needLog) {
+        if (isGameOver) { // 检查游戏是否结束
+            return;
+        }
         if (movedBlock != null) {
-            if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 2,needLog)) {
+            if (rController.doMove(movedBlock, movedBlock.getRow(), movedBlock.getCol(), 1, needLog)) {
                 afterMove();
             }
         }
     }
 
-    protected void doMoveDown(Block movedBlock,boolean needLog) {
+    protected void doMoveUp(Block movedBlock, boolean needLog) {
+        if (isGameOver) { // 检查游戏是否结束
+            return;
+        }
         if (movedBlock != null) {
-            if (rController.doMove(movedBlock,movedBlock.getRow(), movedBlock.getCol(), 3,needLog)) {
+            if (rController.doMove(movedBlock, movedBlock.getRow(), movedBlock.getCol(), 2, needLog)) {
                 afterMove();
             }
         }
+    }
 
+    protected void doMoveDown(Block movedBlock, boolean needLog) {
+        if (isGameOver) { // 检查游戏是否结束
+            return;
+        }
+        if (movedBlock != null) {
+            if (rController.doMove(movedBlock, movedBlock.getRow(), movedBlock.getCol(), 3, needLog)) {
+                afterMove();
+            }
+        }
     }
 
     protected void afterMove() {
         rFrame.updateStep();
         if (CaoCaoBlock.getRow() == TARGET_Y && CaoCaoBlock.getCol() == TARGET_X) {
+            // 停止游戏计时
+            rFrame.stopTimer();
+
+            // 弹出胜利对话框（传入当前 GameFrame）
+            SwingUtilities.invokeLater(() -> {
+                VictoryDialog victoryDialog = new VictoryDialog(rFrame);
+                victoryDialog.setVisible(true);
+            });
+            isGameOver = true; // 设置游戏结束标记
+            // 原有日志输出
             System.out.println("You Win!");
             rFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();
             rFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();
         }
-
     }
 
     //撤销逻辑，通过复用移动逻辑实现，、

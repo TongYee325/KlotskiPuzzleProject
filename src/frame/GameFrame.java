@@ -168,7 +168,7 @@ public class GameFrame extends FrameBase {
         return String.format("Time : %02d:%02d:%02d ", hours, minutes, seconds);
     }
 
-    private void stopTimer(){
+    void stopTimer(){
         if (gameTimer != null) {
             gameTimer.stop();
         }
