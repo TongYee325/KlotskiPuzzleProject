@@ -274,6 +274,7 @@ public class GamePanel extends JPanel {
     }
 
     protected void afterMove() {
+        rFrame.updateStep();
         if (CaoCaoBlock.getRow() == TARGET_Y && CaoCaoBlock.getCol() == TARGET_X) {
             System.out.println("You Win!");
             rFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();

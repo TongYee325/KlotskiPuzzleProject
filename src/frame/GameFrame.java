@@ -18,6 +18,8 @@ public class GameFrame extends FrameBase {
     private GameMap rMap;
     private LevelBase rlevel;
 
+    private JLabel stepLabel;
+
     private long startTime;
 
 
@@ -71,7 +73,7 @@ public class GameFrame extends FrameBase {
             mainPanel.add(gamePanel);
             ((GameLevel) rlevel).getGameController().updateControlledPanelAccordingToLevel();
             initialGame();
-            timerRestart();
+            gameRestart();
         });
         JButton revokeButton = new JButton("Revoke");
         toolsPanel.add(revokeButton);
@@ -107,6 +109,7 @@ public class GameFrame extends FrameBase {
         mainPanel.add(infoPanel);
         infoPanel.setLayout(new GridLayout(2, 1));
         JLabel stepsLabel = new JLabel("Steps : 0 ");
+        this.stepLabel = stepsLabel;
         infoPanel.add(stepsLabel);
         timeLabel = new JLabel(formatTime(elapsedTime));
         infoPanel.add(timeLabel);
@@ -153,7 +156,13 @@ public class GameFrame extends FrameBase {
         setTimer();//开始计时
     }
 
+    public void gameRestart() {
+        timerRestart();
+        updateStep();
+    }
+
     public void timerRestart() {
+        timeLabel.setText(formatTime(0));
         elapsedTime = 0;
         startTime = System.currentTimeMillis();
         stopTimer();
@@ -170,6 +179,10 @@ public class GameFrame extends FrameBase {
         this.removeAll();
     }
 
+    //更新步数
+    public void updateStep(){
+        stepLabel.setText(String.format("Steps : %d",rlevel.getrGameState().getMyLogSystem().getTotalSteps().size()));
+    }
 
     public void setElapsedTime(long elapsedTime) {
         this.elapsedTime = elapsedTime;
