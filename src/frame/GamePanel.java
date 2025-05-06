@@ -198,7 +198,8 @@ public class GamePanel extends JPanel {
 
     public void refreshMovedBlock(Block movedBlock) {
         if (movedBlock != null) {
-            movedBlock.setLocation(movedBlock.getCol() * BLOCK_SIZE + 2, movedBlock.getRow() * BLOCK_SIZE + 2);
+            movedBlock.moveTo(movedBlock.getCol() * BLOCK_SIZE + 2, movedBlock.getRow() * BLOCK_SIZE + 2);
+            /*movedBlock.setLocation(movedBlock.getCol() * BLOCK_SIZE+2, movedBlock.getRow() * BLOCK_SIZE+2);*/
         }
     }
 
@@ -207,7 +208,7 @@ public class GamePanel extends JPanel {
     @Override
     protected void processKeyEvent(KeyEvent e) {
         super.processKeyEvent(e);
-        System.out.println(e.getKeyChar());
+        //System.out.println(e.getKeyChar());
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> doMoveRight(selectedBlock,true);
