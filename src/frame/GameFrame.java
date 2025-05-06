@@ -51,19 +51,24 @@ public class GameFrame extends FrameBase {
         //tools panel 包含save、restart、revoke按钮，用来存档和重启游戏和撤销
         toolsPanel = new JPanel();
         toolsPanel.setLayout(new GridLayout(3, 1));
+        if(rlevel.getrGameState().getCurrentUserId()==null) {toolsPanel.setLayout(new GridLayout(2, 1));}
         toolsPanel.setBackground(Color.WHITE);
         mainPanel.add(toolsPanel);
         toolsPanel.setBounds(width *55/100, height *10/100, width /3, height /3);
-        JButton saveButton = new JButton("Save");
-        saveButton.setVisible(true);
-        toolsPanel.add(saveButton);
-        saveButton.addActionListener(e -> {
-            ((GameLevel) rlevel).saveGame();
-        });
+            //save button
+        if(rlevel.getrGameState().getCurrentUserId()!=null) {
+            JButton saveButton = new JButton("Save");
+            saveButton.setVisible(true);
+            toolsPanel.add(saveButton);
+            saveButton.addActionListener(e -> {
+                ((GameLevel) rlevel).saveGame();
+            });
+        }
+            //restart button
         JButton restartButton = new JButton("Restart");
         toolsPanel.add(restartButton);
         restartButton.addActionListener(e -> {
-            //print and clear log
+                //print and clear log
             rlevel.getrGameState().getMyLogSystem().printAllSteps();
             rlevel.getrGameState().getMyLogSystem().clearSteps();
             if(gamePanel!=null){

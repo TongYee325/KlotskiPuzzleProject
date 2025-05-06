@@ -22,6 +22,7 @@ public abstract class LevelBase {
     }
 
     public void levelDestroy() {
+
     }
 
     public MyGameState getrGameState() {
