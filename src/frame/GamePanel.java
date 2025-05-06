@@ -199,7 +199,6 @@ public class GamePanel extends JPanel {
     public void refreshMovedBlock(Block movedBlock) {
         if (movedBlock != null) {
             movedBlock.moveTo(movedBlock.getCol() * BLOCK_SIZE + 2, movedBlock.getRow() * BLOCK_SIZE + 2);
-            /*movedBlock.setLocation(movedBlock.getCol() * BLOCK_SIZE+2, movedBlock.getRow() * BLOCK_SIZE+2);*/
         }
     }
 

@@ -2,6 +2,8 @@ package frame;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * This class is to create basic JComponent.
@@ -53,5 +55,6 @@ public class FrameUtil {
         frame.add(jPasswordField);
         return jPasswordField;
     }
+
 
 }

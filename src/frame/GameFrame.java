@@ -26,6 +26,9 @@ public class GameFrame extends FrameBase {
     private long elapsedTime;
     private Timer gameTimer;
     private JLabel timeLabel;
+    //存档信息显示
+    private JLabel saveTipLabel;
+    private Timer tipTimer;
 
     public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
         super(level, title, width, height);
@@ -55,7 +58,7 @@ public class GameFrame extends FrameBase {
         saveButton.setVisible(true);
         toolsPanel.add(saveButton);
         saveButton.addActionListener(e -> {
-            rlevel.getrGameState().saveGameData();
+            ((GameLevel) rlevel).saveGame();
         });
         JButton restartButton = new JButton("Restart");
         toolsPanel.add(restartButton);
@@ -105,7 +108,7 @@ public class GameFrame extends FrameBase {
         //info panel 记录游戏开始时间和总共走的步数
         infoPanel = new JPanel();
         mainPanel.add(infoPanel);
-        infoPanel.setLayout(new GridLayout(2, 1));
+        infoPanel.setLayout(new GridLayout(3, 1));
         JLabel stepsLabel = new JLabel("Steps : 0 ");
         this.stepLabel = stepsLabel;
         infoPanel.add(stepsLabel);
@@ -113,9 +116,28 @@ public class GameFrame extends FrameBase {
         infoPanel.add(timeLabel);
         infoPanel.setBounds(width *55/100, height *60/100, width /3, height /5);
         updateStep();
-
+        saveTipLabel = new JLabel("Game has been saved!");
+        saveTipLabel.setVisible(false);
+        infoPanel.add(saveTipLabel);
     }
 
+
+    public void showSaveInfo(){
+        saveTipLabel.setVisible(true);
+
+        // 如果已有计时器先停止
+        if(tipTimer != null && tipTimer.isRunning()) {
+            tipTimer.stop();
+        }
+
+        // 创建新的计时器
+        tipTimer = new Timer(3000, e -> {
+            saveTipLabel.setVisible(false);
+            repaint();
+        });
+        tipTimer.setRepeats(false); // 只执行一次
+        tipTimer.start();
+    }
 
 
     public void initialGame() {

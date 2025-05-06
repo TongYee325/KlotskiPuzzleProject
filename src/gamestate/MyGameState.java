@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class MyGameState extends GameStateBase {
     private LogSystem myLogSystem;
 
+    public boolean autoSave = true;
+    private int saveTime=30000;
 
     private SaveManager mySaveManager;
 
@@ -111,6 +113,9 @@ public class MyGameState extends GameStateBase {
 
 
 
+    public int getSaveTime() {
+        return saveTime;
+    }
 
     public LevelBase getLevel() {
         return level;
