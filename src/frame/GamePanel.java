@@ -2,7 +2,7 @@ package frame;
 
 import controller.MyGameController;
 import frame.block.Block;
-import frame.block.VictoryDialog;
+import frame.dialog.VictoryDialog;
 import level.GameLevel;
 import level.GameMap;
 

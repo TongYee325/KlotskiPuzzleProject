@@ -1,4 +1,4 @@
-package frame.block;
+package frame.dialog;
 
 import gamestate.MyGameState;
 import frame.GameFrame;
