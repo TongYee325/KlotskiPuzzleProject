@@ -13,7 +13,7 @@ public class MyGameState extends GameStateBase {
     private int gameMapIndex=0;
 
     public boolean autoSave = true;
-    private int saveTime=30000;
+    private int saveTime=30*1000;
 
     private SaveManager mySaveManager;
 
