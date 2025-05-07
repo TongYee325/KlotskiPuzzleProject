@@ -50,6 +50,8 @@ public class MenuLevel extends LevelBase {
         if(menuFrame != null) {
             menuFrame.clear();
             menuFrame.dispose();
+        }
+        if(selectFrame != null) {
             selectFrame.clear();
             selectFrame.dispose();
         }

@@ -65,8 +65,10 @@ public class GameLevel extends LevelBase {
     }
 
     public void loadGame(int[][] panelMap) {
-
-        gameFrame.loadGame(panelMap);
+        gameFrame.initialGame(panelMap);
+        if(saveTimer!=null){
+            saveTimer.start();
+        }
     }
 
 
@@ -88,7 +90,9 @@ public class GameLevel extends LevelBase {
     }
 
     public void levelDestroy() {
-        saveTimer.stop();
+        if(saveTimer!=null) {
+            saveTimer.stop();
+        }
         this.gameFrame.dispose();
     }
 }

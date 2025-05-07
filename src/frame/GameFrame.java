@@ -50,8 +50,8 @@ public class GameFrame extends FrameBase {
         mainPanel.add(gamePanel);
         //tools panel 包含save、restart、revoke按钮，用来存档和重启游戏和撤销
         toolsPanel = new JPanel();
-        toolsPanel.setLayout(new GridLayout(3, 1));
-        if(rlevel.getrGameState().getCurrentUserId()==null) {toolsPanel.setLayout(new GridLayout(2, 1));}
+        toolsPanel.setLayout(new GridLayout(4, 1));
+        if(rlevel.getrGameState().getCurrentUserId()==null) {toolsPanel.setLayout(new GridLayout(3, 1));}
         toolsPanel.setBackground(Color.WHITE);
         mainPanel.add(toolsPanel);
         toolsPanel.setBounds(width *55/100, height *10/100, width /3, height /3);
@@ -86,6 +86,12 @@ public class GameFrame extends FrameBase {
         toolsPanel.add(revokeButton);
         revokeButton.addActionListener(e -> {
             gamePanel.revoke();
+        });
+            //back button
+        JButton backButton = new JButton("Back");
+        toolsPanel.add(backButton);
+        backButton.addActionListener(e -> {
+            rlevel.getrGameState().startLevel(1);//重回menuLevel
         });
         //move button panel包含四个按钮，上下左右
         movePanel = new JPanel();
@@ -151,18 +157,17 @@ public class GameFrame extends FrameBase {
         setTimer();//开始计时
     }
 
+    public void initialGame(int [][] panelMap) {
+        gamePanel.initialGame(panelMap);
+        loadGameTimer();
+        setTimer();
+    }
+
     private void gameRestart() {
         timerRestart();
         updateStep();
     }
 
-
-    public void loadGame(int [][] panelMap) {
-        gamePanel.initialGame(panelMap);
-        loadGameTimer();
-        setTimer();
-
-    }
 
     //更新步数
     public void updateStep(){

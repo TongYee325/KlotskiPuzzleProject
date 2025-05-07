@@ -42,6 +42,7 @@ public class MenuFrame extends FrameBase {
             btnPanel.setBounds(center.x-300/2, center.y-300/2, 300, 300);
             loadGameBtn.addActionListener(e -> {
                 getRlevel().getrGameState().loadGameData();
+                getRlevel().levelDestroy();
             });
         }
 
