@@ -29,8 +29,6 @@ public class MenuFrame extends FrameBase {
         startGameBtn = new JButton("Start Game");
         btnPanel.add(startGameBtn);
         startGameBtn.addActionListener(e -> {
-            //fix
-            //level.nextLevel();
             rLevel.switchToSelectFrame();
 
         });

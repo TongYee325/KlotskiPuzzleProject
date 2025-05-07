@@ -43,10 +43,11 @@ public class SelectFrame extends FrameBase {
         btn.setVisible(true);
         btn.setText("Level " + (index+1));
         btn.addActionListener(e -> {
-            rLevel.getrGameState().setGameMapIndex(index);
-            rLevel.getrGameState().startLevel(2);
+            rLevel.switchToGameLevelAccordingToIndex(index);
         });
         return btn;
     }
+
+
 
 }

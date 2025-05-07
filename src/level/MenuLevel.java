@@ -49,6 +49,14 @@ public class MenuLevel extends LevelBase {
     public void levelDestroy() {
         if(menuFrame != null) {
             menuFrame.clear();
+            menuFrame.dispose();
+            selectFrame.clear();
+            selectFrame.dispose();
         }
+    }
+
+    public void switchToGameLevelAccordingToIndex(int index){
+        getrGameState().setGameMapIndex(index);
+        getrGameState().startLevel(2);
     }
 }
