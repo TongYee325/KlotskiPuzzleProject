@@ -336,6 +336,7 @@ public class GamePanel extends JPanel {
         }
         rFrame.getRlevel().getrGameState().getMyLogSystem().revoke();
         this.requestFocusInWindow();
+        rFrame.updateStep();
     }
 
 

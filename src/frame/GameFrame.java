@@ -81,6 +81,7 @@ public class GameFrame extends FrameBase {
             initialGame();
             gameRestart();
         });
+            //revoke button
         JButton revokeButton = new JButton("Revoke");
         toolsPanel.add(revokeButton);
         revokeButton.addActionListener(e -> {
