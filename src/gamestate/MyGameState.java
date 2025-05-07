@@ -9,6 +9,9 @@ import java.util.ArrayList;
 public class MyGameState extends GameStateBase {
     private LogSystem myLogSystem;
 
+
+    private int gameMapIndex=0;
+
     public boolean autoSave = true;
     private int saveTime=30000;
 
@@ -44,7 +47,7 @@ public class MyGameState extends GameStateBase {
                 level = new MenuLevel(this);
                 break;
             case 2:
-                level = new GameLevel(this);
+                level = new GameLevel(this,gameMapIndex);
                 break;
         }
         if (level != null) {
@@ -91,6 +94,10 @@ public class MyGameState extends GameStateBase {
         }
     }
 
+
+    public void setGameMapIndex(int gameMapIndex) {
+        this.gameMapIndex = gameMapIndex;
+    }
 
     public SaveManager getMySaveManager() {
         return mySaveManager;

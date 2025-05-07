@@ -29,7 +29,10 @@ public class MenuFrame extends FrameBase {
         startGameBtn = new JButton("Start Game");
         btnPanel.add(startGameBtn);
         startGameBtn.addActionListener(e -> {
-            level.nextLevel();
+            //fix
+            //level.nextLevel();
+            rLevel.switchToSelectFrame();
+
         });
 
         if(rLevel.getrGameState().getCurrentUserId()!=null){//非游客模式下四个按钮,新增load game按钮

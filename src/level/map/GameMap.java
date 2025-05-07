@@ -1,4 +1,4 @@
-package level;
+package level.map;
 
 public class GameMap{
 
@@ -13,13 +13,7 @@ public class GameMap{
     {5,0,0,6},
     {1,1,1,1},
 */
-    private int [][]mapIndex= {
-        {3,7,7,4},
-        {3,7,7,4},
-        {5,2,2,6},
-        {5,0,0,6},
-        {1,1,1,1},
-    };
+    private int [][]mapIndex;
     //可在这里修改地图
 
     public int getMapCol() {
@@ -33,7 +27,11 @@ public class GameMap{
     private int mapCol=4;
     private int mapRow=5;
     public GameMap(){
+        this.mapIndex = MapManager.map(0);
+    }
 
+    public GameMap(int gameMapIndex){
+        this.mapIndex = MapManager.map(gameMapIndex);
     }
 
     public GameMap (int[][] designedMap){

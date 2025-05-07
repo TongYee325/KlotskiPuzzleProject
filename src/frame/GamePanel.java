@@ -4,7 +4,7 @@ import controller.MyGameController;
 import frame.block.Block;
 import frame.dialog.VictoryDialog;
 import level.GameLevel;
-import level.GameMap;
+import level.map.GameMap;
 
 import javax.swing.*;
 import javax.swing.border.Border;

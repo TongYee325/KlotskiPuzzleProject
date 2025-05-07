@@ -1,7 +1,7 @@
 package frame;
 
 import level.GameLevel;
-import level.GameMap;
+import level.map.GameMap;
 import level.LevelBase;
 
 import javax.swing.*;

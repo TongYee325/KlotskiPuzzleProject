@@ -1,9 +1,9 @@
 package level;
 
 import controller.MyGameController;
-import frame.FrameUtil;
 import frame.GameFrame;
 import gamestate.MyGameState;
+import level.map.GameMap;
 
 import javax.swing.*;
 
@@ -16,6 +16,8 @@ public class GameLevel extends LevelBase {
     private GameFrame gameFrame;
     private Timer saveTimer;
     private MyGameState rGameState;
+
+    private int gameMapIndex;
 
 
     private MyGameController gameController;
@@ -32,8 +34,19 @@ public class GameLevel extends LevelBase {
         if(rGameState.autoSave){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
         }
+    }
 
-
+    public GameLevel(MyGameState gameState,int gameMapIndex) {
+        super(gameState);
+        this.gameMapIndex = gameMapIndex;
+        this.rGameState = gameState;
+        gameController = new MyGameController(this,gameState.getMyLogSystem());//为游戏关卡新建控制器
+        gameMap =  new GameMap(gameMapIndex);//创建游戏地图
+        gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);//创建游戏帧
+        gameController.updateControlledPanelAccordingToLevel();//更新游戏控制器，使其控制新建的Frame中的GamePanel*/
+        if(rGameState.autoSave){
+            saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
+        }
 
     }
 

@@ -3,7 +3,7 @@ package controller;
 import frame.GamePanel;
 import frame.block.Block;
 import level.GameLevel;
-import level.GameMap;
+import level.map.GameMap;
 import level.LogSystem;
 
 public class MyGameController extends GameControllerBase {
