@@ -7,9 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Deque;
 
 public class VictoryDialog extends JDialog {
-    public VictoryDialog(GameFrame parentFrame) {
+    public VictoryDialog(GameFrame parentFrame, long elapsedTime) {
         super(parentFrame, "胜利！", true);
         setSize(450, 250); // 增大对话框尺寸
         setLocationRelativeTo(parentFrame);
@@ -64,6 +65,27 @@ public class VictoryDialog extends JDialog {
         timePanel.add(timeField);
         infoPanel.add(timePanel, BorderLayout.CENTER); // 放置在中间
 
+
+
+        
+        if (MyGameState.isTimedMode) {
+            long remainingTime = gameState.getRemainingTime(); // 获取剩余时间
+            JPanel remainingTimePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            JLabel remainingTimeLabel = new JLabel("剩余时间：", SwingConstants.RIGHT);
+            remainingTimeLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+            JTextField remainingTimeField = new JTextField(formatTime(remainingTime), 10);
+            remainingTimeField.setEditable(false);
+            remainingTimeField.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            ));
+            remainingTimeField.setBackground(Color.WHITE);
+            remainingTimeField.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+            remainingTimePanel.add(remainingTimeLabel);
+            remainingTimePanel.add(remainingTimeField);
+            infoPanel.add(remainingTimePanel, BorderLayout.SOUTH);
+        }
+
         // 确定按钮（底部）
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(245, 245, 245));
@@ -91,6 +113,11 @@ public class VictoryDialog extends JDialog {
         add(titlePanel, BorderLayout.NORTH);
         add(infoPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+    }
+
+
+
+    public VictoryDialog(GameFrame rFrame) {
     }
 
     private String formatTime(long elapsedTime) {

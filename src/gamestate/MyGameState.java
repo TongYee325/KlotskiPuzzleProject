@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class MyGameState extends GameStateBase {
     private LogSystem myLogSystem;
 
-
     private int gameMapIndex=0;
 
     public boolean autoSave = true;
@@ -23,11 +22,9 @@ public class MyGameState extends GameStateBase {
     private LevelBase level;
 
 
-    public MyGameState() {
-        myLogSystem = new LogSystem();
-        mySaveManager = new SaveManager(this);
 
-    }
+
+
 
     public void startLevel(int levelIndex) {
         if (levelIndex == currentLevel && levelIndex != 0) {
@@ -116,6 +113,31 @@ public class MyGameState extends GameStateBase {
         }
         this.currentUserId = userId;
         mySaveManager.updateSavePathAccordingToUserName(userId);
+    }
+    // 新增限时模式字段
+   public static boolean isTimedMode = false;
+    private long remainingTime = 0;
+
+    public MyGameState() {
+        myLogSystem = new LogSystem();
+        mySaveManager = new SaveManager(this);
+    }
+
+    // 新增限时模式相关方法
+    public boolean isTimedMode() {
+        return isTimedMode;
+    }
+
+    public void setTimedMode(boolean timedMode) {
+        isTimedMode = timedMode;
+    }
+
+    public long getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(long remainingTime) {
+        this.remainingTime = remainingTime;
     }
 
 

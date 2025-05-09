@@ -1,6 +1,7 @@
 package frame;
 
 import controller.MyGameController;
+import frame.audio.AudioManager;
 import frame.block.Block;
 import frame.dialog.VictoryDialog;
 import level.GameLevel;
@@ -293,6 +294,13 @@ public class GamePanel extends JPanel {
         if (CaoCaoBlock.getRow() == TARGET_Y && CaoCaoBlock.getCol() == TARGET_X) {
             // 停止游戏计时
             rFrame.stopTimer();
+            // 播放移动音效
+            AudioManager.getInstance().playSoundEffect(AudioManager.SoundEffectType.MOVE);
+
+            if (CaoCaoBlock.getRow() == TARGET_Y && CaoCaoBlock.getCol() == TARGET_X) {
+                // 播放胜利音效
+                AudioManager.getInstance().playSoundEffect(AudioManager.SoundEffectType.VICTORY);
+            }
 
             // 弹出胜利对话框（传入当前 GameFrame）
             SwingUtilities.invokeLater(() -> {

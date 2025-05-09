@@ -1,8 +1,12 @@
 package frame;
 
+import frame.audio.AudioManager;
+import frame.dialog.VictoryDialog;
 import level.GameLevel;
 import level.map.GameMap;
 import level.LevelBase;
+import gamestate.MyGameState;
+import frame.dialog.DefeatDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,6 +33,11 @@ public class GameFrame extends FrameBase {
     //存档信息显示
     private JLabel saveTipLabel;
     private Timer tipTimer;
+    private static final long TIME_LIMIT = 3 * 60 * 1000; // 3分钟
+    private JLabel remainingTimeLabel;
+    private Timer countdownTimer;
+    private boolean isTimedMode = false;
+
 
     public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
         super(level, title, width, height);
@@ -39,6 +48,7 @@ public class GameFrame extends FrameBase {
         setPanels(width, height);
         setLocationRelativeTo(null);
         setVisible(true);
+        showModeSelection();
     }
 
     private void setPanels(int width, int height) {//面板配置
@@ -131,6 +141,21 @@ public class GameFrame extends FrameBase {
         saveTipLabel = new JLabel("Game has been saved!");
         saveTipLabel.setVisible(false);
         infoPanel.add(saveTipLabel);
+        // 新增：时间显示标签
+        remainingTimeLabel = new JLabel("剩余时间：--:--");
+        remainingTimeLabel.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+        remainingTimeLabel.setVisible(false); // 默认隐藏
+        infoPanel.add(remainingTimeLabel);
+
+        // 新增：背景音乐控制按钮
+        JButton bgmToggleBtn = new JButton("背景音乐: 开");
+        bgmToggleBtn.addActionListener(e -> toggleBgm());
+        infoPanel.add(bgmToggleBtn);
+
+        // 新增：音效控制按钮
+        JButton sfxToggleBtn = new JButton("音效: 开");
+        sfxToggleBtn.addActionListener(e -> toggleSfx());
+        infoPanel.add(sfxToggleBtn);
     }
 
 
@@ -151,10 +176,30 @@ public class GameFrame extends FrameBase {
         tipTimer.start();
     }
 
+    public void showModeSelection() {
+        ModeSelectDialog dialog = new ModeSelectDialog(this);
+        dialog.setVisible(true);
+        MyGameState gameState = rlevel.getrGameState();
+        gameState.setTimedMode(dialog.isTimedModeSelected());
+        setupAudio();
+        AudioManager.getInstance().setBgmEnabled(true);
+        if (dialog.isTimedModeSelected()) {
+            gameState.setRemainingTime(TIME_LIMIT);
+            remainingTimeLabel.setVisible(true);
+            remainingTimeLabel.setText("剩余时间：03:00"); // 初始时间设置为3分钟
+            remainingTimeLabel.setForeground(Color.BLACK);
+            startCountdown();
+        } else {
+            remainingTimeLabel.setVisible(false);
+        }
+    }
 
-    public void initialGame() {
+
+        public void initialGame() {
         gamePanel.initialGame();
         setTimer();//开始计时
+        // 启动倒计时（如果有时限模式）
+
     }
 
     public void initialGame(int [][] panelMap) {
@@ -243,6 +288,84 @@ public class GameFrame extends FrameBase {
 
     public GamePanel getGamePanel() {
         return gamePanel;
+    }
+
+    // 新增方法：启动倒计时
+    private void startCountdown() {
+        if (countdownTimer != null && countdownTimer.isRunning()) {
+            countdownTimer.stop();
+        }
+        MyGameState gameState = rlevel.getrGameState();
+        countdownTimer = new Timer(1000, e -> {
+            long remaining = gameState.getRemainingTime() - 1000;
+            gameState.setRemainingTime(remaining);
+            SwingUtilities.invokeLater(() -> {
+                long totalMs = Math.max(remaining, 0); // 防止剩余时间为负
+                long minutes = totalMs / (1000 * 60);
+                long seconds = (totalMs % (1000 * 60)) / 1000;
+                remainingTimeLabel.setText("剩余时间：" + String.format("%02d:%02d", minutes, seconds)); // 格式化时间显示
+                if (remaining <= 60000) {
+                    remainingTimeLabel.setForeground(Color.RED);
+                    if (remaining % 10000 == 0 && remaining > 0 && AudioManager.getInstance().isSfxEnabled()) {
+                        AudioManager.getInstance().playSoundEffect(AudioManager.SoundEffectType.TIMER_WARNING);
+                    }
+                }
+                if (remaining <= 0) {
+                    countdownTimer.stop();
+                    gameOver(false);
+                }
+            });
+        });
+        countdownTimer.start();
+    }
+    // 新增方法：游戏结束处理
+    private void gameOver(boolean isVictory) {
+        if (gameTimer != null) gameTimer.stop();
+        if (countdownTimer != null) countdownTimer.stop();
+
+        if (isVictory) {
+            AudioManager.getInstance().playSoundEffect(AudioManager.SoundEffectType.VICTORY);
+            new VictoryDialog(this, elapsedTime).setVisible(true);
+        } else {
+            AudioManager.getInstance().playSoundEffect(AudioManager.SoundEffectType.ERROR);
+            new DefeatDialog(this).setVisible(true);
+        }
+    }
+
+    // 新增方法：控制背景音乐开关
+    private void toggleBgm() {
+        AudioManager audioManager = AudioManager.getInstance();
+        boolean bgmEnabled = !audioManager.isBgmEnabled();
+        audioManager.setBgmEnabled(bgmEnabled);
+        // 更新按钮文本
+        for (Component comp : infoPanel.getComponents()) {
+            if (comp instanceof JButton && ((JButton) comp).getText().startsWith("背景音乐:")) {
+                ((JButton) comp).setText("背景音乐: " + (bgmEnabled ? "开" : "关"));
+                break;
+            }
+        }
+    }
+
+    private void toggleSfx() {
+        AudioManager audioManager = AudioManager.getInstance();
+        boolean sfxEnabled = !audioManager.isSfxEnabled();
+        audioManager.setSfxEnabled(sfxEnabled);
+        // 更新按钮文本
+        for (Component comp : infoPanel.getComponents()) {
+            if (comp instanceof JButton && ((JButton) comp).getText().startsWith("音效:")) {
+                ((JButton) comp).setText("音效: " + (sfxEnabled ? "开" : "关"));
+                break;
+            }
+        }
+    }
+
+    // 新增方法：初始化音频
+    private void setupAudio() {
+        try {
+            AudioManager.getInstance().generateBackgroundMusic();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
