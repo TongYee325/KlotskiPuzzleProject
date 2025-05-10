@@ -19,8 +19,6 @@ public class Main {
                 {1,1,1,1}
         };
         AiController controller = new AiController();
-        修改
-        System.out.println(controller.solve(map));
-        */
+        System.out.println(controller.solve(map));*/
     }
 }
