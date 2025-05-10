@@ -203,7 +203,7 @@ public class GameFrame extends FrameBase {
     }
 
 
-        public void initialGame() {
+    public void initialGame() {
         gamePanel.initialGame();
         setTimer();//开始计时
         // 启动倒计时（如果有时限模式）
