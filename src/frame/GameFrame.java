@@ -153,17 +153,6 @@ public class GameFrame extends FrameBase {
         saveTipLabel.setVisible(false);
         saveTipLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         infoPanel.add(saveTipLabel);
-        // 音频控制面板（独立分组）
-        JPanel audioPanel = new JPanel(new GridLayout(2, 1, 5, 5));
-        audioPanel.setBorder(BorderFactory.createTitledBorder("音效设置"));
-        JButton bgmToggleBtn = new JButton("背景音乐: 开");
-        bgmToggleBtn.addActionListener(e -> toggleBgm());
-        audioPanel.add(bgmToggleBtn);
-        JButton sfxToggleBtn = new JButton("音效: 开");
-        sfxToggleBtn.addActionListener(e -> toggleSfx());
-        audioPanel.add(sfxToggleBtn);
-        infoPanel.add(Box.createVerticalStrut(10)); // 添加垂直间距
-        infoPanel.add(audioPanel);
     }
 
 
