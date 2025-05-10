@@ -7,11 +7,29 @@ public enum BlockType {
     MA_CHAO(5),     // 马超
     HUANG_ZHONG(6), // 黄忠
     CAO_CAO(7),    // 曹操
-    SOLDIER_A(1),     // 小兵1
-    SOLDIER_B(8),   //小兵2
-    SOLDIER_C(9),   //小兵3
-    SOLDIER_D(10);  //小兵4
+    SOLDIER(1),;    // 小兵1
 
     final int code;
     BlockType(int code) { this.code = code; }
+
+    public static BlockType fromCode(int blockCode) {
+        for (BlockType type : BlockType.values()) {
+            if (type.code == blockCode) return type;
+        }
+        return null;
+    }
+
+    public int getWidth() {
+        if(this.code == 2||this.code == 7){return 2;}//关羽曹操返回2
+        else return 1;
+    }
+
+    public int getHeight() {
+        if(this.code >=3&&this.code<=7){return 2;}
+        else return 1;
+    }
+
+    public int getCode() {
+        return code;
+    }
 }
