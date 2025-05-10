@@ -22,7 +22,7 @@ public class Main {
         List<Path> result = controller.solve(map);
         System.out.println(result.size());
         for(Path path : result){
-            System.out.println(path.toString(true));
+            System.out.println(path.toString());
         }
     }
 }

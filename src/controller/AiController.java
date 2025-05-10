@@ -230,6 +230,7 @@ public class AiController {
         int newCol = col + dx;
 
         int[][] newMap = createNewMap(map, row, col, type, newRow, newCol);
+        //todo 修复path记录错误的bug
         List<Path> newPath = new ArrayList<>(current.getPath());
         newPath.add(createMovePath(new Position(row,col),new Position(newRow,newCol)));
         int newG = current.getG() + 1;
