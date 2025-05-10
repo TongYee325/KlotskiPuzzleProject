@@ -20,8 +20,11 @@ public enum BlockType {
     }
 
     public int getWidth() {
-        if(this.code == 2||this.code == 7){return 2;}//关羽曹操返回2
-        else return 1;
+        return switch (this) {
+            case GUAN_YU -> 2; // 实际应为 1x2 竖版
+            case CAO_CAO -> 2;
+            default -> 1;
+        };
     }
 
     public int getHeight() {
