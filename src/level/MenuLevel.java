@@ -3,21 +3,22 @@ package level;
 import frame.*;
 import gamestate.MyGameState;
 
-import java.awt.*;
-
 
 public class MenuLevel extends LevelBase {
-    private final int MenuLevelWidth = 600;
-    private final int MenuLevelHeight = 600;
+    private final int MENU_LEVEL_WIDTH = 600;
+    private final int MENU_LEVEL_HEIGHT = 600;
     private final String MenuLevelText = "Menu Level";
     private MenuFrame menuFrame;
     private SelectFrame selectFrame;
     private MyGameState rGameState;
+    private final String img1Path = "./img/menu.png";
+    private final String img2Path = "./img/select.png";
+    private final String img3Path = "./img/setting.png";
 
     public MenuLevel(MyGameState gameState) {
         super(gameState);
         rGameState = gameState;
-        menuFrame = new  MenuFrame(this, MenuLevelText, MenuLevelWidth, MenuLevelHeight);
+        menuFrame = new  MenuFrame(this, MenuLevelText, MENU_LEVEL_WIDTH, MENU_LEVEL_HEIGHT,img1Path);
     }
 
 
@@ -25,7 +26,7 @@ public class MenuLevel extends LevelBase {
 
     public void switchToSelectFrame() {
         if(this.selectFrame == null) {
-            this.selectFrame = new SelectFrame(this, MenuLevelText, MenuLevelWidth, MenuLevelHeight);
+            this.selectFrame = new SelectFrame(this, MenuLevelText, MENU_LEVEL_WIDTH, MENU_LEVEL_HEIGHT);
         }
         this.selectFrame.setVisible(true);
         this.selectFrame.setEnabled(true);

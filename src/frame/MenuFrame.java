@@ -13,7 +13,7 @@ public class MenuFrame extends FrameBase {
     private JButton loadGameBtn;
     private MenuLevel rLevel;
 
-    public MenuFrame(LevelBase level, String title, int width, int height) {
+    public MenuFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
         this.rLevel = (MenuLevel) level;
         this.setLayout(null);
@@ -67,5 +67,7 @@ public class MenuFrame extends FrameBase {
 
 
 
+
+        super.setBackground(imgPath);
     }
 }
