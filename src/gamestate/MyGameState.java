@@ -11,7 +11,7 @@ public class MyGameState extends GameStateBase {
 
     private int gameMapIndex=0;
 
-    public boolean autoSave = true;
+
     private int saveTime=5*1000;
 
     private SaveManager mySaveManager;
@@ -21,6 +21,13 @@ public class MyGameState extends GameStateBase {
     private int currentLevel = 0;
     private LevelBase level;
 
+
+    //setting设置值
+    private boolean autoSave = true;
+
+
+    private float musicVolume = 1.0f;
+    private boolean musicEnabled = true;
 
 
 
@@ -141,7 +148,21 @@ public class MyGameState extends GameStateBase {
     }
 
 
+    public void setMusicVolume(float musicVolume) {
+        this.musicVolume = musicVolume;
+    }
 
+    public void setMusicEnabled(boolean musicEnabled) {
+        this.musicEnabled = musicEnabled;
+    }
+
+    public boolean isAutoSave() {
+        return autoSave;
+    }
+
+    public void setAutoSave(boolean autoSave) {
+        this.autoSave = autoSave;
+    }
 
     public int getSaveTime() {
         return saveTime;
@@ -159,5 +180,12 @@ public class MyGameState extends GameStateBase {
         return myLogSystem;
     }
 
+    public float getMusicVolume() {
+        return musicVolume;
+    }
+
+    public boolean isMusicEnabled() {
+        return musicEnabled;
+    }
 }
 

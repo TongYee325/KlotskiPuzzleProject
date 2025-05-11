@@ -52,7 +52,7 @@ public class MenuFrame extends FrameBase {
         settingsBtn.setEnabled(true);
         btnPanel.add(settingsBtn);
         settingsBtn.addActionListener(e -> {
-            //todo open setting frame
+            new SettingFrame(level, title, width, height);
         });
 
         //exit button

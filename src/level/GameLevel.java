@@ -37,7 +37,7 @@ public class GameLevel extends LevelBase {
         gameMap =  new GameMap();//创建游戏地图
         gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);//创建游戏帧
         gameController.updateControlledPanelAccordingToLevel();//更新游戏控制器，使其控制新建的Frame中的GamePanel*/
-        if(rGameState.autoSave&&rGameState.getCurrentUserId()!=null){
+        if(rGameState.isAutoSave()&&rGameState.getCurrentUserId()!=null){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
         }
 
@@ -56,7 +56,7 @@ public class GameLevel extends LevelBase {
         gameMap =  new GameMap(gameMapIndex);//创建游戏地图
         gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);//创建游戏帧
         gameController.updateControlledPanelAccordingToLevel();//更新游戏控制器，使其控制新建的Frame中的GamePanel*/
-        if(rGameState.autoSave&&rGameState.getCurrentUserId()!=null){
+        if(rGameState.isAutoSave()&&rGameState.getCurrentUserId()!=null){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
         }
 
