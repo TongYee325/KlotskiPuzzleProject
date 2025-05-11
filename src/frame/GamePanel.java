@@ -1,6 +1,7 @@
 package frame;
 
 import controller.MyGameController;
+import controller.Position;
 import frame.audio.AudioManager;
 import frame.block.Block;
 import frame.dialog.VictoryDialog;
@@ -13,6 +14,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GamePanel extends JPanel {
     //胜利条件
@@ -25,6 +28,8 @@ public class GamePanel extends JPanel {
 
     private GameMap rMap;
     private int[][] panelMap;
+
+
 
 
     private Block selectedBlock;
@@ -357,6 +362,10 @@ public class GamePanel extends JPanel {
     //Getter & Setter --------------------------------------------------------------------------------------------------
     public MyGameController getrController() {
         return rController;
+    }
+
+    public void setSelectedBlock(Block selectedBlock) {
+        this.selectedBlock = selectedBlock;
     }
 
     public Block getSelectedBlock() {

@@ -6,12 +6,12 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        /*SwingUtilities.invokeLater(() -> {
+        SwingUtilities.invokeLater(() -> {
             //KGameMode gameMode = new KGameMode();
             MyGameState myGameState = new MyGameState();
             myGameState.startLevel(0);
-        });*/
-        int  [][]map ={
+        });
+        /*int  [][]map ={
                 {3,7,7,4},
                 {3,7,7,4},
                 {5,2,2,6},
@@ -22,7 +22,7 @@ public class Main {
         List<Path> result = controller.solve(map);
         System.out.println(result.size());
         for(Path path : result){
-            System.out.println(path.toString());
-        }
+            System.out.println(path.toString(true));
+        }*/
     }
 }

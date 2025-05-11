@@ -17,6 +17,10 @@ public class MyGameController extends GameControllerBase {
         this.myLogSystem = myLogSystem;
     }
 
+    public MyGameController(GameLevel gameLevel) {
+        this.gameLevel = gameLevel;
+    }
+
     public void restartGame() {
         System.out.println("Do restart game here");
     }

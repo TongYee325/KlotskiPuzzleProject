@@ -2,6 +2,8 @@ package level;
 
 import controller.MyGameController;
 import frame.GameFrame;
+import gamemode.AiGameMode;
+import gamemode.GameModeBase;
 import gamestate.MyGameState;
 import level.map.GameMap;
 
@@ -16,6 +18,10 @@ public class GameLevel extends LevelBase {
     private GameFrame gameFrame;
     private Timer saveTimer;
     private MyGameState rGameState;
+
+
+
+    private GameModeBase rGameModeBase;
 
     private int gameMapIndex;
 
@@ -34,6 +40,12 @@ public class GameLevel extends LevelBase {
         if(rGameState.autoSave&&rGameState.getCurrentUserId()!=null){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
         }
+
+
+        //选择游戏模式
+        //测试阶段默认aimode
+        rGameModeBase = new AiGameMode(this);
+
     }
 
     public GameLevel(MyGameState gameState,int gameMapIndex) {
@@ -47,6 +59,10 @@ public class GameLevel extends LevelBase {
         if(rGameState.autoSave&&rGameState.getCurrentUserId()!=null){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
         }
+
+
+        //选择游戏模式
+        rGameModeBase = new AiGameMode(this);
 
     }
 
@@ -72,6 +88,9 @@ public class GameLevel extends LevelBase {
     }
 
 
+    public GameModeBase getrGameModeBase() {
+        return rGameModeBase;
+    }
 
     public MyGameController getGameController() {
         return gameController;

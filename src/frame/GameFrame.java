@@ -2,6 +2,7 @@ package frame;
 
 import frame.audio.AudioManager;
 import frame.dialog.VictoryDialog;
+import gamemode.AiGameMode;
 import level.GameLevel;
 import level.map.GameMap;
 import level.LevelBase;
@@ -58,10 +59,10 @@ public class GameFrame extends FrameBase {
         this.add(mainPanel, BorderLayout.CENTER);
         gamePanel = new GamePanel(rMap,this);
         mainPanel.add(gamePanel);
-        //tools panel 包含save、restart、revoke按钮，用来存档和重启游戏和撤销
+        //tools panel 包含save、restart、revoke、aiMove按钮，用来存档和重启游戏和撤销
         toolsPanel = new JPanel();
-        toolsPanel.setLayout(new GridLayout(4, 1));
-        if(rlevel.getrGameState().getCurrentUserId()==null) {toolsPanel.setLayout(new GridLayout(3, 1));}
+        toolsPanel.setLayout(new GridLayout(5, 1));
+        if(rlevel.getrGameState().getCurrentUserId()==null) {toolsPanel.setLayout(new GridLayout(4, 1));}
         toolsPanel.setBackground(Color.WHITE);
         mainPanel.add(toolsPanel);
         toolsPanel.setBounds(width *55/100, height *10/100, width /3, height /3);
@@ -103,6 +104,14 @@ public class GameFrame extends FrameBase {
         backButton.addActionListener(e -> {
             rlevel.getrGameState().startLevel(1);//重回menuLevel
         });
+            //aiMove button
+        JButton aiMoveButton = new JButton("AI Move");
+        toolsPanel.add(aiMoveButton);
+        aiMoveButton.addActionListener(e -> {
+            aiMoveButton.setEnabled(false);
+            ((AiGameMode) ((GameLevel) rlevel).getrGameModeBase()).aiMove(getGamePanel().getPanelMap());
+        });
+
         //move button panel包含四个按钮，上下左右
         movePanel = new JPanel();
         movePanel.setLayout(null);

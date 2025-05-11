@@ -19,6 +19,25 @@ public class Path implements Serializable {
         return end;
     }
 
+    //0右1左2上3下
+    public int getDir(){
+        if(end.getX()>start.getX()){
+            return 3;
+        }
+        else if(end.getX()<start.getX()){
+            return 2;
+        }else {
+            if(end.getY()>start.getY()){
+                return 0;
+            } else if (end.getY()<start.getY()) {
+                return 1;
+
+            }else {
+                return -1;
+            }
+        }
+    }
+
     public String toString() {
         return start.toString() + " -> " + end.toString();
     }
