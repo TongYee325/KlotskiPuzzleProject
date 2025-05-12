@@ -74,6 +74,7 @@ public class FrameBase extends JFrame {
         button.setOpaque(false);
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder());
         try {
             ImageIcon normalIcon = new ImageIcon(normalPath);
             ImageIcon roverIcon = new ImageIcon(rolloverPath);

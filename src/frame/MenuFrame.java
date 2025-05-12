@@ -14,7 +14,7 @@ public class MenuFrame extends FrameBase {
     private MenuLevel rLevel;
 
     private final String startPath = "./img/button/start.png";
-    private final String settingPath = "./img/button/start.png";
+    private final String settingPath = "./img/button/settings.png";
     private final String loadPath = "./img/button/load.png";
     private final String exitPath = "./img/button/exit.png";
 
@@ -28,7 +28,7 @@ public class MenuFrame extends FrameBase {
         btnPanel.setOpaque(false);
         btnPanel.setVisible(true);
         this.add(btnPanel);
-        btnPanel.setBounds(center.x-200/2, center.y-100/2, 200, 144);
+        btnPanel.setBounds(center.x-200/2, center.y+100/2, 200, 140);
         btnPanel.setLayout(new GridLayout(3,1));//游客模式下三个按钮
         //start button
         startGameBtn = new JButton("Start Game");
@@ -44,7 +44,7 @@ public class MenuFrame extends FrameBase {
             loadGameBtn.setVisible(true);
             loadGameBtn.setEnabled(true);
             btnPanel.add(loadGameBtn);
-            btnPanel.setBounds(center.x-200/2, center.y-100/2, 200, 192);
+            btnPanel.setBounds(center.x-200/2, center.y+100/2, 200, 186);
             loadGameBtn.addActionListener(e -> {
                 getRlevel().getrGameState().loadGameData();
                 getRlevel().levelDestroy();
@@ -70,7 +70,6 @@ public class MenuFrame extends FrameBase {
             System.exit(0);
         });
         super.setButtonBackground(exitGameBtn, exitPath,exitPath,exitPath);
-
 
 
 
