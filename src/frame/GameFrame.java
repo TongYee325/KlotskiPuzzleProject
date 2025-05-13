@@ -53,14 +53,37 @@ public class GameFrame extends FrameBase {
     }
 
     private void setPanels(int width, int height) {//面板配置
-        //main panel是主要面板，包含了game panel
         mainPanel = new JPanel();
+        gamePanel = new GamePanel(rMap,this);
+        toolsPanel = new JPanel();
+        JButton saveButton = new JButton("Save");
+        saveButton.setVisible(false);
+        saveButton.setEnabled(false);
+        JButton restartButton = new JButton("Restart");
+        JButton revokeButton = new JButton("Revoke");
+        JButton backButton = new JButton("Back");
+        JButton aiMoveButton = new JButton("AI Move");
+        movePanel = new JPanel();
+        JButton downbtn = new JButton("Down");
+        JButton leftbtn = new JButton("Left");
+        JButton rightbtn = new JButton("Right");
+        JButton upbtn = new JButton("Up");
+        JButton nothingButton = new JButton("/");
+        JButton nothingButton2 = new JButton("/");
+        infoPanel = new JPanel();
+        JPanel timeInfoPanel = new JPanel();
+        JLabel stepsLabel = new JLabel("Steps : 0 ");
+
+
+
+
+
+
+        //main panel是主要面板，包含了game panel
         mainPanel.setLayout(null);
         this.add(mainPanel, BorderLayout.CENTER);
-        gamePanel = new GamePanel(rMap,this);
         mainPanel.add(gamePanel);
         //tools panel 包含save、restart、revoke、aiMove按钮，用来存档和重启游戏和撤销
-        toolsPanel = new JPanel();
         toolsPanel.setLayout(new GridLayout(5, 1));
         if(rlevel.getrGameState().getCurrentUserId()==null) {toolsPanel.setLayout(new GridLayout(4, 1));}
         toolsPanel.setBackground(Color.WHITE);
@@ -68,15 +91,14 @@ public class GameFrame extends FrameBase {
         toolsPanel.setBounds(width *55/100, height *10/100, width /3, height /3);
             //save button
         if(rlevel.getrGameState().getCurrentUserId()!=null) {
-            JButton saveButton = new JButton("Save");
             saveButton.setVisible(true);
+            saveButton.setEnabled(true);
             toolsPanel.add(saveButton);
             saveButton.addActionListener(e -> {
                 ((GameLevel) rlevel).saveGame();
             });
         }
             //restart button
-        JButton restartButton = new JButton("Restart");
         toolsPanel.add(restartButton);
         restartButton.addActionListener(e -> {
                 //print and clear log
@@ -91,44 +113,43 @@ public class GameFrame extends FrameBase {
             ((GameLevel) rlevel).getGameController().updateControlledPanelAccordingToLevel();
             initialGame();
             gameRestart();
+            revokeButton.setEnabled(true);
+            aiMoveButton.setEnabled(true);
         });
             //revoke button
-        JButton revokeButton = new JButton("Revoke");
         toolsPanel.add(revokeButton);
         revokeButton.addActionListener(e -> {
             gamePanel.revoke();
         });
             //back button
-        JButton backButton = new JButton("Back");
         toolsPanel.add(backButton);
         backButton.addActionListener(e -> {
             rlevel.getrGameState().startLevel(1);//重回menuLevel
         });
             //aiMove button
-        JButton aiMoveButton = new JButton("AI Move");
         toolsPanel.add(aiMoveButton);
         aiMoveButton.addActionListener(e -> {
+            //开启aiMove时禁用撤销和保存按钮
             aiMoveButton.setEnabled(false);
+            revokeButton.setEnabled(false);
+            if(rlevel.getrGameState().getCurrentUserId() != null) {
+                saveButton.setEnabled(false);
+            }
             ((AiGameMode) ((GameLevel) rlevel).getrGameModeBase()).aiMove(getGamePanel().getPanelMap());
         });
 
         //move button panel包含四个按钮，上下左右
-        movePanel = new JPanel();
         movePanel.setLayout(null);
         mainPanel.add(movePanel);
         movePanel.setBounds(20, height *60/100, 300*80/100, 200*80/100);
         movePanel.setLayout(new GridLayout(2, 3));
-        JButton nothingButton = new JButton("/");
-        JButton nothingButton2 = new JButton("/");
+
         nothingButton.setVisible(false);
         nothingButton2.setVisible(false);
         movePanel.add(nothingButton);
-        JButton upbtn = new JButton("Up");
         movePanel.add(upbtn);
         movePanel.add(nothingButton2);
-        JButton downbtn = new JButton("Down");
-        JButton leftbtn = new JButton("Left");
-        JButton rightbtn = new JButton("Right");
+
         upbtn.addActionListener(e -> gamePanel.doMoveUp(gamePanel.getSelectedBlock(),true));
         downbtn.addActionListener(e -> gamePanel.doMoveDown(gamePanel.getSelectedBlock(),true));
         leftbtn.addActionListener(e -> gamePanel.doMoveLeft(gamePanel.getSelectedBlock(),true));
@@ -137,14 +158,11 @@ public class GameFrame extends FrameBase {
         movePanel.add(downbtn);
         movePanel.add(rightbtn);
         //info panel 记录游戏开始时间和总共走的步数
-        infoPanel = new JPanel();
         mainPanel.add(infoPanel);
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS)); // 垂直盒子布局
         infoPanel.setBounds(width *55/100, height *60/100, width /3, height /5);
-        JPanel timeInfoPanel = new JPanel();
         timeInfoPanel.setLayout(new GridLayout(3, 1, 5, 5));
         timeInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        JLabel stepsLabel = new JLabel("Steps : 0 ");
         this.stepLabel = stepsLabel;
         timeInfoPanel.add(stepsLabel);
         timeLabel = new JLabel(formatTime(elapsedTime));
