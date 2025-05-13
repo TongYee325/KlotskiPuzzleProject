@@ -14,9 +14,19 @@ public class MenuFrame extends FrameBase {
     private MenuLevel rLevel;
 
     private final String startPath = "./img/button/start.png";
+    private final String startRolloverPath = "./img/button/start_rollover.png";
+    private final String startPressedPath = "./img/button/start_pressed.png";
+
     private final String settingPath = "./img/button/settings.png";
+    private final String settingRolloverPath = "./img/button/settings_rollover.png";
+    private final String settingPressedPath = "./img/button/settings_pressed.png";
     private final String loadPath = "./img/button/load.png";
+    private final String loadRolloverPath = "./img/button/load_rollover.png";
+    private final String loadPressedPath = "./img/button/load_pressed.png";
     private final String exitPath = "./img/button/exit.png";
+    private final String exitRolloverPath = "./img/button/exit_rollover.png";
+    private final String exitPressedPath = "./img/button/exit_pressed.png";
+
 
     public MenuFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
@@ -36,7 +46,7 @@ public class MenuFrame extends FrameBase {
         startGameBtn.addActionListener(e -> {
             rLevel.switchToSelectFrame();
         });
-        super.setButtonBackground(startGameBtn,startPath);
+        super.setButtonBackground(startGameBtn,startPath,startRolloverPath,startPressedPath);
 
         if(rLevel.getrGameState().getCurrentUserId()!=null){//非游客模式下四个按钮,新增load game按钮
             btnPanel.setLayout(new GridLayout(4,1));
@@ -49,7 +59,7 @@ public class MenuFrame extends FrameBase {
                 getRlevel().getrGameState().loadGameData();
                 getRlevel().levelDestroy();
             });
-            super.setButtonBackground(loadGameBtn,loadPath,loadPath,loadPath);
+            super.setButtonBackground(loadGameBtn,loadPath,loadRolloverPath,loadPressedPath);
         }
 
         //setting button
@@ -59,7 +69,7 @@ public class MenuFrame extends FrameBase {
             new SettingFrame(level, title, width, height);
         });
 
-        super.setButtonBackground(settingsBtn, settingPath,settingPath,settingPath);
+        super.setButtonBackground(settingsBtn, settingPath,settingRolloverPath,startPressedPath);
 
         //exit button
         JButton exitGameBtn = new JButton("Exit Game");
@@ -69,7 +79,7 @@ public class MenuFrame extends FrameBase {
         exitGameBtn.addActionListener(e -> {
             System.exit(0);
         });
-        super.setButtonBackground(exitGameBtn, exitPath,exitPath,exitPath);
+        super.setButtonBackground(exitGameBtn, exitPath,exitRolloverPath,exitPressedPath);
 
 
 
