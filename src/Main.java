@@ -10,6 +10,7 @@ public class Main {
             //KGameMode gameMode = new KGameMode();
             MyGameState myGameState = new MyGameState();
             myGameState.startLevel(0);
+            //helloworld
         });
         /*int  [][]map ={
                 {3,7,7,4},
