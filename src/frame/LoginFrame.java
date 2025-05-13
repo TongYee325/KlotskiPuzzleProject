@@ -19,23 +19,23 @@ public class LoginFrame extends FrameBase {
     private JButton registerBtn;
     private JPanel textPanel;
 
-    public LoginFrame(LoginLevel loginLevel, MyGameState gameState, String title, int width, int height) {
+    public LoginFrame(LoginLevel loginLevel, MyGameState gameState, String title, int width, int height,String imgPath) {
         super(loginLevel, title, width, height);
         this.gameState = gameState;
         this.setLayout(null);
         Point center = new Point(this.getWidth() / 2, this.getHeight() / 2);
-        Point userLocation = new Point(center.x - width / 4, center.y - height / 3);
-        Point passwordLocation = new Point(center.x - width / 4, center.y - height / 5);
-        JLabel userLabel = FrameUtil.createJLabel(this, userLocation, 70, 40, "username:");
-        JLabel passLabel = FrameUtil.createJLabel(this, passwordLocation, 70, 40, "password:");
+        Point userLocation = new Point(center.x+10 - width / 2, center.y - height / 3);
+        Point passwordLocation = new Point(center.x, center.y - height / 3);
+        JLabel userLabel = FrameUtil.createJLabel(this, userLocation, 70, 40, "Username:");
+        JLabel passLabel = FrameUtil.createJLabel(this, passwordLocation, 70, 40, "Password:");
         this.add(userLabel);
         this.add(passLabel);
 
         //提示框
-        int hintX = (width - 300) / 2;
+        int hintX = (width - 450) / 2;
         int hintY = 20;
         Point hintLocation = new Point(hintX, hintY);
-        JLabel hintLabel = FrameUtil.createJLabel(this, hintLocation, 300, 40, "用户名和密码仅限a-z A-Z 0-9 _ -,数量3-20");
+        JLabel hintLabel = FrameUtil.createJLabel(this, hintLocation, 500, 40, "The username and password are limited to a-z A-Z 0-9 _ -, and the quantity is 3-20");
         this.add(hintLabel);
 
         username = FrameUtil.createJTextField(this, new Point((int) (userLocation.getX() + userLabel.getWidth()), (int) userLocation.getY()), 200, 40);
@@ -46,9 +46,9 @@ public class LoginFrame extends FrameBase {
         this.add(password);
 
 
-        Point buttonLocation = new Point(center.x, center.y);
-        submitBtn = FrameUtil.createButton(this, "Confirm", new Point((int) (buttonLocation.getX() - width / 4.0), (int) buttonLocation.getY()), 100, 40);
-        registerBtn = FrameUtil.createButton(this, "Register", new Point((int) (buttonLocation.getX() + width / 4.0 - submitBtn.getWidth()), (int) buttonLocation.getY()), 100, 40);
+        Point buttonLocation = new Point(center.x, center.y-100);
+        submitBtn = FrameUtil.createButton(this, "Confirm", new Point((int) (buttonLocation.getX() - width / 3.0), (int) buttonLocation.getY()), 100, 40);
+        registerBtn = FrameUtil.createButton(this, "Register", new Point((int) (buttonLocation.getX() + width / 3.0 - submitBtn.getWidth()), (int) buttonLocation.getY()), 100, 40);
         this.add(registerBtn);
         this.add(submitBtn);
 
@@ -68,6 +68,8 @@ public class LoginFrame extends FrameBase {
 
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        super.setBackground(imgPath);
     }
 
 

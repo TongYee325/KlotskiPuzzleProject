@@ -11,9 +11,9 @@ public class MenuLevel extends LevelBase {
     private MenuFrame menuFrame;
     private SelectFrame selectFrame;
     private MyGameState rGameState;
-    private final String img1Path = "./img/menu.png";
-    private final String img2Path = "./img/select.png";
-    private final String img3Path = "./img/setting.png";
+    private final String img1Path = "./img/menuFrame.png";
+    private final String img2Path = "./img/selectFrame.png";
+    private final String img3Path = "./img/settingFrame.png";
 
     public MenuLevel(MyGameState gameState) {
         super(gameState);
