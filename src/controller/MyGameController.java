@@ -66,13 +66,6 @@ public class MyGameController extends GameControllerBase {
         // 7. 执行移动
         performMove(movedBlock,row, col, width, height, dx, dy, blockType,needLog);
         return true;
-
-
-
-
-
-
-
     }
 
     private boolean isValidPosition(int row, int col) {

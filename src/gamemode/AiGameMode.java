@@ -23,7 +23,7 @@ public class AiGameMode extends GameModeBase {
     public AiGameMode(GameLevel gameLevel) {
         this.gameLevel = gameLevel;
         this.ai = new AiController();
-        this.myGameController = new MyGameController(gameLevel);
+        this.myGameController = new MyGameController(gameLevel,gameLevel.getrGameState().getMyLogSystem());
     }
 
     public List<Path> solveMap(int[][] mapToSolve) {
@@ -86,7 +86,8 @@ public class AiGameMode extends GameModeBase {
         //0右1左2上3下
         Block selectedBlock = view.getSelectedBlock();
         if (selectedBlock != null) {
-            myGameController.doMove(selectedBlock, selectedBlock.getRow(), selectedBlock.getCol(), dir, false);
+            myGameController.doMove(selectedBlock, selectedBlock.getRow(), selectedBlock.getCol(), dir, true);
+            gameLevel.getGameFrame().updateStep();
         }
     }
 
