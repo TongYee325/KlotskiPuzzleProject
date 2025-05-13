@@ -19,6 +19,14 @@ public class LoginFrame extends FrameBase {
     private JButton registerBtn;
     private JPanel textPanel;
 
+    private final String loginPath = "./img/button/login.png";
+    private final String loginRolloverPath = "./img/button/login_rollover.png";
+    private final String loginPressedPath = "./img/button/login_pressed.png";
+
+    private final String registerPath = "./img/button/register.png";
+    private final String registerRolloverPath = "./img/button/register_rollover.png";
+    private final String registerPressedPath = "./img/button/register_pressed.png";
+
     public LoginFrame(LoginLevel loginLevel, MyGameState gameState, String title, int width, int height,String imgPath) {
         super(loginLevel, title, width, height);
         this.gameState = gameState;
@@ -47,8 +55,10 @@ public class LoginFrame extends FrameBase {
 
 
         Point buttonLocation = new Point(center.x, center.y-100);
-        submitBtn = FrameUtil.createButton(this, "Confirm", new Point((int) (buttonLocation.getX() - width / 3.0), (int) buttonLocation.getY()), 100, 40);
-        registerBtn = FrameUtil.createButton(this, "Register", new Point((int) (buttonLocation.getX() + width / 3.0 - submitBtn.getWidth()), (int) buttonLocation.getY()), 100, 40);
+        submitBtn = FrameUtil.createButton(this, "Confirm", new Point((int) (buttonLocation.getX() - width / 2.7), (int) buttonLocation.getY()), 150, 50);
+        super.setButtonBackground(submitBtn,loginPath,loginRolloverPath,loginPressedPath);
+        registerBtn = FrameUtil.createButton(this, "Register", new Point((int) (buttonLocation.getX() + width / 2.5 - submitBtn.getWidth()), (int) buttonLocation.getY()), 150, 50);
+        super.setButtonBackground(registerBtn,registerPath,registerRolloverPath,registerPressedPath);
         this.add(registerBtn);
         this.add(submitBtn);
 
