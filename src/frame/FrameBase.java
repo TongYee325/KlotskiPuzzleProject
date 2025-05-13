@@ -33,6 +33,62 @@ public class FrameBase extends JFrame {
         setLocation(x, y);
     }
 
+    public void setButtonBackground(JButton button,String normalPath) {
+        button.setVisible(true);
+        button.setEnabled(true);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        try {
+            ImageIcon icon = new ImageIcon(normalPath);
+            button.setIcon(icon);
+            button.setBorderPainted(false);
+            button.setContentAreaFilled(false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setButtonBackground(JButton button,String normalPath,String rolloverPath) {
+        button.setVisible(true);
+        button.setEnabled(true);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        try {
+            ImageIcon normalIcon = new ImageIcon(normalPath);
+            ImageIcon roverIcon = new ImageIcon(rolloverPath);
+
+            button.setIcon(normalIcon);
+            button.setRolloverIcon(roverIcon);
+            button.setBorderPainted(false);
+            button.setContentAreaFilled(false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setButtonBackground(JButton button,String normalPath,String rolloverPath,String pressPath) {
+        button.setVisible(true);
+        button.setEnabled(true);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        try {
+            ImageIcon normalIcon = new ImageIcon(normalPath);
+            ImageIcon roverIcon = new ImageIcon(rolloverPath);
+            ImageIcon pressIcon = new ImageIcon(pressPath);
+
+            button.setIcon(normalIcon);
+            button.setRolloverIcon(roverIcon);
+            button.setPressedIcon(pressIcon);
+            button.setBorderPainted(false);
+            button.setContentAreaFilled(false);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected void setBackground(String imgPath) {
         //设置背景
         JLabel lblBackground = new JLabel(); // 创建一个标签组件对象
