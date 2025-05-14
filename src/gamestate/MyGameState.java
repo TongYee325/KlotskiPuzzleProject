@@ -29,6 +29,8 @@ public class MyGameState extends GameStateBase {
     private float musicVolume = 1.0f;
     private boolean musicEnabled = true;
 
+    private boolean timedMode = false;
+
 
 
 
@@ -122,7 +124,7 @@ public class MyGameState extends GameStateBase {
         mySaveManager.updateSavePathAccordingToUserName(userId);
     }
     // 新增限时模式字段
-   public static boolean isTimedMode = false;
+    public static boolean isTimedMode = false;
     private long remainingTime = 0;
 
     public MyGameState() {
@@ -131,12 +133,10 @@ public class MyGameState extends GameStateBase {
     }
 
     // 新增限时模式相关方法
-    public boolean isTimedMode() {
-        return isTimedMode;
-    }
+    public boolean isTimedMode() { return timedMode; }
 
     public void setTimedMode(boolean timedMode) {
-        isTimedMode = timedMode;
+        this.timedMode = timedMode;
     }
 
     public long getRemainingTime() {
@@ -187,5 +187,8 @@ public class MyGameState extends GameStateBase {
     public boolean isMusicEnabled() {
         return musicEnabled;
     }
+    // 在MyGameState类中确保有这些方法
+
+
 }
 

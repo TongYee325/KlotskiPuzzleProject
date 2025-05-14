@@ -14,24 +14,24 @@ import java.awt.*;
 
 public class GameFrame extends FrameBase {
 
-    //面板数据
+    // 面板数据
     private GamePanel gamePanel;
     private JPanel mainPanel;
     private JPanel toolsPanel;
     private JPanel movePanel;
     private JPanel infoPanel;
-    //游戏初始地图
+    // 游戏初始地图
     private GameMap rMap;
-    //关卡指针
+    // 关卡指针
     private LevelBase rlevel;
-    //步数显示
+    // 步数显示
     private JLabel stepLabel;
-    //计时
+    // 计时
     private long startTime;
     private long elapsedTime;
     private Timer gameTimer;
     private JLabel timeLabel;
-    //存档信息显示
+    // 存档信息显示
     private JLabel saveTipLabel;
     private Timer tipTimer;
     private static final long TIME_LIMIT = 3 * 60 * 1000; // 3分钟
@@ -39,6 +39,9 @@ public class GameFrame extends FrameBase {
     private Timer countdownTimer;
     private boolean isTimedMode = false;
 
+    // 新增：模式选择按钮
+    private JRadioButton timedModeRadio;
+    private JRadioButton normalModeRadio;
 
     public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
         super(level, title, width, height);
@@ -49,12 +52,20 @@ public class GameFrame extends FrameBase {
         setPanels(width, height);
         setLocationRelativeTo(null);
         setVisible(true);
-        showModeSelection();
+
+        // 从游戏状态获取模式选择
+        MyGameState gameState = rlevel.getrGameState();
+        isTimedMode = gameState.isTimedMode();
+
+        setupAudio();
+        AudioManager.getInstance().setBgmEnabled(true);
+        initialGame();
     }
 
-    private void setPanels(int width, int height) {//面板配置
+    private void setPanels(int width, int height) {
+        // 主面板配置（保持原有代码不变）
         mainPanel = new JPanel();
-        gamePanel = new GamePanel(rMap,this);
+        gamePanel = new GamePanel(rMap, this);
         toolsPanel = new JPanel();
         JButton saveButton = new JButton("Save");
         saveButton.setVisible(false);
@@ -74,22 +85,21 @@ public class GameFrame extends FrameBase {
         JPanel timeInfoPanel = new JPanel();
         JLabel stepsLabel = new JLabel("Steps : 0 ");
 
-
-
-
-
-
-        //main panel是主要面板，包含了game panel
+        // main panel配置（保持原有代码不变）
         mainPanel.setLayout(null);
         this.add(mainPanel, BorderLayout.CENTER);
         mainPanel.add(gamePanel);
-        //tools panel 包含save、restart、revoke、aiMove按钮，用来存档和重启游戏和撤销
+
+        // tools panel配置（保持原有代码不变）
         toolsPanel.setLayout(new GridLayout(5, 1));
-        if(rlevel.getrGameState().getCurrentUserId()==null) {toolsPanel.setLayout(new GridLayout(4, 1));}
+        if(rlevel.getrGameState().getCurrentUserId()==null) {
+            toolsPanel.setLayout(new GridLayout(4, 1));
+        }
         toolsPanel.setBackground(Color.WHITE);
         mainPanel.add(toolsPanel);
         toolsPanel.setBounds(width *55/100, height *10/100, width /3, height /3);
-            //save button
+
+        // save button配置（保持原有代码不变）
         if(rlevel.getrGameState().getCurrentUserId()!=null) {
             saveButton.setVisible(true);
             saveButton.setEnabled(true);
@@ -98,17 +108,17 @@ public class GameFrame extends FrameBase {
                 ((GameLevel) rlevel).saveGame();
             });
         }
-            //restart button
+
+        // restart button配置（保持原有代码不变）
         toolsPanel.add(restartButton);
         restartButton.addActionListener(e -> {
-                //print and clear log
             rlevel.getrGameState().getMyLogSystem().printAllSteps();
             rlevel.getrGameState().getMyLogSystem().clearSteps();
             if(gamePanel!=null){
                 mainPanel.remove(gamePanel);
                 gamePanel=null;
             }
-            gamePanel = new GamePanel(rMap,this);
+            gamePanel = new GamePanel(rMap, this);
             mainPanel.add(gamePanel);
             ((GameLevel) rlevel).getGameController().updateControlledPanelAccordingToLevel();
             initialGame();
@@ -116,20 +126,22 @@ public class GameFrame extends FrameBase {
             revokeButton.setEnabled(true);
             aiMoveButton.setEnabled(true);
         });
-            //revoke button
+
+        // revoke button配置（保持原有代码不变）
         toolsPanel.add(revokeButton);
         revokeButton.addActionListener(e -> {
             gamePanel.revoke();
         });
-            //back button
+
+        // back button配置（保持原有代码不变）
         toolsPanel.add(backButton);
         backButton.addActionListener(e -> {
-            rlevel.getrGameState().startLevel(1);//重回menuLevel
+            rlevel.getrGameState().startLevel(1);
         });
-            //aiMove button
+
+        // aiMove button配置（保持原有代码不变）
         toolsPanel.add(aiMoveButton);
         aiMoveButton.addActionListener(e -> {
-            //开启aiMove时禁用撤销和保存按钮
             aiMoveButton.setEnabled(false);
             revokeButton.setEnabled(false);
             if(rlevel.getrGameState().getCurrentUserId() != null) {
@@ -138,7 +150,7 @@ public class GameFrame extends FrameBase {
             ((AiGameMode) ((GameLevel) rlevel).getrGameModeBase()).aiMove(getGamePanel().getPanelMap());
         });
 
-        //move button panel包含四个按钮，上下左右
+        // move button panel配置（保持原有代码不变）
         movePanel.setLayout(null);
         mainPanel.add(movePanel);
         movePanel.setBounds(20, height *60/100, 300*80/100, 200*80/100);
@@ -150,81 +162,184 @@ public class GameFrame extends FrameBase {
         movePanel.add(upbtn);
         movePanel.add(nothingButton2);
 
-        upbtn.addActionListener(e -> gamePanel.doMoveUp(gamePanel.getSelectedBlock(),true));
-        downbtn.addActionListener(e -> gamePanel.doMoveDown(gamePanel.getSelectedBlock(),true));
-        leftbtn.addActionListener(e -> gamePanel.doMoveLeft(gamePanel.getSelectedBlock(),true));
-        rightbtn.addActionListener(e -> gamePanel.doMoveRight(gamePanel.getSelectedBlock(),true));
+        upbtn.addActionListener(e -> gamePanel.doMoveUp(gamePanel.getSelectedBlock(), true));
+        downbtn.addActionListener(e -> gamePanel.doMoveDown(gamePanel.getSelectedBlock(), true));
+        leftbtn.addActionListener(e -> gamePanel.doMoveLeft(gamePanel.getSelectedBlock(), true));
+        rightbtn.addActionListener(e -> gamePanel.doMoveRight(gamePanel.getSelectedBlock(), true));
         movePanel.add(leftbtn);
         movePanel.add(downbtn);
         movePanel.add(rightbtn);
-        //info panel 记录游戏开始时间和总共走的步数
+
+        // info panel配置（保持原有代码不变）
         mainPanel.add(infoPanel);
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS)); // 垂直盒子布局
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setBounds(width *55/100, height *60/100, width /3, height /5);
-        timeInfoPanel.setLayout(new GridLayout(3, 1, 5, 5));
+        timeInfoPanel.setLayout(new GridLayout(4, 1, 5, 5)); // 增加一行用于模式选择
         timeInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         this.stepLabel = stepsLabel;
         timeInfoPanel.add(stepsLabel);
         timeLabel = new JLabel(formatTime(elapsedTime));
         timeInfoPanel.add(timeLabel);
-        // 剩余时间标签（新增尺寸约束）
+
+        // 剩余时间标签（保持原有代码不变）
         remainingTimeLabel = new JLabel("剩余时间：--:--");
         remainingTimeLabel.setFont(new Font("微软雅黑", Font.BOLD, 14));
-        remainingTimeLabel.setForeground(new Color(0, 100, 0)); // 深绿色
+        remainingTimeLabel.setForeground(new Color(0, 100, 0));
         remainingTimeLabel.setMinimumSize(new Dimension(120, 25));
         remainingTimeLabel.setPreferredSize(new Dimension(120, 25));
         timeInfoPanel.add(remainingTimeLabel);
+
+        // 新增：模式选择控件
+        addModeSelection(timeInfoPanel);
+
         infoPanel.add(timeInfoPanel);
-        // 保存提示标签（单独一行）
+
+        // 保存提示标签（保持原有代码不变）
         saveTipLabel = new JLabel("Game has been saved!");
         saveTipLabel.setVisible(false);
         saveTipLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         infoPanel.add(saveTipLabel);
     }
 
+    // 新增：模式选择控件
+    // 在GameFrame类的addModeSelection方法中更新
+    private void addModeSelection(JPanel container) {
+        JPanel modePanel = new JPanel();
+        modePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-    public void showSaveInfo(){
+        JLabel modeLabel = new JLabel("Mode:");
+        ButtonGroup modeGroup = new ButtonGroup();
+
+        timedModeRadio = new JRadioButton("Timed");
+        timedModeRadio.addActionListener(e -> {
+            isTimedMode = true;
+            MyGameState gameState = rlevel.getrGameState();
+            gameState.setTimedMode(true);
+            if (gameTimer != null && gameTimer.isRunning()) {
+                initialGame();
+            }
+        });
+
+        normalModeRadio = new JRadioButton("Normal", isTimedMode);
+        normalModeRadio.addActionListener(e -> {
+            isTimedMode = false;
+            MyGameState gameState = rlevel.getrGameState();
+            gameState.setTimedMode(false);
+            remainingTimeLabel.setVisible(false);
+            if (countdownTimer != null) {
+                countdownTimer.stop();
+            }
+        });
+
+        modeGroup.add(timedModeRadio);
+        modeGroup.add(normalModeRadio);
+
+        // 根据游戏状态初始化选择
+        if (isTimedMode) {
+            timedModeRadio.setSelected(true);
+        } else {
+            normalModeRadio.setSelected(true);
+        }
+
+        modePanel.add(modeLabel);
+        modePanel.add(timedModeRadio);
+        modePanel.add(normalModeRadio);
+
+        container.add(modePanel);
+    }
+
+    // 其他方法保持不变...
+    public void showSaveInfo() {
         saveTipLabel.setVisible(true);
 
-        // 如果已有计时器先停止
         if(tipTimer != null && tipTimer.isRunning()) {
             tipTimer.stop();
         }
 
-        // 创建新的计时器
         tipTimer = new Timer(3000, e -> {
             saveTipLabel.setVisible(false);
             repaint();
         });
-        tipTimer.setRepeats(false); // 只执行一次
+        tipTimer.setRepeats(false);
         tipTimer.start();
     }
+    // 新增方法：启动倒计时
+    private void startCountdown() {
+        if (countdownTimer != null && countdownTimer.isRunning()) {
+            countdownTimer.stop();
+        }
 
-    public void showModeSelection() {
-        ModeSelectDialog dialog = new ModeSelectDialog(this);
-        dialog.setVisible(true);
         MyGameState gameState = rlevel.getrGameState();
-        gameState.setTimedMode(dialog.isTimedModeSelected());
-        setupAudio();
-        AudioManager.getInstance().setBgmEnabled(true);
-        if (dialog.isTimedModeSelected()) {
+
+        // 确保初始时间正确设置
+        if (gameState.getRemainingTime() <= 0) {
+            gameState.setRemainingTime(TIME_LIMIT);
+        }
+
+        // 更新UI显示初始时间
+        updateRemainingTimeUI(gameState.getRemainingTime());
+
+        countdownTimer = new Timer(1000, e -> {
+            long remaining = gameState.getRemainingTime() - 1000;
+            gameState.setRemainingTime(remaining);
+
+            // 在事件调度线程上更新UI
+            updateRemainingTimeUI(remaining);
+
+            if (remaining <= 0) {
+                countdownTimer.stop();
+                gameOver(false);
+            }
+        });
+
+        countdownTimer.start();
+    }
+
+    // 辅助方法：更新剩余时间UI
+    private void updateRemainingTimeUI(long remainingMs) {
+        SwingUtilities.invokeLater(() -> {
+            long totalMs = Math.max(remainingMs, 0);
+            long minutes = totalMs / (1000 * 60);
+            long seconds = (totalMs % (1000 * 60)) / 1000;
+
+            remainingTimeLabel.setText("剩余时间：" + String.format("%02d:%02d", minutes, seconds));
+
+            // 根据剩余时间改变颜色
+            if (remainingMs <= 60000) {
+                remainingTimeLabel.setForeground(Color.RED);
+            } else {
+                remainingTimeLabel.setForeground(Color.BLACK);
+            }
+
+            // 确保UI刷新
+            remainingTimeLabel.revalidate();
+            remainingTimeLabel.repaint();
+        });
+    }
+
+    public void initialGame() {
+        gamePanel.initialGame();
+        setTimer();
+
+        // 根据当前模式设置计时器
+        MyGameState gameState = rlevel.getrGameState();
+        gameState.setTimedMode(isTimedMode);
+
+        if (isTimedMode) {
             gameState.setRemainingTime(TIME_LIMIT);
             remainingTimeLabel.setVisible(true);
-            remainingTimeLabel.setText("剩余时间：03:00"); // 初始时间设置为3分钟
+            remainingTimeLabel.setText("剩余时间：03:00");
             remainingTimeLabel.setForeground(Color.BLACK);
             startCountdown();
         } else {
             remainingTimeLabel.setVisible(false);
+            if (countdownTimer != null) {
+                countdownTimer.stop();
+            }
         }
     }
 
 
-    public void initialGame() {
-        gamePanel.initialGame();
-        setTimer();//开始计时
-        // 启动倒计时（如果有时限模式）
-
-    }
 
     public void initialGame(int [][] panelMap) {
         gamePanel.initialGame(panelMap);
@@ -235,6 +350,13 @@ public class GameFrame extends FrameBase {
     private void gameRestart() {
         timerRestart();
         updateStep();
+
+        // 如果是限时模式，重置剩余时间
+        if (isTimedMode) {
+            MyGameState gameState = rlevel.getrGameState();
+            gameState.setRemainingTime(TIME_LIMIT);
+            updateRemainingTimeUI(TIME_LIMIT);
+        }
     }
 
 
@@ -315,36 +437,36 @@ public class GameFrame extends FrameBase {
     }
 
     // 新增方法：启动倒计时
-    private void startCountdown() {
-        if (countdownTimer != null && countdownTimer.isRunning()) {
-            countdownTimer.stop();
-        }
-        MyGameState gameState = rlevel.getrGameState();
-        countdownTimer = new Timer(1000, e -> {
-            long remaining = gameState.getRemainingTime() - 1000;
-            gameState.setRemainingTime(remaining);
-            SwingUtilities.invokeLater(() -> {
-                long totalMs = Math.max(remaining, 0);
-                long minutes = totalMs / (1000 * 60);
-                long seconds = (totalMs % (1000 * 60)) / 1000;
-                remainingTimeLabel.setText("剩余时间：" + String.format("%02d:%02d", minutes, seconds));
-
-                // 强制刷新界面
-                remainingTimeLabel.revalidate();
-                remainingTimeLabel.repaint();
-
-                if (remaining <= 60000) {
-                    remainingTimeLabel.setForeground(Color.RED);
-                    // ... 原有声音提示代码 ...
-                }
-                if (remaining <= 0) {
-                    countdownTimer.stop();
-                    gameOver(false);
-                }
-            });
-        });
-        countdownTimer.start();
-    }
+//    private void startCountdown() {
+//        if (countdownTimer != null && countdownTimer.isRunning()) {
+//            countdownTimer.stop();
+//        }
+//        MyGameState gameState = rlevel.getrGameState();
+//        countdownTimer = new Timer(1000, e -> {
+//            long remaining = gameState.getRemainingTime() - 1000;
+//            gameState.setRemainingTime(remaining);
+//            SwingUtilities.invokeLater(() -> {
+//                long totalMs = Math.max(remaining, 0);
+//                long minutes = totalMs / (1000 * 60);
+//                long seconds = (totalMs % (1000 * 60)) / 1000;
+//                remainingTimeLabel.setText("剩余时间：" + String.format("%02d:%02d", minutes, seconds));
+//
+//                // 强制刷新界面
+//                remainingTimeLabel.revalidate();
+//                remainingTimeLabel.repaint();
+//
+//                if (remaining <= 60000) {
+//                    remainingTimeLabel.setForeground(Color.RED);
+//                    // ... 原有声音提示代码 ...
+//                }
+//                if (remaining <= 0) {
+//                    countdownTimer.stop();
+//                    gameOver(false);
+//                }
+//            });
+//        });
+//        countdownTimer.start();
+//    }
     // 新增方法：游戏结束处理
     private void gameOver(boolean isVictory) {
         if (gameTimer != null) gameTimer.stop();
@@ -396,9 +518,4 @@ public class GameFrame extends FrameBase {
     }
 
 
-
 }
-
-
-
-
