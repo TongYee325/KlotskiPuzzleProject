@@ -1,6 +1,5 @@
 package controller;
 
-import org.jetbrains.annotations.NotNull;
 
 public final class Position implements Comparable<Position> {
     int x;
@@ -25,7 +24,7 @@ public final class Position implements Comparable<Position> {
     }
 
     @Override
-    public int compareTo(@NotNull Position another) {
+    public int compareTo( Position another) {
         if (this.x < another.x) return -1;
         else if (this.x == another.x) {
             return Integer.compare(this.y, another.y);
