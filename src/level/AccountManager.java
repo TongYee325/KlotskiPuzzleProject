@@ -8,10 +8,10 @@ import java.util.Properties;
 
 public class AccountManager {
 
-    public static boolean registerAccount(String username, char[] passwordChar) {
+    public static int registerAccount(String username, char[] passwordChar) {
         String password=new String(passwordChar);
         if (!isValidUsername(username)) {
-            return false;
+            return -1;
         }
 
         // 修改路径为 user/[username]/data
@@ -36,24 +36,24 @@ public class AccountManager {
                 writer.write("password=" + hashedPassword);
             }
 
-            return true;
+            return 0;
         } catch (IOException | NoSuchAlgorithmException e) {
             e.printStackTrace();
-            return false;
+            return 1;
         }
     }
 
     // 检查密码是否匹配（需与 registerAccount 的加密逻辑一致）
-    public static boolean checkPassword(String username, char[] passwordChar) {
+    public static int checkPassword(String username, char[] passwordChar) {
         String password=new String(passwordChar);
         if (!isValidUsername(username)) {
-            return false;
+            return -1;//密码不规范
         }
 
         // 修改路径为 user/[username]/data/userinfo.properties
-        Path dataFile = Paths.get("user", username, "data", "userinfo.properties"); // 🌟 关键修改点
+        Path dataFile = Paths.get("user", username, "data", "userinfo.properties");
         if (!Files.exists(dataFile)) {
-            return false;
+            return 1;//未注册或本地数据缺失
         }
 
         try (InputStream input = Files.newInputStream(dataFile)) {
@@ -63,18 +63,21 @@ public class AccountManager {
             String storedSalt = prop.getProperty("salt");
             String storedHash = prop.getProperty("password");
             if (storedSalt == null || storedHash == null) {
-                return false;
+                return 1;//本地数据缺失
             }
 
             byte[] salt = Base64.getDecoder().decode(storedSalt);
             String calculatedHash = hashPassword(password, salt);
 
-            return MessageDigest.isEqual(
-                    storedHash.getBytes(),
-                    calculatedHash.getBytes()
-            );
+            if(MessageDigest.isEqual(storedHash.getBytes(), calculatedHash.getBytes()))
+            {
+                return 0;//密码正确
+            }else {
+                return 2;//密码错误
+            }
+
         } catch (IOException | IllegalArgumentException | NoSuchAlgorithmException e) {
-            return false;
+            return 3;//未知错误
         }
     }
 

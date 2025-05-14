@@ -27,12 +27,12 @@ public class LoginFrame extends FrameBase {
     private final String registerRolloverPath = "./img/button/register_rollover.png";
     private final String registerPressedPath = "./img/button/register_pressed.png";
 
-    public LoginFrame(LoginLevel loginLevel, MyGameState gameState, String title, int width, int height,String imgPath) {
+    public LoginFrame(LoginLevel loginLevel, MyGameState gameState, String title, int width, int height, String imgPath) {
         super(loginLevel, title, width, height);
         this.gameState = gameState;
         this.setLayout(null);
         Point center = new Point(this.getWidth() / 2, this.getHeight() / 2);
-        Point userLocation = new Point(center.x+10 - width / 2, center.y - height / 3);
+        Point userLocation = new Point(center.x + 10 - width / 2, center.y - height / 3);
         Point passwordLocation = new Point(center.x, center.y - height / 3);
         JLabel userLabel = FrameUtil.createJLabel(this, userLocation, 70, 40, "Username:");
         JLabel passLabel = FrameUtil.createJLabel(this, passwordLocation, 70, 40, "Password:");
@@ -49,31 +49,53 @@ public class LoginFrame extends FrameBase {
         username = FrameUtil.createJTextField(this, new Point((int) (userLocation.getX() + userLabel.getWidth()), (int) userLocation.getY()), 200, 40);
         password = FrameUtil.createJPasswordField(this, new Point((int) (passwordLocation.getX() + passLabel.getWidth()), (int) passwordLocation.getY()), 200, 40);
         Random random = new Random();
-        if(random.nextBoolean()){password.setEchoChar('*');}//小trick
+        if (random.nextBoolean()) {
+            password.setEchoChar('*');
+        }//小trick
         this.add(username);
         this.add(password);
 
 
-        Point buttonLocation = new Point(center.x, center.y-100);
+        Point buttonLocation = new Point(center.x, center.y - 100);
         submitBtn = FrameUtil.createButton(this, "Confirm", new Point((int) (buttonLocation.getX() - width / 2.7), (int) buttonLocation.getY()), 150, 50);
-        super.setButtonBackground(submitBtn,loginPath,loginRolloverPath,loginPressedPath);
+        super.setButtonBackground(submitBtn, loginPath, loginRolloverPath, loginPressedPath);
         registerBtn = FrameUtil.createButton(this, "Register", new Point((int) (buttonLocation.getX() + width / 2.5 - submitBtn.getWidth()), (int) buttonLocation.getY()), 150, 50);
-        super.setButtonBackground(registerBtn,registerPath,registerRolloverPath,registerPressedPath);
+        super.setButtonBackground(registerBtn, registerPath, registerRolloverPath, registerPressedPath);
         this.add(registerBtn);
         this.add(submitBtn);
 
         submitBtn.addActionListener(e -> {
+            int condition = AccountManager.checkPassword(username.getText(), password.getPassword());
 
-            if (AccountManager.checkPassword(username.getText(), password.getPassword())) {//检查用户名与密码
-                if(username.getText()!=null){getRlevel().getrGameState().setCurrentUser(username.getText());}//存入当前userID
+            if (condition == 0) {//检查用户名与密码
+                if (username.getText() != null) {
+                    getRlevel().getrGameState().setCurrentUser(username.getText());
+                }//存入当前userID
                 LoginLevel rlevel = (LoginLevel) super.getRlevel();
                 rlevel.nextLevel();
+            } else if (condition == -1) {
+                System.out.println("Username or password is not valid!");
+            } else if (condition == 1) {
+                System.out.println("Have not registered yet or data missed");
+            } else if (condition == 2) {
+                System.out.println("Wrong username or password!");
             } else {
-                System.out.println("Wrong Username or Password");
+                System.out.println("Unknown Error!");
             }
         });
         registerBtn.addActionListener(e -> {
-            System.out.println(AccountManager.registerAccount(username.getText(), password.getPassword()));//注册
+            int condition = AccountManager.registerAccount(username.getText(), password.getPassword());
+            switch (condition) {
+                case -1:
+                    System.out.println("Username or password is not valid!");
+                    break;
+                case 0:
+                    System.out.println("Register Successful!");
+                    break;
+                default:
+                    System.out.println("Unknown Error!");
+                    break;
+            }
         });
 
         this.setLocationRelativeTo(null);
@@ -81,7 +103,6 @@ public class LoginFrame extends FrameBase {
 
         super.setBackground(imgPath);
     }
-
 
 
     public JButton getSubmitBtn() {
