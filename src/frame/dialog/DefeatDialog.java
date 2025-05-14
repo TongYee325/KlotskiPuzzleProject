@@ -5,29 +5,29 @@ import java.awt.*;
 
 public class DefeatDialog extends JDialog {
     public DefeatDialog(Frame owner) {
-        super(owner, "游戏结束", true);
+        super(owner, "Game Over", true);
         setSize(350, 200);
         setLocationRelativeTo(owner);
         setLayout(new BorderLayout());
 
-        // 图标面板
+        // Icon panel
         JPanel iconPanel = new JPanel();
-        JLabel iconLabel = new JLabel(new ImageIcon("resources/defeat_icon.png")); // 可替换为实际图标
+        JLabel iconLabel = new JLabel(new ImageIcon("resources/defeat_icon.png")); // Replace with actual icon
         iconPanel.add(iconLabel);
         add(iconPanel, BorderLayout.NORTH);
 
-        // 消息面板
+        // Message panel
         JPanel messagePanel = new JPanel();
-        JLabel messageLabel = new JLabel("时间已耗尽！", SwingConstants.CENTER);
-        messageLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
+        JLabel messageLabel = new JLabel("Time has run out!", SwingConstants.CENTER);
+        messageLabel.setFont(new Font("Microsoft YaHei", Font.BOLD, 20));
         messagePanel.add(messageLabel);
         add(messagePanel, BorderLayout.CENTER);
 
-        // 按钮面板
+        // Button panel
         JPanel buttonPanel = new JPanel();
-        JButton okButton = new JButton("确定");
+        JButton okButton = new JButton("OK");
         okButton.addActionListener(e -> dispose());
-        okButton.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+        okButton.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
         okButton.setPreferredSize(new Dimension(100, 35));
         buttonPanel.add(okButton);
         add(buttonPanel, BorderLayout.SOUTH);
