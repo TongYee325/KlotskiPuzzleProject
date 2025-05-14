@@ -1,8 +1,8 @@
 package frame;
 
 
+import frame.dialog.DefaultDialog;
 import level.AccountManager;
-import level.LevelBase;
 import level.LoginLevel;
 import gamestate.MyGameState;
 
@@ -18,6 +18,7 @@ public class LoginFrame extends FrameBase {
     private JButton submitBtn;
     private JButton registerBtn;
     private JPanel textPanel;
+    private JDialog dialog;
 
     private final String loginPath = "./img/button/login.png";
     private final String loginRolloverPath = "./img/button/login_rollover.png";
@@ -74,12 +75,16 @@ public class LoginFrame extends FrameBase {
                 LoginLevel rlevel = (LoginLevel) super.getRlevel();
                 rlevel.nextLevel();
             } else if (condition == -1) {
+                this.dialog = new DefaultDialog(this,"Error!", true," Username or password is not valid!"," ");
                 System.out.println("Username or password is not valid!");
             } else if (condition == 1) {
+                this.dialog = new DefaultDialog(this,"Error!", true,"Have not registered yet or data missed "," ");
                 System.out.println("Have not registered yet or data missed");
             } else if (condition == 2) {
+                this.dialog = new DefaultDialog(this,"Error!", true,"Wrong username or password! "," ");
                 System.out.println("Wrong username or password!");
             } else {
+                this.dialog = new DefaultDialog(this,"Error!", true,"Unknown error! "," ");
                 System.out.println("Unknown Error!");
             }
         });
@@ -87,13 +92,13 @@ public class LoginFrame extends FrameBase {
             int condition = AccountManager.registerAccount(username.getText(), password.getPassword());
             switch (condition) {
                 case -1:
-                    System.out.println("Username or password is not valid!");
+                    this.dialog = new DefaultDialog(this,"Error!", true," Username or password is not valid!"," ");
                     break;
                 case 0:
-                    System.out.println("Register Successful!");
+                    this.dialog = new DefaultDialog(this,"Success!", true," Registered Successfully!"," ");
                     break;
                 default:
-                    System.out.println("Unknown Error!");
+                    this.dialog = new DefaultDialog(this,"Error!", true,"Unknown error! "," ");
                     break;
             }
         });
