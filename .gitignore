@@ -33,7 +33,9 @@ user/
 # 忽略指定文件
 vcs.xml             # 精确匹配文件名
 Project.iml
-.iml
+KlotskiPuzzleProject.iml
+*.iml
+
 
 # 忽略所有同类文件（示例）
 *.iml              # 忽略所有 .iml 文件
