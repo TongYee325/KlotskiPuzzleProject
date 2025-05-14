@@ -313,10 +313,11 @@ public class GamePanel extends JPanel {
                 victoryDialog.setVisible(true);
             });
             isGameOver = true; // 设置游戏结束标记
+
             // 原有日志输出
-            System.out.println("You Win!");
+            /*System.out.println("You Win!");
             rFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();
-            rFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();
+            rFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();*/
         }
     }
 

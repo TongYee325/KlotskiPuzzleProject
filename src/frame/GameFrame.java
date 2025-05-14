@@ -7,7 +7,7 @@ import level.GameLevel;
 import level.map.GameMap;
 import level.LevelBase;
 import gamestate.MyGameState;
-import frame.dialog.DefeatDialog;
+import frame.dialog.DefaultDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -477,7 +477,10 @@ public class GameFrame extends FrameBase {
             new VictoryDialog(this, elapsedTime).setVisible(true);
         } else {
             AudioManager.getInstance().playSoundEffect(AudioManager.SoundEffectType.ERROR);
-            new DefeatDialog(this).setVisible(true);
+            new DefaultDialog(this,"Time out!",true,
+                    String.format("You spent %d steps.",rlevel.getrGameState().getMyLogSystem().getTotalSteps().size()),
+                    String.format("You spent %s ",formatTime(elapsedTime))
+                    ).setVisible(true);
         }
     }
 

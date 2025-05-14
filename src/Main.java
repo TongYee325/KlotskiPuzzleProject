@@ -1,8 +1,6 @@
-import controller.*;
 import gamestate.MyGameState;
 
 import javax.swing.*;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,6 +8,7 @@ public class Main {
             //KGameMode gameMode = new KGameMode();
             MyGameState myGameState = new MyGameState();
             myGameState.startLevel(0);
+
         });
         /*int  [][]map ={
                 {3,7,7,4},
