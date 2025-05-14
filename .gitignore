@@ -23,6 +23,7 @@ bin/
 /.nb-gradle/
 # 忽略特定目录（递归忽略）
 user/
+.idea/
 ### VS Code ###
 .vscode/
 
@@ -31,8 +32,8 @@ user/
 
 # 忽略指定文件
 vcs.xml             # 精确匹配文件名
-KlotskiPuzzleProject.iml
-
+Project.iml
+.iml
 
 # 忽略所有同类文件（示例）
 *.iml              # 忽略所有 .iml 文件
