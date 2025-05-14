@@ -23,15 +23,21 @@ public class SettingFrame extends FrameBase{
 
     private LevelBase rLevel;
 
+    private final String backPath = "./img/button/back.png";
+    private final String backRolloverPath = "./img/button/back_Rollover.png";
+    private final String backPressedPath = "./img/button/back_Pressed.png";
 
-    public SettingFrame(LevelBase level, String title, int width, int height) {
+
+    public SettingFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
         this.rLevel=level;
 
         initialComponents();
+        super.setBackground(imgPath);
     }
 
     private void initialComponents(){
+        this.setLayout(null);
         mainPanel = new JPanel(new GridLayout(3,1,50,50));
         backButton = new JButton("Back");
         backButton.addActionListener(e -> {
@@ -71,9 +77,10 @@ public class SettingFrame extends FrameBase{
         needAutoSaveLabel = new JLabel("Auto Save");
         needAutoSaveLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.add(mainPanel, BorderLayout.CENTER);
-        this.add(backButton, BorderLayout.SOUTH);
-
+        this.add(mainPanel);
+        mainPanel.setBounds(100,100,400,300);
+        this.add(backButton);
+        backButton.setBounds(250,450,100,40);
         mainPanel.add(firstPanel);
         mainPanel.add(secondPanel);
         mainPanel.add(thirdPanel);
