@@ -28,8 +28,6 @@ public class MenuFrame extends FrameBase {
     private final String exitPressedPath = "./img/button/exit_pressed.png";
 
 
-    private final String imgPath = "./img/selectFrame.png";
-    private final String img2Path = "./img/settingFrame.png";
 
     public MenuFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
@@ -69,7 +67,7 @@ public class MenuFrame extends FrameBase {
         JButton settingsBtn = new JButton("Settings");
         btnPanel.add(settingsBtn);
         settingsBtn.addActionListener(e -> {
-            new SettingFrame(level, title, width, height,img2Path);
+            rLevel.switchToSettingFrame();
         });
 
         super.setButtonBackground(settingsBtn, settingPath,settingRolloverPath,settingPressedPath);

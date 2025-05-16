@@ -12,16 +12,18 @@ public class SelectFrame extends FrameBase {
     private int levelNum = 3;
     private MenuLevel rLevel;
     public boolean isTimedModeSelected = false; // 新增：记录模式选择
+    private JPanel mainPanel;
 
-    public SelectFrame(LevelBase level, String title, int width, int height) {
+    public SelectFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
         this.rLevel = (MenuLevel) level;
-        this.setLayout(new BorderLayout(20, 20)); // 使用更灵活的BorderLayout
+        mainPanel = new JPanel(new BorderLayout(20,20));
+        this.add(mainPanel, BorderLayout.CENTER);
 
         // 主内容面板（居中布局）
         JPanel contentPanel = new JPanel(new GridBagLayout());
         contentPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
-        add(contentPanel, BorderLayout.CENTER);
+        mainPanel.add(contentPanel, BorderLayout.CENTER);
 
         // 1. 原有关卡选择部分
         addLevelSelection(contentPanel);
@@ -31,6 +33,7 @@ public class SelectFrame extends FrameBase {
 
         // 3. 原有返回按钮（调整位置到底部）
         addBackButton();
+        /*super.setBackground(imgPath);*/
     }
 
     // 原有关卡选择逻辑（调整为GridBagLayout布局）
@@ -100,7 +103,7 @@ public class SelectFrame extends FrameBase {
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
         bottomPanel.add(back);
-        add(bottomPanel, BorderLayout.SOUTH);
+        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
     }
 
     // 原有关卡按钮创建逻辑（修改点击事件，传递模式选择）

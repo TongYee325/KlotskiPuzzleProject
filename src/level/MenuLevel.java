@@ -10,6 +10,7 @@ public class MenuLevel extends LevelBase {
     private final String MenuLevelText = "Menu Level";
     private MenuFrame menuFrame;
     private SelectFrame selectFrame;
+    private SettingFrame settingsFrame;
     private MyGameState rGameState;
     private final String img1Path = "./img/menuFrame.png";
     private final String img2Path = "./img/selectFrame.png";
@@ -26,7 +27,7 @@ public class MenuLevel extends LevelBase {
 
     public void switchToSelectFrame() {
         if(this.selectFrame == null) {
-            this.selectFrame = new SelectFrame(this, MenuLevelText, MENU_LEVEL_WIDTH, MENU_LEVEL_HEIGHT);
+            this.selectFrame = new SelectFrame(this, MenuLevelText, MENU_LEVEL_WIDTH, MENU_LEVEL_HEIGHT,img2Path);
         }
         this.selectFrame.setVisible(true);
         this.selectFrame.setEnabled(true);
@@ -37,8 +38,26 @@ public class MenuLevel extends LevelBase {
     public void switchToMenuFrame() {
         this.menuFrame.setVisible(true);
         this.menuFrame.setEnabled(true);
-        this.selectFrame.setVisible(false);
-        this.selectFrame.setEnabled(false);
+        if(this.selectFrame != null) {
+            this.selectFrame.setVisible(false);
+            this.selectFrame.setEnabled(false);
+            this.selectFrame.dispose();
+        }
+        if(this.settingsFrame != null) {
+            this.settingsFrame.setVisible(false);
+            this.settingsFrame.setEnabled(false);
+            this.settingsFrame.dispose();
+        }
+    }
+
+    public void switchToSettingFrame() {
+        if(this.settingsFrame == null) {
+            this.settingsFrame = new SettingFrame(this,MenuLevelText, MENU_LEVEL_WIDTH, MENU_LEVEL_HEIGHT,img3Path);
+        }
+        this.menuFrame.setVisible(false);
+        this.menuFrame.setEnabled(false);
+        this.settingsFrame.setVisible(true);
+        this.settingsFrame.setEnabled(true);
     }
 
     @Override

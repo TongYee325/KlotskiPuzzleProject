@@ -68,6 +68,33 @@ public class FrameBase extends JFrame {
         }
     }
 
+    public void setCheckBoxBackground(JCheckBox checkBox,String normalPath,String rolloverPath,String pressedPath,String selectedPath,String selectedRolloverPath,String selectedPressedPath) {
+        checkBox.setVisible(true);
+        checkBox.setEnabled(true);
+        checkBox.setOpaque(false);
+        checkBox.setBorder(BorderFactory.createEmptyBorder());
+        try {
+            ImageIcon normalIcon = new ImageIcon(normalPath);
+            ImageIcon roverIcon = new ImageIcon(rolloverPath);
+            ImageIcon pressedIcon = new ImageIcon(pressedPath);
+            ImageIcon selectedIcon = new ImageIcon(selectedPath);
+            ImageIcon selectedRolloverIcon = new ImageIcon(selectedRolloverPath);
+            ImageIcon selectedPressedIcon = new ImageIcon(selectedPressedPath);
+
+            checkBox.setIcon(normalIcon);
+            checkBox.setRolloverIcon(roverIcon);
+            checkBox.setPressedIcon(pressedIcon);
+            checkBox.setSelectedIcon(selectedIcon);
+            checkBox.setRolloverSelectedIcon(selectedRolloverIcon);
+            checkBox.setDisabledSelectedIcon(selectedPressedIcon);
+
+            checkBox.setBorderPainted(false);
+            checkBox.setContentAreaFilled(false);
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void setButtonBackground(JButton button,String normalPath,String rolloverPath,String pressPath) {
         button.setVisible(true);
         button.setEnabled(true);

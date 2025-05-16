@@ -11,26 +11,30 @@ public class SettingFrame extends FrameBase{
     private JPanel upPanel;
     private JPanel mainPanel;
     private JButton backButton;
-    private JPanel firstPanel;
     private JLabel needAutoSaveLabel;
     private JCheckBox autoSaveCheckBox;
-    private JPanel secondPanel;
     private JLabel needTurnOnMusicLabel;
     private JCheckBox musicOnCheckBox;
-    private JPanel thirdPanel;
     private JLabel volumeLabel;
     private JSlider volumeSlider;
 
-    private LevelBase rLevel;
+    private MenuLevel rLevel;
 
     private final String backPath = "./img/button/back.png";
     private final String backRolloverPath = "./img/button/back_Rollover.png";
     private final String backPressedPath = "./img/button/back_Pressed.png";
 
+    private final String boxPath = "./img/checkbox/checkbox.png";
+    private final String boxRolloverPath = "./img/checkbox/checkbox_rollover.png";
+    private final String boxPressedPath = "./img/checkbox/checkbox_pressed.png";
+    private final String sBoxPath = "./img/checkbox/checkbox_selected.png";
+    private final String sBoxRolloverPath = "./img/checkbox/checkbox_selected_rollover.png";
+    private final String sBoxPressedPath = "./img/checkbox/checkbox_selected_pressed.png";
+
 
     public SettingFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
-        this.rLevel=level;
+        this.rLevel=((MenuLevel) level);
 
         initialComponents();
         super.setBackground(imgPath);
@@ -38,16 +42,17 @@ public class SettingFrame extends FrameBase{
 
     private void initialComponents(){
         this.setLayout(null);
-        mainPanel = new JPanel(new GridLayout(3,1,50,50));
+        mainPanel = new JPanel(new GridLayout(3,2,20,50));
         backButton = new JButton("Back");
         backButton.addActionListener(e -> {
-            this.dispose();
+            rLevel.switchToMenuFrame();
         });
-        firstPanel = new JPanel(new GridLayout(1,2,20,0));
-        secondPanel = new JPanel(new GridLayout(1,2,20,0));
-        thirdPanel = new JPanel(new GridLayout(1,2,20,0));
+
+
         volumeLabel = new JLabel("Volume Value");
         volumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        volumeLabel.setFont(new Font("ArtifaktElement-Medium", Font.BOLD, 20));
+        volumeLabel.setForeground(new Color(0,150,255,250));
         volumeSlider = new JSlider();
         volumeSlider.setValue((int) (rLevel.getrGameState().getMusicVolume()*100));
         volumeSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -56,8 +61,13 @@ public class SettingFrame extends FrameBase{
                 rLevel.getrGameState().setMusicVolume(Math.clamp(volumeSlider.getValue(),0,100)/100.0f);
             }
         });
+        volumeSlider.setOpaque(false);
         needTurnOnMusicLabel = new JLabel("Music");
         needTurnOnMusicLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+
+        needTurnOnMusicLabel.setFont(new Font("ArtifaktElement-Medium", Font.BOLD, 20));
+        needTurnOnMusicLabel.setForeground(new Color(0,150,255,250));
         musicOnCheckBox = new JCheckBox();
         musicOnCheckBox.setSelected(rLevel.getrGameState().isMusicEnabled());
         musicOnCheckBox.setHorizontalAlignment(SwingConstants.CENTER);
@@ -66,6 +76,7 @@ public class SettingFrame extends FrameBase{
                rLevel.getrGameState().setMusicEnabled(musicOnCheckBox.isSelected());
            }
         });
+        super.setCheckBoxBackground(musicOnCheckBox,boxPath,boxRolloverPath,boxPressedPath,sBoxPath,sBoxRolloverPath,sBoxPressedPath);
         autoSaveCheckBox = new JCheckBox();
         autoSaveCheckBox.setSelected(rLevel.getrGameState().isAutoSave());
         autoSaveCheckBox.setHorizontalAlignment(SwingConstants.CENTER);
@@ -74,25 +85,27 @@ public class SettingFrame extends FrameBase{
                 rLevel.getrGameState().setAutoSave(autoSaveCheckBox.isSelected());
             }
         });
+        super.setCheckBoxBackground(autoSaveCheckBox,boxPath,boxRolloverPath,boxPressedPath,sBoxPath,sBoxRolloverPath,sBoxPressedPath);
         needAutoSaveLabel = new JLabel("Auto Save");
         needAutoSaveLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        needAutoSaveLabel.setFont(new Font("ArtifaktElement-Medium", Font.BOLD, 20));
+        needAutoSaveLabel.setForeground(new Color(0,150,255,250));
+        //透明度设置
+
 
         this.add(mainPanel);
         mainPanel.setBounds(100,100,400,300);
         this.add(backButton);
-        backButton.setBounds(250,450,100,40);
-        mainPanel.add(firstPanel);
-        mainPanel.add(secondPanel);
-        mainPanel.add(thirdPanel);
+        backButton.setBounds(250,450,100,50);
 
-        firstPanel.add(needAutoSaveLabel);
-        firstPanel.add(autoSaveCheckBox);
+        mainPanel.add(needAutoSaveLabel);
+        mainPanel.add(autoSaveCheckBox);
 
-        secondPanel.add(needTurnOnMusicLabel);
-        secondPanel.add(musicOnCheckBox);
+        mainPanel.add(needTurnOnMusicLabel);
+        mainPanel.add(musicOnCheckBox);
 
-        thirdPanel.add(volumeLabel);
-        thirdPanel.add(volumeSlider);
+        mainPanel.add(volumeLabel);
+        mainPanel.add(volumeSlider);
 
     }
 }
