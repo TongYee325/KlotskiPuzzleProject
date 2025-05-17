@@ -12,7 +12,7 @@ public class MyGameState extends GameStateBase {
     private int gameMapIndex=0;
 
 
-    private int saveTime=5*1000;
+    private int saveTime=30*1000;//自动存档时间
 
     private SaveManager mySaveManager;
 
@@ -68,7 +68,9 @@ public class MyGameState extends GameStateBase {
 
 
     public void loadGameData() {
-        GameSave gamesave = mySaveManager.loadGame();
+        int[] info = new int [1];
+        info[0] = 10;
+        GameSave gamesave= mySaveManager.loadGame(info);
         if (gamesave != null) {
             //将存档数据转化为可用数据
             int[][] panelMap = gamesave.getPanelMap();

@@ -2,6 +2,7 @@ package Save;
 
 import gamestate.MyGameState;
 import level.GameLevel;
+import level.MenuLevel;
 
 import java.io.*;
 import java.io.IOException;
@@ -56,19 +57,24 @@ public class SaveManager {
         }
     }
 
-    public GameSave loadGame() {
-        if (username == null) return null;
+    public GameSave loadGame(int[] info) {
+        if (username == null) {
+            info[0] = 1;
+            return null;//游客登陆不可用}
+        }
         try (ObjectInputStream ois = new ObjectInputStream(
-                new FileInputStream(savePath.resolve("save.dat").toFile()))) {
+                new FileInputStream(savePath.resolve("save.dat").toFile())))
+        {
+            info[0] = 0;
             return (GameSave) ois.readObject();
         } catch (FileNotFoundException e) {
-            //todo 存档未找到ui反馈
-            System.out.println("未找到存档文件");
+            info[0] = 2;
+            return null;//存档不存在
         } catch (Exception e) {
-            //todo 存档损坏ui反馈
-            System.out.println("存档损坏: " + e.getMessage());
+            //存档损坏
+            info[0] = 3;
+            return null;
         }
-        return null;
     }
 
 }
