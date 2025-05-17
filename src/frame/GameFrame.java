@@ -231,19 +231,23 @@ public class GameFrame extends FrameBase {
         updateRemainingTimeUI(gameLevel.getRemainTime());
 
         countdownTimer = new Timer(1000, e -> {
-            long remaining = gameLevel.getRemainTime() - 1000;
-            gameLevel.setRemainTime(remaining);
-
-            // 在事件调度线程上更新UI
-            updateRemainingTimeUI(remaining);
-
-            if (remaining <= 0) {
-                countdownTimer.stop();
-                gameOver();
-            }
+            updateRemainTimer(gameLevel);
         });
 
         countdownTimer.start();
+    }
+
+    public void updateRemainTimer(GameLevel gameLevel) {
+        long remaining = gameLevel.getRemainTime() - 1000;
+        gameLevel.setRemainTime(remaining);
+
+        // 在事件调度线程上更新UI
+        updateRemainingTimeUI(remaining);
+
+        if (remaining <= 0) {
+            countdownTimer.stop();
+            gameOver();
+        }
     }
 
     // 辅助方法：更新剩余时间UI
@@ -286,9 +290,7 @@ public class GameFrame extends FrameBase {
             startCountdown();
         } else {
             remainingTimeLabel.setVisible(false);
-            if (countdownTimer != null) {
-                countdownTimer.stop();
-            }
+            stopRemainTimer();
         }
     }
 
@@ -348,7 +350,7 @@ public class GameFrame extends FrameBase {
     }
 
     void stopTimer(){
-        if (gameTimer != null) {
+        if (gameTimer != null&&gameTimer.isRunning()) {
             gameTimer.stop();
         }
     }
@@ -363,23 +365,24 @@ public class GameFrame extends FrameBase {
         elapsedTime = 0;
         startTime = System.currentTimeMillis();
         stopTimer();
+        stopRemainTimer();
         gameTimer = new Timer(1000, e -> updateTimer());
         gameTimer.start();
+        startRemainTimer();
     }
 
     //计时部分^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     public void frameDestroyed() {
         stopTimer();//停止计时
-        if(countdownTimer!=null){
-            countdownTimer.stop();
-        }
+        stopRemainTimer();
         this.removeAll();
     }
 
-
-
-
-
+    public void stopRemainTimer() {
+        if(countdownTimer!=null){
+            countdownTimer.stop();
+        }
+    }
 
 
     public void setElapsedTime(long elapsedTime) {

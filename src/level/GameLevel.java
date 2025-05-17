@@ -104,13 +104,18 @@ public class GameLevel extends LevelBase {
 
     public void loadGame(int[][] panelMap,long remain) {
         gameFrame.initialGame(panelMap);
-        if(saveTimer!=null){
-            saveTimer.start();
-        }
         if(isTimeMode)
         {
             this.remainTime = remain;
+            gameFrame.updateRemainTimer(this);
         }
+        if(saveTimer!=null){
+            saveTimer.start();
+        }
+
+
+
+
     }
 
 
