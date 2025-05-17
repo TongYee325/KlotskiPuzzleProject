@@ -1,5 +1,6 @@
 package frame;
 
+import audio.AudioManager;
 import controller.MyGameController;
 import frame.block.Block;
 import frame.dialog.VictoryDialog;
@@ -34,6 +35,9 @@ public class GamePanel extends JPanel {
     private final int BLOCK_SIZE = 60;
     private boolean isGameOver = false; // 标记游戏是否结束
 
+    //fx
+    private AudioManager audioManager;
+    private final String fxPath = "./fx/slideFX.wav";
 
     public GamePanel(GameMap gameMap, GameFrame rFrame) {
         this.rFrame = rFrame;
@@ -50,6 +54,7 @@ public class GamePanel extends JPanel {
         this.setBackground(Color.ORANGE);
         this.setBounds(20, 20, rMap.getMapCol() * BLOCK_SIZE + 4, rMap.getMapRow() * BLOCK_SIZE + 4);
 
+        this.audioManager = new AudioManager();
     }
 
     @Override
@@ -252,7 +257,7 @@ public class GamePanel extends JPanel {
         }
         if (movedBlock != null) {
             if (rController.doMove(movedBlock, movedBlock.getRow(), movedBlock.getCol(), 0, needLog)) {
-                afterMove();
+                rFrame.updateStep();
             }
         }
     }
@@ -263,7 +268,7 @@ public class GamePanel extends JPanel {
         }
         if (movedBlock != null) {
             if (rController.doMove(movedBlock, movedBlock.getRow(), movedBlock.getCol(), 1, needLog)) {
-                afterMove();
+                rFrame.updateStep();
             }
         }
     }
@@ -274,7 +279,7 @@ public class GamePanel extends JPanel {
         }
         if (movedBlock != null) {
             if (rController.doMove(movedBlock, movedBlock.getRow(), movedBlock.getCol(), 2, needLog)) {
-                afterMove();
+                rFrame.updateStep();
             }
         }
     }
@@ -285,21 +290,16 @@ public class GamePanel extends JPanel {
         }
         if (movedBlock != null) {
             if (rController.doMove(movedBlock, movedBlock.getRow(), movedBlock.getCol(), 3, needLog)) {
-                afterMove();
+                rFrame.updateStep();
             }
         }
     }
 
     protected void afterMove() {
-        rFrame.updateStep();
+        playFx();
         if (CaoCaoBlock.getRow() == TARGET_Y && CaoCaoBlock.getCol() == TARGET_X) {
             // 停止游戏计时
             rFrame.stopTimer();
-
-
-            if (CaoCaoBlock.getRow() == TARGET_Y && CaoCaoBlock.getCol() == TARGET_X) {
-//todo
-            }
 
             // 弹出胜利对话框（传入当前 GameFrame）
             SwingUtilities.invokeLater(() -> {
@@ -313,6 +313,11 @@ public class GamePanel extends JPanel {
             rFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();
             rFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();*/
         }
+    }
+
+    private void playFx() {
+        audioManager.setVolume(rFrame.getRlevel().getrGameState().getMusicVolume());
+        audioManager.play(fxPath,false);
     }
 
     //撤销逻辑，通过复用移动逻辑实现，、

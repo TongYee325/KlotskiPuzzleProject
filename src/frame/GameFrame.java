@@ -360,6 +360,7 @@ public class GameFrame extends FrameBase {
 
     //更新步数
     public void updateStep(){
+        gamePanel.afterMove();
         stepLabel.setText(String.format("Steps : %d",rlevel.getrGameState().getMyLogSystem().getTotalSteps().size()));
     }
 

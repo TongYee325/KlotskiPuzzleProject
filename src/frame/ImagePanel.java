@@ -1,3 +1,4 @@
+/*废案
 package frame;
 
 import javax.imageio.ImageIO;
@@ -40,3 +41,4 @@ public class ImagePanel extends JPanel {
     }
 }
 
+*/

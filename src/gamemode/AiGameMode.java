@@ -86,7 +86,10 @@ public class AiGameMode extends GameModeBase {
         //0右1左2上3下
         Block selectedBlock = view.getSelectedBlock();
         if (selectedBlock != null) {
-            myGameController.doMove(selectedBlock, selectedBlock.getRow(), selectedBlock.getCol(), dir, true);
+            if(myGameController.doMove(selectedBlock, selectedBlock.getRow(), selectedBlock.getCol(), dir, true))
+            {
+                gameLevel.getGameFrame().updateStep();
+            }
             gameLevel.getGameFrame().updateStep();
         }
     }
