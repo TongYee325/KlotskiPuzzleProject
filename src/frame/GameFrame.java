@@ -1,6 +1,5 @@
 package frame;
 
-import frame.audio.AudioManager;
 import frame.dialog.VictoryDialog;
 import gamemode.AiGameMode;
 import level.GameLevel;
@@ -57,9 +56,8 @@ public class GameFrame extends FrameBase {
         MyGameState gameState = rlevel.getrGameState();
         isTimedMode = gameState.isTimedMode();
 
-        setupAudio();
-        AudioManager.getInstance().setBgmEnabled(true);
-        initialGame();
+
+
     }
 
     private void setPanels(int width, int height) {
@@ -472,53 +470,9 @@ public class GameFrame extends FrameBase {
         if (gameTimer != null) gameTimer.stop();
         if (countdownTimer != null) countdownTimer.stop();
 
-        if (isVictory) {
-            AudioManager.getInstance().playSoundEffect(AudioManager.SoundEffectType.VICTORY);
-            new VictoryDialog(this, elapsedTime).setVisible(true);
-        } else {
-            AudioManager.getInstance().playSoundEffect(AudioManager.SoundEffectType.ERROR);
-            new DefaultDialog(this,"Time out!",true,
-                    String.format("You spent %d steps.",rlevel.getrGameState().getMyLogSystem().getTotalSteps().size()),
-                    String.format("You spent %s ",formatTime(elapsedTime))
-                    ).setVisible(true);
-        }
     }
 
-    // 新增方法：控制背景音乐开关
-    private void toggleBgm() {
-        AudioManager audioManager = AudioManager.getInstance();
-        boolean bgmEnabled = !audioManager.isBgmEnabled();
-        audioManager.setBgmEnabled(bgmEnabled);
-        // 更新按钮文本
-        for (Component comp : infoPanel.getComponents()) {
-            if (comp instanceof JButton && ((JButton) comp).getText().startsWith("背景音乐:")) {
-                ((JButton) comp).setText("背景音乐: " + (bgmEnabled ? "开" : "关"));
-                break;
-            }
-        }
-    }
 
-    private void toggleSfx() {
-        AudioManager audioManager = AudioManager.getInstance();
-        boolean sfxEnabled = !audioManager.isSfxEnabled();
-        audioManager.setSfxEnabled(sfxEnabled);
-        // 更新按钮文本
-        for (Component comp : infoPanel.getComponents()) {
-            if (comp instanceof JButton && ((JButton) comp).getText().startsWith("音效:")) {
-                ((JButton) comp).setText("音效: " + (sfxEnabled ? "开" : "关"));
-                break;
-            }
-        }
-    }
-
-    // 新增方法：初始化音频
-    private void setupAudio() {
-        try {
-            AudioManager.getInstance().generateBackgroundMusic();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
 
 }
