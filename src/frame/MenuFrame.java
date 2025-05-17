@@ -32,6 +32,13 @@ public class MenuFrame extends FrameBase {
     public MenuFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
         this.rLevel = (MenuLevel) level;
+        initialComponents();
+
+
+        super.setBackground(imgPath);
+    }
+
+    private void initialComponents() {
         this.setLayout(null);
         Point center = new Point(this.getWidth() / 2, this.getHeight() / 2);
 
@@ -80,10 +87,5 @@ public class MenuFrame extends FrameBase {
             System.exit(0);
         });
         super.setButtonBackground(exitGameBtn, exitPath,exitRolloverPath,exitPressedPath);
-
-
-
-
-        super.setBackground(imgPath);
     }
 }

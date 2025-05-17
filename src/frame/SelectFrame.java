@@ -9,20 +9,34 @@ import java.awt.event.ActionEvent;
 
 public class SelectFrame extends FrameBase {
     private JPanel multipleLevelPanel;
-    private int levelNum = 3;
+    private int levelNum = 3;//todo
     private MenuLevel rLevel;
+
+
+    private JRadioButton timeMode;
+    private JRadioButton normalMode;
     public boolean isTimedModeSelected = false; // 新增：记录模式选择
     private JPanel mainPanel;
 
     public SelectFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
+
         this.rLevel = (MenuLevel) level;
-        mainPanel = new JPanel(new BorderLayout(20,20));
-        this.add(mainPanel, BorderLayout.CENTER);
+        initialComponents();
+
+        super.setBackground(imgPath);
+    }
+
+    private void initialComponents() {
+        this.setLayout(null);
+        mainPanel = new JPanel(new BorderLayout(0,0));
+        mainPanel.setBounds(0, 0, this.getWidth(), this.getHeight());
+        mainPanel.setOpaque(false);
+        this.add(mainPanel);
 
         // 主内容面板（居中布局）
-        JPanel contentPanel = new JPanel(new GridBagLayout());
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        JPanel contentPanel = new JPanel(new GridLayout(2,1));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(10,20,20,30));
         mainPanel.add(contentPanel, BorderLayout.CENTER);
 
         // 1. 原有关卡选择部分
@@ -31,14 +45,12 @@ public class SelectFrame extends FrameBase {
         // 2. 新增模式选择部分（放置在关卡选择下方）
         addModeSelection(contentPanel);
 
-        // 3. 原有返回按钮（调整位置到底部）
-        addBackButton();
-        /*super.setBackground(imgPath);*/
+        contentPanel.setOpaque(false);
+
     }
 
-    // 原有关卡选择逻辑（调整为GridBagLayout布局）
     private void addLevelSelection(JPanel container) {
-        GridBagConstraints gbc = new GridBagConstraints();
+        /*GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0, 0, 20, 0); // 下方留空20px
         gbc.anchor = GridBagConstraints.CENTER;
 
@@ -51,20 +63,34 @@ public class SelectFrame extends FrameBase {
 
         // 关卡按钮面板（水平排列）
         multipleLevelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        multipleLevelPanel.setOpaque(false);
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        container.add(multipleLevelPanel, gbc);
+        container.add(multipleLevelPanel, gbc);*/
+        JPanel levelSelectionPanel = new JPanel(null);
+        levelSelectionPanel.setOpaque(false);
+        JLabel levelLabel = new JLabel("Select Level");
 
+        levelLabel.setFont(new Font("Algerian", Font.BOLD, 30));
+        levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        levelLabel.setBounds(75,20,400,50);
+        levelSelectionPanel.add(levelLabel);
+
+        multipleLevelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        multipleLevelPanel.setBounds(0,70,550,200);
+        multipleLevelPanel.setOpaque(false);
+        levelSelectionPanel.add(multipleLevelPanel);
         // 创建3个关卡按钮（Level 1-3）
-        for (int i = 0; i < levelNum; i++) {
+        for (int i = 0; i < levelNum; i++) {//todo :add more level upto 12
             JButton levelBtn = createLevelBtn(i);
             multipleLevelPanel.add(levelBtn);
         }
+        container.add(levelSelectionPanel);
     }
 
     // 新增：模式选择逻辑
     private void addModeSelection(JPanel container) {
-        GridBagConstraints gbc = new GridBagConstraints();
+        /*GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(20, 0, 30, 0); // 上下留空
         gbc.anchor = GridBagConstraints.CENTER;
 
@@ -87,29 +113,87 @@ public class SelectFrame extends FrameBase {
 
         // 普通模式按钮（英文，默认选中）
         JRadioButton normalMode = new JRadioButton("Normal Mode", true);
+
         normalMode.addActionListener(e -> isTimedModeSelected = false);
         modeGroup.add(normalMode);
         modePanel.add(normalMode);
 
+
+
+
         gbc.gridy = 3;
         container.add(modePanel, gbc);
-    }
 
-    // 原有返回按钮（调整位置到底部）
-    private void addBackButton() {
+        timedMode.setOpaque(false);
+        normalMode.setOpaque(false);
+        modePanel.setOpaque(false);*/
+        JPanel modeSelectionPanel = new JPanel(null);
+        JLabel modeLabel = new JLabel("Select Mode");
+
+        modeLabel.setFont(new Font("Algerian", Font.BOLD, 30));
+        modeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        modeSelectionPanel.add(modeLabel);
+
+
+        timeMode = new JRadioButton("Timed Mode");
+        timeMode.setFont(new Font("Book Antiqua", Font.BOLD, 15));
+        timeMode.setHorizontalAlignment(SwingConstants.CENTER);
+        timeMode.addActionListener(e -> {
+             setTimedModeSelected(true);
+        });
+
+        Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+
+        normalMode = new JRadioButton("Normal Mode", true);
+        normalMode.setFont(new Font("Book Antiqua", Font.BOLD, 15));
+        normalMode.setHorizontalAlignment(SwingConstants.CENTER);
+        normalMode.addActionListener(e -> {
+            setTimedModeSelected(false);
+        });
+
+        modeSelectionPanel.add(modeLabel);
+        modeSelectionPanel.add(timeMode);
+        modeSelectionPanel.add(normalMode);
+        modeLabel.setBounds(75,20,400,50);
+        timeMode.setBounds(100,100,150,50);
+        normalMode.setBounds(275,100,150,50);
+
+        timeMode.setOpaque(false);
+        normalMode.setOpaque(false);
+        modeSelectionPanel.setOpaque(false);
+
+
         JButton back = new JButton("Back");
         back.addActionListener(e -> rLevel.switchToMenuFrame());
         back.setPreferredSize(new Dimension(120, 40));
 
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 20));
-        bottomPanel.add(back);
-        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+        modeSelectionPanel.add(back);
+
+
+        back.setBounds(200,200,120,40);
+
+
+
+        container.add(modeSelectionPanel);
+    }
+
+
+    public void setTimedModeSelected(boolean timedModeSelected) {
+        if(timedModeSelected) {
+            timeMode.setSelected(true);
+            normalMode.setSelected(false);
+        }else {
+            timeMode.setSelected(false);
+            normalMode.setSelected(true);
+        }
+        isTimedModeSelected = timedModeSelected;
     }
 
     // 原有关卡按钮创建逻辑（修改点击事件，传递模式选择）
     private JButton createLevelBtn(int index) {
-        JButton btn = new JButton("Level " + (index + 1));
-        btn.setPreferredSize(new Dimension(100, 50));
+        JButton btn = new JButton(String.valueOf(index + 1));
+        btn.setPreferredSize(new Dimension(60, 60));
         btn.addActionListener(e -> {
             // 在切换关卡前，保存模式选择到游戏状态
             rLevel.getrGameState().setTimedMode(isTimedModeSelected);
