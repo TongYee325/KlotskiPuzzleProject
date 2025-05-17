@@ -4,9 +4,9 @@ public class MapManager {
     private static final int[][] map0 = {
             {3, 7, 7, 4},
             {3, 7, 7, 4},
-            {5, 2, 2, 6},
             {5, 0, 0, 6},
-            {1, 1, 1, 1},
+            {5, 0, 0, 6},
+            {1, 0, 0, 1},
     };
 
     private static final int[][] map1 = {

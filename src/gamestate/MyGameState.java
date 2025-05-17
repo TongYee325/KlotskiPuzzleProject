@@ -2,9 +2,12 @@ package gamestate;
 
 import Save.GameSave;
 import Save.SaveManager;
-import audio.AudioManager;
+import frame.MenuFrame;
+import frame.dialog.DefaultDialog;
 import level.*;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class MyGameState extends GameStateBase {
@@ -32,45 +35,9 @@ public class MyGameState extends GameStateBase {
 
     private boolean timedMode = false;
 
-    //bgm
-    private AudioManager myAudioManager;
-    private final String bgmPath = "./fx/bgm.wav";
 
 
-    public MyGameState() {
-        myLogSystem = new LogSystem();
-        mySaveManager = new SaveManager(this);
 
-
-        //turn on bgm
-        myAudioManager = new AudioManager();
-        playBgm(bgmPath,true);
-    }
-
-    public void playBgm(String bgmPath,boolean loop){
-        if(musicEnabled){
-            myAudioManager.play(bgmPath,true);
-        }
-    }
-
-    public void updateBgmConfig()
-    {
-
-        if(musicEnabled&&!myAudioManager.isPlaying()) {
-            myAudioManager.play(bgmPath,true);
-            myAudioManager.setVolume(musicVolume);
-        }else if(musicEnabled&&myAudioManager.isPlaying()) {
-            myAudioManager.setVolume(musicVolume);
-        } else{
-            myAudioManager.stop();
-            myAudioManager.setVolume(musicVolume);
-        }
-    }
-
-
-    public void stopBgm(){
-        myAudioManager.stop();
-    }
 
     public void startLevel(int levelIndex) {
         if (levelIndex == currentLevel && levelIndex != 0) {
@@ -104,41 +71,66 @@ public class MyGameState extends GameStateBase {
     }
 
 
-    public void loadGameData() {
+    public void loadGameData(MenuFrame menuFrame) {
         int[] info = new int [1];
         GameSave gamesave= mySaveManager.loadGame(info);
+            switch (info[0]) {
+            case 1: // 游客登录，无法加载存档
+                showMessage("Please log in to load your saved game",menuFrame);
+                break;
 
-        if (gamesave != null) {
-            //将存档数据转化为可用数据
-            int[][] panelMap = gamesave.getPanelMap();
-            int levelIndex = gamesave.getCurrentLevelIndex();
-            ArrayList<Step> totalSteps = gamesave.getTotalSteps();
-            long elapsedTime = gamesave.getElapsedTime();
+            case 2: // 存档不存在
+                showMessage("Save file not found",menuFrame);
+                break;
 
-            myLogSystem.setTotalSteps(totalSteps);
-            myLogSystem.setElapsedTime(elapsedTime);
-            if (levelIndex >= 2) {
-                if (levelIndex == currentLevel) {
-                    //传入关卡与当前关卡一样时，不做任何处理
-                    return;
+            case 3: // 存档损坏
+                showMessage("The save file is corrupted. Please start a new game",menuFrame);
+                break;
+
+            default:
+                if (gamesave != null) {
+                    ((MenuLevel) menuFrame.getRlevel()).levelDestroy();
+
+                    //将存档数据转化为可用数据
+                    int[][] panelMap = gamesave.getPanelMap();
+                    int levelIndex = gamesave.getCurrentLevelIndex();
+                    ArrayList<Step> totalSteps = gamesave.getTotalSteps();
+                    long elapsedTime = gamesave.getElapsedTime();
+
+                    myLogSystem.setTotalSteps(totalSteps);
+                    myLogSystem.setElapsedTime(elapsedTime);
+                    if (levelIndex >= 2) {
+                        if (levelIndex == currentLevel) {
+                            //传入关卡与当前关卡一样时，不做任何处理
+                            return;
+                        }
+                        currentLevel = levelIndex;
+                        switch (currentLevel) {
+                            case 2:
+                                level = new GameLevel(this);
+                                ((GameLevel) level).loadGame(panelMap);
+                                break;
+                            //can add more level
+                            default:
+                                break;
+
+                        }
+                    }
                 }
-                currentLevel = levelIndex;
-                switch (currentLevel) {
-                    case 2:
-                        level = new GameLevel(this);
-                        ((GameLevel) level).loadGame(panelMap);
-
-
-
-                        break;
-                    //can add more level
-                    default:
-                        break;
-
-                }
+                break;
             }
-        }
     }
+    private void showMessage(String message,MenuFrame menuFrame) {
+        SwingUtilities.invokeLater(() -> {
+            new DefaultDialog(
+                    menuFrame,
+                    "Load Game Error",
+                    true,
+                    message,
+                    " ",
+                    400,200
+            );
+        });}
 
 
     public void setGameMapIndex(int gameMapIndex) {
@@ -166,6 +158,11 @@ public class MyGameState extends GameStateBase {
     public static boolean isTimedMode = false;
     private long remainingTime = 0;
 
+    public MyGameState() {
+        myLogSystem = new LogSystem();
+        mySaveManager = new SaveManager(this);
+    }
+
     // 新增限时模式相关方法
     public boolean isTimedMode() { return timedMode; }
 
@@ -184,13 +181,10 @@ public class MyGameState extends GameStateBase {
 
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
-        updateBgmConfig();
     }
 
     public void setMusicEnabled(boolean musicEnabled) {
         this.musicEnabled = musicEnabled;
-        updateBgmConfig();
-
     }
 
     public boolean isAutoSave() {
