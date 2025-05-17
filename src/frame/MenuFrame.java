@@ -57,7 +57,7 @@ public class MenuFrame extends FrameBase {
             btnPanel.add(loadGameBtn);
             btnPanel.setBounds(center.x-200/2, center.y+100/2, 200, 186);
             loadGameBtn.addActionListener(e -> {
-                getRlevel().getrGameState().loadGameData(this);;
+                getRlevel().getrGameState().loadGameData(this);
             });
             super.setButtonBackground(loadGameBtn,loadPath,loadRolloverPath,loadPressedPath);
         }
