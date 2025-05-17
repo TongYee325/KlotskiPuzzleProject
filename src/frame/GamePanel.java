@@ -128,12 +128,12 @@ public class GamePanel extends JPanel {
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 5) {
-                    box = new Block(Color.RED, i, j, 5);
+                    box = new Block(Color.MAGENTA, i, j, 5);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 6) {
-                    box = new Block(Color.PINK, i, j, 6);
+                    box = new Block(Color.GREEN, i, j, 6);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
@@ -192,12 +192,12 @@ public class GamePanel extends JPanel {
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 5) {
-                    box = new Block(Color.RED, i, j, 5);
+                    box = new Block(Color.MAGENTA, i, j, 5);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;
                 } else if (mapIndex[i][j] == 6) {
-                    box = new Block(Color.PINK, i, j, 6);
+                    box = new Block(Color.GREEN, i, j, 6);
                     box.setSize(BLOCK_SIZE, BLOCK_SIZE * 2);
                     mapIndex[i][j] = 0;
                     mapIndex[i + 1][j] = 0;

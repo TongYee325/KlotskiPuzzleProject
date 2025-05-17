@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class SelectFrame extends FrameBase {
     private JPanel multipleLevelPanel;
-    private int levelNum = 3;//todo
+    private final int levelNum = 9;//todo
     private MenuLevel rLevel;
 
 
@@ -17,6 +17,10 @@ public class SelectFrame extends FrameBase {
     private JRadioButton normalMode;
     public boolean isTimedModeSelected = false; // 新增：记录模式选择
     private JPanel mainPanel;
+
+    private final String backPath = "./img/button/back.png";
+    private final String back_rollover = "./img/button/back_rollover.png";
+    private final String back_pressed = "./img/button/back_pressed.png";
 
     public SelectFrame(LevelBase level, String title, int width, int height,String imgPath) {
         super(level, title, width, height);
@@ -81,7 +85,7 @@ public class SelectFrame extends FrameBase {
         multipleLevelPanel.setOpaque(false);
         levelSelectionPanel.add(multipleLevelPanel);
         // 创建3个关卡按钮（Level 1-3）
-        for (int i = 0; i < levelNum; i++) {//todo :add more level upto 12
+        for (int i = 0; i < levelNum; i++) {//todo :add more level upto 9
             JButton levelBtn = createLevelBtn(i);
             multipleLevelPanel.add(levelBtn);
         }
@@ -171,8 +175,8 @@ public class SelectFrame extends FrameBase {
         modeSelectionPanel.add(back);
 
 
-        back.setBounds(200,200,120,40);
-
+        back.setBounds(200,200,130,40);
+        super.setButtonBackground(back,backPath,back_rollover,back_pressed);
 
 
         container.add(modeSelectionPanel);
@@ -192,13 +196,17 @@ public class SelectFrame extends FrameBase {
 
     // 原有关卡按钮创建逻辑（修改点击事件，传递模式选择）
     private JButton createLevelBtn(int index) {
-        JButton btn = new JButton(String.valueOf(index + 1));
+        String boxPath = "./img/box/box" + (index+1) + ".png";
+        String boxRolloverPath = "./img/box/box" + (index+1) + "_rollover.png";
+        String boxPressedPath = "./img/box/box" + (index+1) + "_pressed.png";
+        JButton btn = new JButton();
         btn.setPreferredSize(new Dimension(60, 60));
         btn.addActionListener(e -> {
             // 在切换关卡前，保存模式选择到游戏状态
             rLevel.getrGameState().setTimedMode(isTimedModeSelected);
             rLevel.switchToGameLevelAccordingToIndex(index);
         });
+        super.setButtonBackground(btn,boxPath,boxRolloverPath,boxPressedPath);
         return btn;
     }
 
