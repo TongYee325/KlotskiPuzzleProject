@@ -2,7 +2,8 @@ package frame;
 
 import controller.MyGameController;
 import frame.block.Block;
-import frame.dialog.VictoryDialog;
+import frame.dialog.DefaultDialog;
+import gamestate.MyGameState;
 import level.GameLevel;
 import level.map.GameMap;
 
@@ -25,6 +26,9 @@ public class GamePanel extends JPanel {
     private GameMap rMap;
     private int[][] panelMap;
 
+    private long totalTime;  // 总游戏时间（毫秒）
+    private long remainingTime;  // 剩余时间（限时模式）
+    private int totalSteps;  // 总步数
 
 
 
@@ -50,6 +54,20 @@ public class GamePanel extends JPanel {
         this.setBackground(Color.ORANGE);
         this.setBounds(20, 20, rMap.getMapCol() * BLOCK_SIZE + 4, rMap.getMapRow() * BLOCK_SIZE + 4);
 
+    }
+    /** 将毫秒时间格式化为 "分:秒" 或 "时:分:秒" */
+    private String formatTime(long elapsedTime) {
+        long seconds = (elapsedTime / 1000) % 60;
+        long minutes = (elapsedTime / (1000 * 60)) % 60;
+        long hours = elapsedTime / (1000 * 60 * 60);
+
+        if (hours > 0) {
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        } else if (minutes > 0) {
+            return String.format("%02d:%02d", minutes, seconds);
+        } else {
+            return String.format("%02d秒", seconds);
+        }
     }
 
     @Override
@@ -301,17 +319,77 @@ public class GamePanel extends JPanel {
 //todo
             }
 
-            // 弹出胜利对话框（传入当前 GameFrame）
-            SwingUtilities.invokeLater(() -> {
-                VictoryDialog victoryDialog = new VictoryDialog(rFrame);
-                victoryDialog.setVisible(true);
-            });
-            isGameOver = true; // 设置游戏结束标记
+            this.totalSteps = rFrame.getRlevel().getrGameState().getMyLogSystem().getTotalSteps().size();
+            this.totalTime = rFrame.getElapsedTime();
+            this.remainingTime = rFrame.getRlevel().getrGameState().getRemainingTime();
 
-            // 原有日志输出
-            /*System.out.println("You Win!");
-            rFrame.getRlevel().getrGameState().getMyLogSystem().printAllSteps();
-            rFrame.getRlevel().getrGameState().getMyLogSystem().printStepsNum();*/
+            SwingUtilities.invokeLater(() -> {
+                // 构建胜利对话框的中间内容面板（统计信息）
+                JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
+
+                // 总步数面板
+                JPanel stepsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                JLabel stepsLabel = new JLabel("Total Steps:");
+                stepsLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
+                JTextField stepsField = new JTextField(String.valueOf(totalSteps), 15);
+                stepsField.setEditable(false);
+                stepsField.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                ));
+                stepsField.setBackground(Color.WHITE);
+                stepsField.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
+                stepsPanel.add(stepsLabel);
+                stepsPanel.add(stepsField);
+
+                // 总时间面板
+                JPanel timePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                JLabel timeLabel = new JLabel("Total Time:");
+                timeLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
+                JTextField timeField = new JTextField(formatTime(totalTime), 15);
+                timeField.setEditable(false);
+                timeField.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                ));
+                timeField.setBackground(Color.WHITE);
+                timeField.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
+                timePanel.add(timeLabel);
+                timePanel.add(timeField);
+
+                // 剩余时间面板（限时模式）
+                if (MyGameState.isTimedMode) {
+                    JPanel remainingTimePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+                    JLabel remainingTimeLabel = new JLabel("Remaining Time:");
+                    remainingTimeLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 18));
+                    JTextField remainingTimeField = new JTextField(formatTime(remainingTime), 10);
+                    remainingTimeField.setEditable(false);
+                    remainingTimeField.setBorder(BorderFactory.createCompoundBorder(
+                            BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+                    ));
+                    remainingTimeField.setBackground(Color.WHITE);
+                    remainingTimeField.setFont(new Font("Microsoft YaHei", Font.PLAIN, 18));
+                    remainingTimePanel.add(remainingTimeLabel);
+                    remainingTimePanel.add(remainingTimeField);
+                    contentPanel.add(remainingTimePanel, BorderLayout.SOUTH);
+                }
+
+                contentPanel.add(stepsPanel, BorderLayout.NORTH);
+                contentPanel.add(timePanel, BorderLayout.CENTER);
+
+                // 调用 DefaultDialog
+                new DefaultDialog(
+                        rFrame,
+                        "Victory!",
+                        true,
+                        null,
+                        "You Win!",
+                        contentPanel,
+                        "OK",
+                        new Dimension(450, 250)
+                );
+            });
         }
     }
 

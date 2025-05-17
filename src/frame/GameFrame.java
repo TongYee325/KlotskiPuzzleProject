@@ -1,6 +1,6 @@
 package frame;
 
-import frame.dialog.VictoryDialog;
+
 import gamemode.AiGameMode;
 import level.GameLevel;
 import level.map.GameMap;
@@ -434,41 +434,24 @@ public class GameFrame extends FrameBase {
         return gamePanel;
     }
 
-    // 新增方法：启动倒计时
-//    private void startCountdown() {
-//        if (countdownTimer != null && countdownTimer.isRunning()) {
-//            countdownTimer.stop();
-//        }
-//        MyGameState gameState = rlevel.getrGameState();
-//        countdownTimer = new Timer(1000, e -> {
-//            long remaining = gameState.getRemainingTime() - 1000;
-//            gameState.setRemainingTime(remaining);
-//            SwingUtilities.invokeLater(() -> {
-//                long totalMs = Math.max(remaining, 0);
-//                long minutes = totalMs / (1000 * 60);
-//                long seconds = (totalMs % (1000 * 60)) / 1000;
-//                remainingTimeLabel.setText("剩余时间：" + String.format("%02d:%02d", minutes, seconds));
-//
-//                // 强制刷新界面
-//                remainingTimeLabel.revalidate();
-//                remainingTimeLabel.repaint();
-//
-//                if (remaining <= 60000) {
-//                    remainingTimeLabel.setForeground(Color.RED);
-//                    // ... 原有声音提示代码 ...
-//                }
-//                if (remaining <= 0) {
-//                    countdownTimer.stop();
-//                    gameOver(false);
-//                }
-//            });
-//        });
-//        countdownTimer.start();
-//    }
-    // 新增方法：游戏结束处理
+
+    //游戏结束处理
     private void gameOver(boolean isVictory) {
         if (gameTimer != null) gameTimer.stop();
         if (countdownTimer != null) countdownTimer.stop();
+        SwingUtilities.invokeLater(() -> {
+            // 调用 DefaultDialog
+            new DefaultDialog(
+                    this,
+                    "Game Over",
+                    true,
+                    "resources/defeat_icon.png",
+                    "Time has expired!",
+                    null,
+                    "OK",
+                    new Dimension(350, 200)
+            );
+        });
 
     }
 
