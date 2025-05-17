@@ -39,4 +39,5 @@ public class DefaultDialog extends JDialog {
         iconLabel.setBounds(0, 0, icon.getIconWidth(), icon.getIconHeight()); // 设置组件的显示位置及大小
         this.getContentPane().add(iconLabel); // 将组件添加到面板中*/
     }
+
 }

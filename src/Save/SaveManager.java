@@ -62,8 +62,10 @@ public class SaveManager {
                 new FileInputStream(savePath.resolve("save.dat").toFile()))) {
             return (GameSave) ois.readObject();
         } catch (FileNotFoundException e) {
+            //todo 存档未找到ui反馈
             System.out.println("未找到存档文件");
         } catch (Exception e) {
+            //todo 存档损坏ui反馈
             System.out.println("存档损坏: " + e.getMessage());
         }
         return null;
