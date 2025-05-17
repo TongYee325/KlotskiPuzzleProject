@@ -69,8 +69,8 @@ public class MyGameState extends GameStateBase {
 
     public void loadGameData() {
         int[] info = new int [1];
-        info[0] = 10;
         GameSave gamesave= mySaveManager.loadGame(info);
+
         if (gamesave != null) {
             //将存档数据转化为可用数据
             int[][] panelMap = gamesave.getPanelMap();

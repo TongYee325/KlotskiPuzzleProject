@@ -60,7 +60,7 @@ public class SaveManager {
     public GameSave loadGame(int[] info) {
         if (username == null) {
             info[0] = 1;
-            return null;//游客登陆不可用}
+            return null;//游客登陆不可用
         }
         try (ObjectInputStream ois = new ObjectInputStream(
                 new FileInputStream(savePath.resolve("save.dat").toFile())))
