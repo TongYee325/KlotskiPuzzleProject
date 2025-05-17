@@ -28,7 +28,6 @@ public class GamePanel extends JPanel {
     private int[][] panelMap;
 
     private long totalTime;  // 总游戏时间（毫秒）
-    private long remainingTime;  // 剩余时间（限时模式）
     private int totalSteps;  // 总步数
 
 
@@ -363,7 +362,7 @@ public class GamePanel extends JPanel {
                     JPanel remainingTimePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
                     JLabel remainingTimeLabel = new JLabel("Remaining Time:");
                     remainingTimeLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 18));
-                    JTextField remainingTimeField = new JTextField(formatTime(remainingTime), 10);
+                    JTextField remainingTimeField = new JTextField(formatTime(totalTime), 10);
                     remainingTimeField.setEditable(false);
                     remainingTimeField.setBorder(BorderFactory.createCompoundBorder(
                             BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
@@ -384,7 +383,6 @@ public class GamePanel extends JPanel {
                         rFrame,
                         "Victory!",
                         true,
-                        null,
                         "You Win!",
                         contentPanel,
                         "OK",

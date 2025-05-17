@@ -109,7 +109,7 @@ public class GameLevel extends LevelBase {
         }
         if(isTimeMode)
         {
-            remainTime = remain;
+            this.remainTime = remain;
         }
     }
 

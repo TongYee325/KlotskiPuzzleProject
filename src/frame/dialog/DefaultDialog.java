@@ -52,8 +52,7 @@ public class DefaultDialog extends JDialog {
     }
 
 
-    public DefaultDialog(Frame owner, String title, boolean modal,
-                             String iconPath, String mainMessage,
+    public DefaultDialog(Frame owner, String title, boolean modal, String mainMessage,
                              JPanel contentPanel, String buttonText, Dimension size) {
         //胜利提示框
         super(owner, title, modal);
@@ -62,14 +61,7 @@ public class DefaultDialog extends JDialog {
         setLayout(new BorderLayout(15, 15));
         getContentPane().setBackground(new Color(245, 245, 245)); // 默认背景色
 
-        // 1. 图标面板（可选）
-        if (iconPath != null) {
-                JPanel iconPanel = new JPanel();
-                iconPanel.setBackground(new Color(245, 245, 245));
-                JLabel iconLabel = new JLabel(new ImageIcon(iconPath));
-                iconPanel.add(iconLabel);
-                add(iconPanel, BorderLayout.NORTH);
-        }
+
 
             // 2. 主消息面板（可选）
         if (mainMessage != null) {

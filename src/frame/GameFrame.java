@@ -11,6 +11,8 @@ import frame.dialog.DefaultDialog;
 import javax.swing.*;
 import java.awt.*;
 
+import static gamestate.MyGameState.TIME_LIMIT;
+
 public class GameFrame extends FrameBase {
 
     // 面板数据
@@ -33,7 +35,7 @@ public class GameFrame extends FrameBase {
     // 存档信息显示
     private JLabel saveTipLabel;
     private Timer tipTimer;
-    private static final long TIME_LIMIT = 3 * 60 * 1000; // 3分钟
+
     private JLabel remainingTimeLabel;
     private Timer countdownTimer;
     private boolean isTimedMode = false;
@@ -43,8 +45,7 @@ public class GameFrame extends FrameBase {
         super(level, title, width, height);
         rlevel = level;
         // 从游戏状态获取模式选择
-        MyGameState gameState = rlevel.getrGameState();
-        isTimedMode = gameState.isTimedMode();
+        isTimedMode = ((GameLevel) rlevel).isTimeMode();
 
 
 
@@ -238,7 +239,7 @@ public class GameFrame extends FrameBase {
 
             if (remaining <= 0) {
                 countdownTimer.stop();
-                gameOver(false);
+                gameOver();
             }
         });
 
@@ -395,7 +396,7 @@ public class GameFrame extends FrameBase {
 
 
     //游戏结束处理
-    private void gameOver(boolean isVictory) {
+    private void gameOver() {
         if (gameTimer != null) gameTimer.stop();
         if (countdownTimer != null) countdownTimer.stop();
         SwingUtilities.invokeLater(() -> {
@@ -404,8 +405,7 @@ public class GameFrame extends FrameBase {
                     this,
                     "Game Over",
                     true,
-                    "resources/defeat_icon.png",
-                    "Time has expired!",
+                    "Time out!",
                     null,
                     "OK",
                     new Dimension(350, 200)
