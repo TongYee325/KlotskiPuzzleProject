@@ -45,6 +45,12 @@ public class GameFrame extends FrameBase {
     public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
         super(level, title, width, height);
         rlevel = level;
+        // 从游戏状态获取模式选择
+        MyGameState gameState = rlevel.getrGameState();
+        isTimedMode = gameState.isTimedMode();
+
+
+
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
         rMap = gameMap;
@@ -52,9 +58,7 @@ public class GameFrame extends FrameBase {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        // 从游戏状态获取模式选择
-        MyGameState gameState = rlevel.getrGameState();
-        isTimedMode = gameState.isTimedMode();
+
 
 
 
@@ -180,8 +184,8 @@ public class GameFrame extends FrameBase {
         timeInfoPanel.add(timeLabel);
 
         // 剩余时间标签（保持原有代码不变）
-        remainingTimeLabel = new JLabel("剩余时间：--:--");
-        remainingTimeLabel.setFont(new Font("微软雅黑", Font.BOLD, 14));
+        remainingTimeLabel = new JLabel("Remaining Time : --:--");
+        remainingTimeLabel.setFont(new Font("Arial", Font.BOLD, 14));
         remainingTimeLabel.setForeground(new Color(0, 100, 0));
         remainingTimeLabel.setMinimumSize(new Dimension(120, 25));
         remainingTimeLabel.setPreferredSize(new Dimension(120, 25));
@@ -190,7 +194,11 @@ public class GameFrame extends FrameBase {
         // 新增：模式选择控件
         addModeSelection(timeInfoPanel);
 
-        infoPanel.add(timeInfoPanel);
+        //是限时模式才添加剩余时间UI
+        if(isTimedMode){
+            infoPanel.add(timeInfoPanel);
+        }
+
 
         // 保存提示标签（保持原有代码不变）
         saveTipLabel = new JLabel("Game has been saved!");
@@ -300,7 +308,7 @@ public class GameFrame extends FrameBase {
             long minutes = totalMs / (1000 * 60);
             long seconds = (totalMs % (1000 * 60)) / 1000;
 
-            remainingTimeLabel.setText("剩余时间：" + String.format("%02d:%02d", minutes, seconds));
+            remainingTimeLabel.setText("Remaining time : " + String.format("%02d:%02d", minutes, seconds));
 
             // 根据剩余时间改变颜色
             if (remainingMs <= 60000) {

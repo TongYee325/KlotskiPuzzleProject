@@ -117,8 +117,5 @@ public class SelectFrame extends FrameBase {
         });
         return btn;
     }
-    // 在SelectFrame类中添加这个公共方法
-    public boolean isTimedModeSelected() {
-        return isTimedModeSelected;
-    }
+
 }
