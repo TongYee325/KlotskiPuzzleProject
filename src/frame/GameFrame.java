@@ -152,7 +152,7 @@ public class GameFrame extends FrameBase {
             ((AiGameMode) ((GameLevel) rlevel).getrGameModeBase()).aiMove(getGamePanel().getPanelMap());
         });
 
-        // move button panel配置（保持原有代码不变）
+        // move button panel配置
         movePanel.setLayout(null);
         mainPanel.add(movePanel);
         movePanel.setBounds(20, height *60/100, 300*80/100, 200*80/100);
@@ -172,18 +172,19 @@ public class GameFrame extends FrameBase {
         movePanel.add(downbtn);
         movePanel.add(rightbtn);
 
-        // info panel配置（保持原有代码不变）
+        // info panel配置
         mainPanel.add(infoPanel);
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.setLayout(new GridLayout(3, 1));
         infoPanel.setBounds(width *55/100, height *60/100, width /3, height /5);
+        this.stepLabel = stepsLabel;
+        infoPanel.add(stepsLabel);
+        timeLabel = new JLabel(formatTime(elapsedTime));
+        infoPanel.add(timeLabel);
+
+
         timeInfoPanel.setLayout(new GridLayout(4, 1, 5, 5)); // 增加一行用于模式选择
         timeInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        this.stepLabel = stepsLabel;
-        timeInfoPanel.add(stepsLabel);
-        timeLabel = new JLabel(formatTime(elapsedTime));
-        timeInfoPanel.add(timeLabel);
-
-        // 剩余时间标签（保持原有代码不变）
+        // 剩余时间标签
         remainingTimeLabel = new JLabel("Remaining Time : --:--");
         remainingTimeLabel.setFont(new Font("Arial", Font.BOLD, 14));
         remainingTimeLabel.setForeground(new Color(0, 100, 0));
@@ -343,6 +344,8 @@ public class GameFrame extends FrameBase {
                 countdownTimer.stop();
             }
         }
+        updateStep();
+        updateTimer();
     }
 
 
@@ -351,6 +354,8 @@ public class GameFrame extends FrameBase {
         gamePanel.initialGame(panelMap);
         loadGameTimer();
         setTimer();
+        updateStep();
+        updateTimer();
     }
 
     private void gameRestart() {
