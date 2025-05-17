@@ -77,7 +77,7 @@ public class MenuLevel extends LevelBase {
         }
     }
 
-    public void switchToGameLevelAccordingToIndex(int index, boolean isTimedModeSelected){
+    public void switchToGameLevelAccordingToIndex(int index){
         getrGameState().setGameMapIndex(index);
         getrGameState().startLevel(2);
     }

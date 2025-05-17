@@ -33,7 +33,10 @@ public class SaveManager {
                 gameSave = new GameSave(((GameLevel) rGameState.getLevel()).getGameFrame().getGamePanel().getPanelMap(),
                         rGameState.getMyLogSystem().getTotalSteps(),
                         rGameState.getCurrentLevel(),
-                        ((GameLevel) rGameState.getLevel()).getGameFrame().getElapsedTime());
+                        ((GameLevel) rGameState.getLevel()).getGameFrame().getElapsedTime(),
+                        ((GameLevel) rGameState.getLevel()).isTimeMode(),
+                        ((GameLevel) rGameState.getLevel()).getRemainTime()
+                        );
                 saveData(gameSave);
                 break;
             default:

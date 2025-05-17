@@ -33,6 +33,8 @@ public class MyGameState extends GameStateBase {
     private float musicVolume = 1.0f;
     private boolean musicEnabled = true;
 
+
+
     private boolean timedMode = false;
 
     //bgm
@@ -93,7 +95,7 @@ public class MyGameState extends GameStateBase {
                 level = new MenuLevel(this);
                 break;
             case 2:
-                level = new GameLevel(this,gameMapIndex);
+                level = new GameLevel(this,gameMapIndex,isTimedMode());
                 break;
         }
         if (level != null) {
@@ -132,10 +134,13 @@ public class MyGameState extends GameStateBase {
                     int levelIndex = gamesave.getCurrentLevelIndex();
                     ArrayList<Step> totalSteps = gamesave.getTotalSteps();
                     long elapsedTime = gamesave.getElapsedTime();
+                    boolean isTimeMode = gamesave.isTimeMode();
+                    long remain = gamesave.getRemainTime();
+
 
                     myLogSystem.setTotalSteps(totalSteps);
                     myLogSystem.setElapsedTime(elapsedTime);
-                    //todo 添加剩余时间变量
+
                     if (levelIndex >= 2) {
                         if (levelIndex == currentLevel) {
                             //传入关卡与当前关卡一样时，不做任何处理
@@ -144,8 +149,8 @@ public class MyGameState extends GameStateBase {
                         currentLevel = levelIndex;
                         switch (currentLevel) {
                             case 2:
-                                level = new GameLevel(this);
-                                ((GameLevel) level).loadGame(panelMap);
+                                level = new GameLevel(this,isTimeMode);
+                                ((GameLevel) level).loadGame(panelMap,remain);
                                 break;
                             default:
                                 break;
@@ -190,25 +195,6 @@ public class MyGameState extends GameStateBase {
         this.currentUserId = userId;
         mySaveManager.updateSavePathAccordingToUserName(userId);
     }
-    // 新增限时模式字段
-    public static boolean isTimedMode = false;
-    private long remainingTime = 0;
-
-    // 新增限时模式相关方法
-    public boolean isTimedMode() { return timedMode; }
-
-    public void setTimedMode(boolean timedMode) {
-        this.timedMode = timedMode;
-    }
-
-    public long getRemainingTime() {
-        return remainingTime;
-    }
-
-    public void setRemainingTime(long remainingTime) {
-        this.remainingTime = remainingTime;
-    }
-
 
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
@@ -219,6 +205,15 @@ public class MyGameState extends GameStateBase {
         this.musicEnabled = musicEnabled;
         updateBgmConfig();
 
+    }
+
+
+    public void setTimedMode(boolean timedMode) {
+        this.timedMode = timedMode;
+    }
+
+    public boolean isTimedMode() {
+        return timedMode;
     }
 
     public boolean isAutoSave() {

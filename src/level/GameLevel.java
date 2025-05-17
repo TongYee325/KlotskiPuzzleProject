@@ -30,13 +30,19 @@ public class GameLevel extends LevelBase {
     private MyGameController gameController;
 
 
+    private long remainTime;
+
+
+    private boolean isTimeMode;
 
 
 
 
-    public GameLevel(MyGameState gameState) {
+
+    public GameLevel(MyGameState gameState,boolean isTimedMode) {
         super(gameState);
         this.rGameState = gameState;
+        this.isTimeMode = isTimedMode;
         gameController = new MyGameController(this,gameState.getMyLogSystem());//为游戏关卡新建控制器
         gameMap =  new GameMap();//创建游戏地图
         gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);//创建游戏帧
@@ -53,8 +59,9 @@ public class GameLevel extends LevelBase {
 
     }
 
-    public GameLevel(MyGameState gameState,int gameMapIndex) {
+    public GameLevel(MyGameState gameState,int gameMapIndex,boolean isTimedMode) {
         super(gameState);
+        this.isTimeMode = isTimedMode;
         this.gameMapIndex = gameMapIndex;
         this.rGameState = gameState;
         gameController = new MyGameController(this,gameState.getMyLogSystem());//为游戏关卡新建控制器
@@ -81,18 +88,40 @@ public class GameLevel extends LevelBase {
         }
     }
 
+    public void levelDestroy() {
+        if(saveTimer!=null) {
+            saveTimer.stop();
+        }
+        rGameState.getMyLogSystem().clear();
+        this.gameFrame.frameDestroyed();
+        this.gameFrame.dispose();
+    }
+
     public void saveGame() {
         gameFrame.showSaveInfo();
         rGameState.saveGameData();
     }
 
-    public void loadGame(int[][] panelMap) {
+    public void loadGame(int[][] panelMap,long remain) {
         gameFrame.initialGame(panelMap);
         if(saveTimer!=null){
             saveTimer.start();
         }
+        if(isTimeMode)
+        {
+            remainTime = remain;
+        }
     }
 
+
+
+    public long getRemainTime() {
+        return remainTime;
+    }
+
+    public void setRemainTime(long remainTime) {
+        this.remainTime = remainTime;
+    }
 
     public GameModeBase getrGameModeBase() {
         return rGameModeBase;
@@ -114,12 +143,10 @@ public class GameLevel extends LevelBase {
         return gameController;
     }
 
-    public void levelDestroy() {
-        if(saveTimer!=null) {
-            saveTimer.stop();
-        }
-        rGameState.getMyLogSystem().clear();
-        this.gameFrame.frameDestroyed();
-        this.gameFrame.dispose();
+    public boolean isTimeMode() {
+        return isTimeMode;
     }
+
+
+
 }

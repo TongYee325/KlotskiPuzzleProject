@@ -321,7 +321,7 @@ public class GamePanel extends JPanel {
 
             this.totalSteps = rFrame.getRlevel().getrGameState().getMyLogSystem().getTotalSteps().size();
             this.totalTime = rFrame.getElapsedTime();
-            this.remainingTime = rFrame.getRlevel().getrGameState().getRemainingTime();
+            /*this.remainingTime = rFrame.getRlevel().getrGameState().getRemainingTime();*/
 
             // 弹出胜利对话框（传入当前 GameFrame）
             SwingUtilities.invokeLater(() -> {
@@ -359,7 +359,7 @@ public class GamePanel extends JPanel {
                 timePanel.add(timeField);
 
                 // 剩余时间面板（限时模式）
-                if (MyGameState.isTimedMode) {
+                if (rFrame.getRlevel().getrGameState().isTimedMode()) {
                     JPanel remainingTimePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
                     JLabel remainingTimeLabel = new JLabel("Remaining Time:");
                     remainingTimeLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 18));

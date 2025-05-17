@@ -220,20 +220,18 @@ public class GameFrame extends FrameBase {
         if (countdownTimer != null && countdownTimer.isRunning()) {
             countdownTimer.stop();
         }
-
-        MyGameState gameState = rlevel.getrGameState();
-
+        GameLevel gameLevel = (GameLevel) rlevel;
         // 确保初始时间正确设置
-        if (gameState.getRemainingTime() <= 0) {
-            gameState.setRemainingTime(TIME_LIMIT);
+        if (gameLevel.getRemainTime() <= 0) {
+            gameLevel.setRemainTime(TIME_LIMIT);
         }
 
         // 更新UI显示初始时间
-        updateRemainingTimeUI(gameState.getRemainingTime());
+        updateRemainingTimeUI(gameLevel.getRemainTime());
 
         countdownTimer = new Timer(1000, e -> {
-            long remaining = gameState.getRemainingTime() - 1000;
-            gameState.setRemainingTime(remaining);
+            long remaining = gameLevel.getRemainTime() - 1000;
+            gameLevel.setRemainTime(remaining);
 
             // 在事件调度线程上更新UI
             updateRemainingTimeUI(remaining);
@@ -273,14 +271,16 @@ public class GameFrame extends FrameBase {
         gamePanel.initialGame();
         setTimer();
 
-        // 根据当前模式设置计时器
-        MyGameState gameState = rlevel.getrGameState();
-        gameState.setTimedMode(isTimedMode);
+        startRemainTimer();
+        updateStep();
+        updateTimer();
+    }
 
+    private void startRemainTimer() {
         if (isTimedMode) {
-            gameState.setRemainingTime(TIME_LIMIT);
+            ((GameLevel) rlevel).setRemainTime(TIME_LIMIT);
             remainingTimeLabel.setVisible(true);
-            remainingTimeLabel.setText("Remaining time：03:00");
+            remainingTimeLabel.setText("Remaining time：--:--");
             remainingTimeLabel.setForeground(Color.BLACK);
             startCountdown();
         } else {
@@ -289,14 +289,13 @@ public class GameFrame extends FrameBase {
                 countdownTimer.stop();
             }
         }
-        updateStep();
-        updateTimer();
     }
 
     public void initialGame(int [][] panelMap) {
         gamePanel.initialGame(panelMap);
         loadGameTimer();
         setTimer();
+        startRemainTimer();
         updateStep();
         updateTimer();
     }
@@ -307,8 +306,7 @@ public class GameFrame extends FrameBase {
 
         // 如果是限时模式，重置剩余时间
         if (isTimedMode) {
-            MyGameState gameState = rlevel.getrGameState();
-            gameState.setRemainingTime(TIME_LIMIT);
+            ((GameLevel) rlevel).setRemainTime(TIME_LIMIT);
             updateRemainingTimeUI(TIME_LIMIT);
         }
     }

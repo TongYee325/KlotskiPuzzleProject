@@ -18,11 +18,19 @@ public class GameSave implements Serializable {
     private int currentLevelIndex;//现在的关卡索引
     private long elapsedTime;//关卡时间
 
-    public GameSave(int [][]panelMap, ArrayList<Step> totalSteps, int currentLevelIndex,long elapsedTime) {
+    private boolean isTimeMode;//计时模式
+
+
+
+    private long remainTime;
+
+    public GameSave(int [][]panelMap, ArrayList<Step> totalSteps, int currentLevelIndex,long elapsedTime,boolean isTimeMode,long remainTime) {
         this.panelMap = panelMap;
         this.totalSteps = totalSteps;
         this.currentLevelIndex = currentLevelIndex;
         this.elapsedTime = elapsedTime;
+        this.isTimeMode = isTimeMode;
+        this.remainTime = remainTime;
     }
 
     public int[][] getPanelMap() {
@@ -37,8 +45,16 @@ public class GameSave implements Serializable {
         return currentLevelIndex;
     }
 
+    public boolean isTimeMode() {
+        return isTimeMode;
+    }
+
     public long getElapsedTime() {
         return elapsedTime;
+    }
+
+    public long getRemainTime() {
+        return remainTime;
     }
 
 }

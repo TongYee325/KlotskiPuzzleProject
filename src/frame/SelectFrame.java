@@ -113,7 +113,7 @@ public class SelectFrame extends FrameBase {
         btn.addActionListener(e -> {
             // 在切换关卡前，保存模式选择到游戏状态
             rLevel.getrGameState().setTimedMode(isTimedModeSelected);
-            rLevel.switchToGameLevelAccordingToIndex(index, isTimedModeSelected);
+            rLevel.switchToGameLevelAccordingToIndex(index);
         });
         return btn;
     }
