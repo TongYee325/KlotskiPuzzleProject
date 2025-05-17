@@ -45,6 +45,8 @@ public class SettingFrame extends FrameBase{
     private void initialComponents(){
         this.setLayout(null);
         mainPanel = new JPanel(new GridLayout(3,2,20,50));
+        mainPanel.setBackground(new Color(255,255,100,255));
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.ORANGE,4,false));
         backButton = new JButton("Back");
         backButton.addActionListener(e -> {
             rLevel.switchToMenuFrame();
@@ -53,7 +55,7 @@ public class SettingFrame extends FrameBase{
 
         volumeLabel = new JLabel("Volume Value");
         volumeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        volumeLabel.setFont(new Font("ArtifaktElement-Medium", Font.BOLD, 20));
+        volumeLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
         volumeLabel.setForeground(new Color(0,150,255,250));
         volumeSlider = new JSlider();
         volumeSlider.setValue((int) (rLevel.getrGameState().getMusicVolume()*100));
@@ -73,7 +75,7 @@ public class SettingFrame extends FrameBase{
         needTurnOnMusicLabel.setHorizontalAlignment(SwingConstants.CENTER);
         Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
 
-        needTurnOnMusicLabel.setFont(new Font("ArtifaktElement-Medium", Font.BOLD, 20));
+        needTurnOnMusicLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
         needTurnOnMusicLabel.setForeground(new Color(0,150,255,250));
         musicOnCheckBox = new JCheckBox();
         musicOnCheckBox.setSelected(rLevel.getrGameState().isMusicEnabled());
@@ -95,7 +97,7 @@ public class SettingFrame extends FrameBase{
         super.setCheckBoxBackground(autoSaveCheckBox,boxPath,boxRolloverPath,boxPressedPath,sBoxPath,sBoxRolloverPath,sBoxPressedPath);
         needAutoSaveLabel = new JLabel("Auto Save");
         needAutoSaveLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        needAutoSaveLabel.setFont(new Font("ArtifaktElement-Medium", Font.BOLD, 20));
+        needAutoSaveLabel.setFont(new Font("Algerian", Font.PLAIN, 20));
         needAutoSaveLabel.setForeground(new Color(0,150,255,250));
         //透明度设置
 

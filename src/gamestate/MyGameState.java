@@ -41,7 +41,7 @@ public class MyGameState extends GameStateBase {
 
     //bgm
     private AudioManager myAudioManager;
-    private final String bgmPath = "./fx/bgm.wav";
+    private final String bgmPath = "./fx/menuBgm.wav";
 
 
     public MyGameState() {
