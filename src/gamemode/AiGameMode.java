@@ -90,7 +90,6 @@ public class AiGameMode extends GameModeBase {
             {
                 gameLevel.getGameFrame().updateStep();
             }
-            gameLevel.getGameFrame().updateStep();
         }
     }
 

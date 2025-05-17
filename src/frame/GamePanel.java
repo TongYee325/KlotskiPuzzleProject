@@ -319,11 +319,6 @@ public class GamePanel extends JPanel {
             // 停止游戏计时
             rFrame.stopTimer();
 
-
-            if (CaoCaoBlock.getRow() == TARGET_Y && CaoCaoBlock.getCol() == TARGET_X) {
-//todo
-            }
-
             this.totalSteps = rFrame.getRlevel().getrGameState().getMyLogSystem().getTotalSteps().size();
             this.totalTime = rFrame.getElapsedTime();
             this.remainingTime = rFrame.getRlevel().getrGameState().getRemainingTime();
