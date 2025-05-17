@@ -1,12 +1,16 @@
 package frame.dialog;
 
+import frame.GameFrame;
 import gamestate.MyGameState;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class DefaultDialog extends JDialog {
     public DefaultDialog(Frame owner, String title, boolean modal, String info1, String info2) {
+        //用户登录提示框
         super(owner, title,modal);
         setSize(300, 200);
         initial(owner, info1, info2);
@@ -14,6 +18,7 @@ public class DefaultDialog extends JDialog {
     }
 
     public DefaultDialog(Frame owner, String title, boolean modal, String info1, String info2, int width, int height) {
+        //存档提示框
         super(owner, title,modal);
         setSize(width, height);
         initial(owner, info1, info2);
@@ -50,6 +55,7 @@ public class DefaultDialog extends JDialog {
     public DefaultDialog(Frame owner, String title, boolean modal,
                              String iconPath, String mainMessage,
                              JPanel contentPanel, String buttonText, Dimension size) {
+        //胜利提示框
         super(owner, title, modal);
         setSize(size);
         setLocationRelativeTo(owner);
@@ -86,20 +92,22 @@ public class DefaultDialog extends JDialog {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(new Color(245, 245, 245));
         JButton confirmBtn = new JButton(buttonText == null ? "conform" : buttonText);
-        confirmBtn.addActionListener(e -> dispose());
+        confirmBtn.addActionListener(e->{
+            ((GameFrame) owner).getRlevel().getrGameState().startLevel(1);
+        });
         confirmBtn.setBackground(new Color(0, 120, 215));
         confirmBtn.setForeground(Color.WHITE);
         confirmBtn.setBorderPainted(false);
         confirmBtn.setFocusPainted(false);
         confirmBtn.setFont(new Font("Arial", Font.PLAIN, 16));
         confirmBtn.setPreferredSize(new Dimension(100, 35));
-        confirmBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        confirmBtn.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseEntered(java.awt.event.MouseEvent e) {
+            public void mouseEntered(MouseEvent e) {
                 confirmBtn.setBackground(new Color(0, 150, 255));
             }
             @Override
-            public void mouseExited(java.awt.event.MouseEvent e) {
+            public void mouseExited(MouseEvent e) {
                 confirmBtn.setBackground(new Color(0, 120, 215));
             }
         });
@@ -108,5 +116,4 @@ public class DefaultDialog extends JDialog {
 
         setVisible(true);
     }
-
 }

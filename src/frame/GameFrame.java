@@ -364,6 +364,7 @@ public class GameFrame extends FrameBase {
         stepLabel.setText(String.format("Steps : %d",rlevel.getrGameState().getMyLogSystem().getTotalSteps().size()));
     }
 
+
     //计时部分-----------------------------------------------------------------------------------------------------------
 
     private void setTimer(){

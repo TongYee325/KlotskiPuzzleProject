@@ -19,6 +19,11 @@ public class LogSystem {
 
     }
 
+    public void clear(){
+        totalSteps.clear();
+        movedBlocks.clear();
+    }
+
     public void addStep(int startx, int starty,int endx,int endy,int id) {
         totalSteps.add(new Step(startx, starty, endx, endy, id));
     }

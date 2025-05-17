@@ -118,6 +118,7 @@ public class GameLevel extends LevelBase {
         if(saveTimer!=null) {
             saveTimer.stop();
         }
+        rGameState.getMyLogSystem().clear();
         this.gameFrame.dispose();
     }
 }
