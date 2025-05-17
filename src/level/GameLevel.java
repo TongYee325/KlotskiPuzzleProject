@@ -1,5 +1,6 @@
 package level;
 
+import audio.AudioManager;
 import controller.MyGameController;
 import frame.GameFrame;
 import gamemode.AiGameMode;
@@ -30,6 +31,9 @@ public class GameLevel extends LevelBase {
 
 
 
+
+
+
     public GameLevel(MyGameState gameState) {
         super(gameState);
         this.rGameState = gameState;
@@ -40,6 +44,7 @@ public class GameLevel extends LevelBase {
         if(rGameState.isAutoSave()&&rGameState.getCurrentUserId()!=null){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
         }
+
 
 
         //选择游戏模式
@@ -59,6 +64,7 @@ public class GameLevel extends LevelBase {
         if(rGameState.isAutoSave()&&rGameState.getCurrentUserId()!=null){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
         }
+
 
 
         //选择游戏模式

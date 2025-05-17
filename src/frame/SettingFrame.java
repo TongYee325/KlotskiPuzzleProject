@@ -5,6 +5,8 @@ import level.MenuLevel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class SettingFrame extends FrameBase{
@@ -56,9 +58,14 @@ public class SettingFrame extends FrameBase{
         volumeSlider = new JSlider();
         volumeSlider.setValue((int) (rLevel.getrGameState().getMusicVolume()*100));
         volumeSlider.setAlignmentX(Component.CENTER_ALIGNMENT);
-        volumeSlider.addChangeListener(e -> {
-            if(rLevel!=null){
-                rLevel.getrGameState().setMusicVolume(Math.clamp(volumeSlider.getValue(),0,100)/100.0f);
+
+        volumeSlider.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                if(rLevel!=null){
+                    rLevel.getrGameState().setMusicVolume(Math.clamp(volumeSlider.getValue(),0,100)/100.0f);
+                }
             }
         });
         volumeSlider.setOpaque(false);

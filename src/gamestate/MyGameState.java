@@ -2,6 +2,7 @@ package gamestate;
 
 import Save.GameSave;
 import Save.SaveManager;
+import audio.AudioManager;
 import level.*;
 
 import java.util.ArrayList;
@@ -31,9 +32,45 @@ public class MyGameState extends GameStateBase {
 
     private boolean timedMode = false;
 
+    //bgm
+    private AudioManager myAudioManager;
+    private final String bgmPath = "./fx/bgm.wav";
 
 
+    public MyGameState() {
+        myLogSystem = new LogSystem();
+        mySaveManager = new SaveManager(this);
 
+
+        //turn on bgm
+        myAudioManager = new AudioManager();
+        playBgm(bgmPath,true);
+    }
+
+    public void playBgm(String bgmPath,boolean loop){
+        if(musicEnabled){
+            myAudioManager.play(bgmPath,true);
+        }
+    }
+
+    public void updateBgmConfig()
+    {
+
+        if(musicEnabled&&!myAudioManager.isPlaying()) {
+            myAudioManager.play(bgmPath,true);
+            myAudioManager.setVolume(musicVolume);
+        }else if(musicEnabled&&myAudioManager.isPlaying()) {
+            myAudioManager.setVolume(musicVolume);
+        } else{
+            myAudioManager.stop();
+            myAudioManager.setVolume(musicVolume);
+        }
+    }
+
+
+    public void stopBgm(){
+        myAudioManager.stop();
+    }
 
     public void startLevel(int levelIndex) {
         if (levelIndex == currentLevel && levelIndex != 0) {
@@ -129,11 +166,6 @@ public class MyGameState extends GameStateBase {
     public static boolean isTimedMode = false;
     private long remainingTime = 0;
 
-    public MyGameState() {
-        myLogSystem = new LogSystem();
-        mySaveManager = new SaveManager(this);
-    }
-
     // 新增限时模式相关方法
     public boolean isTimedMode() { return timedMode; }
 
@@ -152,10 +184,13 @@ public class MyGameState extends GameStateBase {
 
     public void setMusicVolume(float musicVolume) {
         this.musicVolume = musicVolume;
+        updateBgmConfig();
     }
 
     public void setMusicEnabled(boolean musicEnabled) {
         this.musicEnabled = musicEnabled;
+        updateBgmConfig();
+
     }
 
     public boolean isAutoSave() {
