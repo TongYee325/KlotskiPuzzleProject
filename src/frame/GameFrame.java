@@ -38,9 +38,6 @@ public class GameFrame extends FrameBase {
     private Timer countdownTimer;
     private boolean isTimedMode = false;
 
-    // 新增：模式选择按钮
-    private JRadioButton timedModeRadio;
-    private JRadioButton normalModeRadio;
 
     public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
         super(level, title, width, height);
@@ -182,22 +179,18 @@ public class GameFrame extends FrameBase {
         infoPanel.add(timeLabel);
 
 
-        timeInfoPanel.setLayout(new GridLayout(4, 1, 5, 5)); // 增加一行用于模式选择
-        timeInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        timeInfoPanel.setLayout(new BorderLayout()); // 增加一行用于模式选择
         // 剩余时间标签
         remainingTimeLabel = new JLabel("Remaining Time : --:--");
-        remainingTimeLabel.setFont(new Font("Arial", Font.BOLD, 14));
         remainingTimeLabel.setForeground(new Color(0, 100, 0));
         remainingTimeLabel.setMinimumSize(new Dimension(120, 25));
         remainingTimeLabel.setPreferredSize(new Dimension(120, 25));
-        timeInfoPanel.add(remainingTimeLabel);
-
-        // 新增：模式选择控件
-        addModeSelection(timeInfoPanel);
+        timeInfoPanel.add(remainingTimeLabel,BorderLayout.CENTER);
 
         //是限时模式才添加剩余时间UI
         if(isTimedMode){
-            infoPanel.add(timeInfoPanel);
+            mainPanel.add(timeInfoPanel);
+            timeInfoPanel.setBounds(width *55/100,485,250,50);
         }
 
 
@@ -208,54 +201,7 @@ public class GameFrame extends FrameBase {
         infoPanel.add(saveTipLabel);
     }
 
-    // 新增：模式选择控件
-    // 在GameFrame类的addModeSelection方法中更新
-    private void addModeSelection(JPanel container) {
-        JPanel modePanel = new JPanel();
-        modePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-        JLabel modeLabel = new JLabel("Mode:");
-        ButtonGroup modeGroup = new ButtonGroup();
-
-        timedModeRadio = new JRadioButton("Timed");
-        timedModeRadio.addActionListener(e -> {
-            isTimedMode = true;
-            MyGameState gameState = rlevel.getrGameState();
-            gameState.setTimedMode(true);
-            if (gameTimer != null && gameTimer.isRunning()) {
-                initialGame();
-            }
-        });
-
-        normalModeRadio = new JRadioButton("Normal", isTimedMode);
-        normalModeRadio.addActionListener(e -> {
-            isTimedMode = false;
-            MyGameState gameState = rlevel.getrGameState();
-            gameState.setTimedMode(false);
-            remainingTimeLabel.setVisible(false);
-            if (countdownTimer != null) {
-                countdownTimer.stop();
-            }
-        });
-
-        modeGroup.add(timedModeRadio);
-        modeGroup.add(normalModeRadio);
-
-        // 根据游戏状态初始化选择
-        if (isTimedMode) {
-            timedModeRadio.setSelected(true);
-        } else {
-            normalModeRadio.setSelected(true);
-        }
-
-        modePanel.add(modeLabel);
-        modePanel.add(timedModeRadio);
-        modePanel.add(normalModeRadio);
-
-        container.add(modePanel);
-    }
-
-    // 其他方法保持不变...
     public void showSaveInfo() {
         saveTipLabel.setVisible(true);
 
@@ -335,7 +281,7 @@ public class GameFrame extends FrameBase {
         if (isTimedMode) {
             gameState.setRemainingTime(TIME_LIMIT);
             remainingTimeLabel.setVisible(true);
-            remainingTimeLabel.setText("剩余时间：03:00");
+            remainingTimeLabel.setText("Remaining time：03:00");
             remainingTimeLabel.setForeground(Color.BLACK);
             startCountdown();
         } else {
