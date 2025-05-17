@@ -135,6 +135,7 @@ public class MyGameState extends GameStateBase {
 
                     myLogSystem.setTotalSteps(totalSteps);
                     myLogSystem.setElapsedTime(elapsedTime);
+                    //todo 添加剩余时间变量
                     if (levelIndex >= 2) {
                         if (levelIndex == currentLevel) {
                             //传入关卡与当前关卡一样时，不做任何处理
@@ -146,7 +147,6 @@ public class MyGameState extends GameStateBase {
                                 level = new GameLevel(this);
                                 ((GameLevel) level).loadGame(panelMap);
                                 break;
-                            //can add more level
                             default:
                                 break;
 

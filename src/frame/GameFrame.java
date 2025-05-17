@@ -201,7 +201,6 @@ public class GameFrame extends FrameBase {
         infoPanel.add(saveTipLabel);
     }
 
-
     public void showSaveInfo() {
         saveTipLabel.setVisible(true);
 
@@ -294,8 +293,6 @@ public class GameFrame extends FrameBase {
         updateTimer();
     }
 
-
-
     public void initialGame(int [][] panelMap) {
         gamePanel.initialGame(panelMap);
         loadGameTimer();
@@ -374,6 +371,9 @@ public class GameFrame extends FrameBase {
     //计时部分^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     public void frameDestroyed() {
         stopTimer();//停止计时
+        if(countdownTimer!=null){
+            countdownTimer.stop();
+        }
         this.removeAll();
     }
 
