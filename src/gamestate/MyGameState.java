@@ -18,7 +18,7 @@ public class MyGameState extends GameStateBase {
 
     private int saveTime=30*1000;//自动存档时间
     //计时剩余时间
-    public static final long TIME_LIMIT = 10 * 60 * 1000; // 10 分钟
+    public static final long TIME_LIMIT = 10* 60 * 1000; // 10 分钟
 
     private SaveManager mySaveManager;
 

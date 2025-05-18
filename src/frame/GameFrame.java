@@ -52,6 +52,21 @@ public class GameFrame extends FrameBase {
     private final String rightPath="./img/button/right.png";
     private final String rightRolloverPath="./img/button/right_rollover.png";
     private final String rightPressedPath="./img/button/right_pressed.png";
+    private final String savePath = "./img/tool/tsave.png";
+    private final String saveRolloverPath = "./img/tool/tsave_rollover.png";
+    private final String savePressedPath = "./img/tool/tsave_pressed.png";
+    private final String backPath = "./img/tool/tback.png";
+    private final String backRolloverPath = "./img/tool/tback_rollover.png";
+    private final String backPressedPath = "./img/tool/tback_pressed.png";
+    private final String restartPath = "./img/tool/trestart.png";
+    private final String restartRolloverPath = "./img/tool/trestart_rollover.png";
+    private final String restartPressedPath = "./img/tool/trestart_pressed.png";
+    private final String revokePath = "./img/tool/trevoke.png";
+    private final String revokeRolloverPath = "./img/tool/trevoke_rollover.png";
+    private final String revokePressedPath = "./img/tool/trevoke_pressed.png";
+    private final String aiMovePath = "./img/tool/taiMove.png";
+    private final String aiMoveRolloverPath = "./img/tool/taiMove_rollover.png";
+    private final String aiMovePressedPath = "./img/tool/taiMove_pressed.png";
 
 
 
@@ -83,13 +98,13 @@ public class GameFrame extends FrameBase {
         mainPanel = new JPanel();
         gamePanel = new GamePanel(rMap, this);
         toolsPanel = new JPanel();
-        JButton saveButton = new JButton("Save");
+        JButton saveButton = new JButton();
         saveButton.setVisible(false);
         saveButton.setEnabled(false);
-        JButton restartButton = new JButton("Restart");
-        JButton revokeButton = new JButton("Revoke");
-        JButton backButton = new JButton("Back");
-        JButton aiMoveButton = new JButton("AI Move");
+        JButton restartButton = new JButton();
+        JButton revokeButton = new JButton();
+        JButton backButton = new JButton();
+        JButton aiMoveButton = new JButton();
         movePanel = new JPanel();
         JButton downbtn = new JButton();
         JButton leftbtn = new JButton();
@@ -111,7 +126,7 @@ public class GameFrame extends FrameBase {
         if(rlevel.getrGameState().getCurrentUserId()==null) {
             toolsPanel.setLayout(new GridLayout(4, 1));
         }
-        toolsPanel.setBackground(Color.WHITE);
+        toolsPanel.setOpaque(false);
         mainPanel.add(toolsPanel);
         toolsPanel.setBounds(width *55/100, height *10/100, width /3, height /3);
 
@@ -123,6 +138,7 @@ public class GameFrame extends FrameBase {
             saveButton.addActionListener(e -> {
                 ((GameLevel) rlevel).saveGame();
             });
+            super.setButtonBackground(saveButton,savePath,saveRolloverPath,savePressedPath);
         }
 
         // restart button配置（保持原有代码不变）
@@ -142,18 +158,21 @@ public class GameFrame extends FrameBase {
             revokeButton.setEnabled(true);
             aiMoveButton.setEnabled(true);
         });
+        super.setButtonBackground(restartButton,restartPath,restartRolloverPath,restartPressedPath);
 
         // revoke button配置（保持原有代码不变）
         toolsPanel.add(revokeButton);
         revokeButton.addActionListener(e -> {
             gamePanel.revoke();
         });
+        super.setButtonBackground(revokeButton,revokePath,revokeRolloverPath,revokePressedPath);
 
         // back button配置（保持原有代码不变）
         toolsPanel.add(backButton);
         backButton.addActionListener(e -> {
             rlevel.getrGameState().startLevel(1);
         });
+        super.setButtonBackground(backButton,backPath,backRolloverPath,backPressedPath);
 
         // aiMove button配置（保持原有代码不变）
         toolsPanel.add(aiMoveButton);
@@ -165,6 +184,7 @@ public class GameFrame extends FrameBase {
             }
             ((AiGameMode) ((GameLevel) rlevel).getrGameModeBase()).aiMove(getGamePanel().getPanelMap());
         });
+        super.setButtonBackground(aiMoveButton,aiMovePath,aiMoveRolloverPath,aiMovePressedPath);
 
         // move button panel配置
         movePanel.setLayout(null);
@@ -201,7 +221,7 @@ public class GameFrame extends FrameBase {
         // info panel配置
         mainPanel.add(infoPanel);
         infoPanel.setLayout(new GridLayout(3, 1));
-        infoPanel.setBounds(width *55/100, height *60/100, width /3, height /5);
+        infoPanel.setBounds(width *55/100, height *60/100, 250, height /5);
         this.stepLabel = stepsLabel;
         stepsLabel.setFont(new Font("Algerian", Font.BOLD, 25));
         stepsLabel.setForeground(Color.darkGray);
@@ -222,8 +242,8 @@ public class GameFrame extends FrameBase {
         // 剩余时间标签
         remainingTimeLabel = new JLabel("RemainTime : --:--");
         remainingTimeLabel.setFont(new Font("Algerian", Font.BOLD, 20));
-        remainingTimeLabel.setMinimumSize(new Dimension(120, 25));
-        remainingTimeLabel.setPreferredSize(new Dimension(120, 25));
+        /*remainingTimeLabel.setMinimumSize(new Dimension(120, 25));
+        remainingTimeLabel.setPreferredSize(new Dimension(120, 25));*/
 
 
         remainingTimeLabel.setOpaque(false);
@@ -231,16 +251,20 @@ public class GameFrame extends FrameBase {
 
         //是限时模式才添加剩余时间UI
         if(isTimedMode){
-            mainPanel.add(timeInfoPanel);
-            timeInfoPanel.setBounds(width *55/100,485,250,50);
+            infoPanel.add(timeInfoPanel);
+            timeInfoPanel.setBounds(0,0,250,50);
         }
 
 
         // 保存提示标签（保持原有代码不变）
         saveTipLabel = new JLabel("Game has been saved!");
         saveTipLabel.setVisible(false);
+
         saveTipLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        infoPanel.add(saveTipLabel);
+        saveTipLabel.setFont(new Font("Algerian", Font.BOLD, 20));
+        saveTipLabel.setForeground(Color.GREEN);
+        mainPanel.add(saveTipLabel);
+        saveTipLabel.setBounds(330,300,250,50);
 
         mainPanel.setOpaque(false);
     }
