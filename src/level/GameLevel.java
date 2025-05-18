@@ -36,6 +36,7 @@ public class GameLevel extends LevelBase {
     private boolean isTimeMode;
 
 
+    private final String imgPath = "./img/gameFrame.png";
 
 
 
@@ -45,7 +46,7 @@ public class GameLevel extends LevelBase {
         this.isTimeMode = isTimedMode;
         gameController = new MyGameController(this,gameState.getMyLogSystem());//为游戏关卡新建控制器
         gameMap =  new GameMap();//创建游戏地图
-        gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);//创建游戏帧
+        gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap,imgPath);//创建游戏帧
         gameController.updateControlledPanelAccordingToLevel();//更新游戏控制器，使其控制新建的Frame中的GamePanel*/
         if(rGameState.isAutoSave()&&rGameState.getCurrentUserId()!=null){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改
@@ -66,7 +67,7 @@ public class GameLevel extends LevelBase {
         this.rGameState = gameState;
         gameController = new MyGameController(this,gameState.getMyLogSystem());//为游戏关卡新建控制器
         gameMap =  new GameMap(gameMapIndex);//创建游戏地图
-        gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap);//创建游戏帧
+        gameFrame = new GameFrame(this, GameLevelText, GameLevelWidth, GameLevelHeight,gameMap,imgPath);//创建游戏帧
         gameController.updateControlledPanelAccordingToLevel();//更新游戏控制器，使其控制新建的Frame中的GamePanel*/
         if(rGameState.isAutoSave()&&rGameState.getCurrentUserId()!=null){
             saveTimer = new Timer( rGameState.getSaveTime(), e -> {saveGame();});//自动保存，默认30s保存一次，用户可修改

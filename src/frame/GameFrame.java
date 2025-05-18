@@ -5,7 +5,6 @@ import gamemode.AiGameMode;
 import level.GameLevel;
 import level.map.GameMap;
 import level.LevelBase;
-import gamestate.MyGameState;
 import frame.dialog.DefaultDialog;
 
 import javax.swing.*;
@@ -41,7 +40,24 @@ public class GameFrame extends FrameBase {
     private boolean isTimedMode = false;
 
 
-    public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap) {
+    private final String upPath="./img/button/up.png";
+    private final String upRolloverPath="./img/button/up_rollover.png";
+    private final String upPressedPath="./img/button/up_pressed.png";
+    private final String downPath="./img/button/down.png";
+    private final String downRolloverPath="./img/button/down_rollover.png";
+    private final String downPressedPath="./img/button/down_pressed.png";
+    private final String leftPath="./img/button/left.png";
+    private final String leftRolloverPath="./img/button/left_rollover.png";
+    private final String leftPressedPath="./img/button/left_pressed.png";
+    private final String rightPath="./img/button/right.png";
+    private final String rightRolloverPath="./img/button/right_rollover.png";
+    private final String rightPressedPath="./img/button/right_pressed.png";
+
+
+
+
+
+    public GameFrame(LevelBase level, String title, int width, int height, GameMap gameMap,String imgPath) {
         super(level, title, width, height);
         rlevel = level;
         // 从游戏状态获取模式选择
@@ -52,17 +68,17 @@ public class GameFrame extends FrameBase {
         BorderLayout layout = new BorderLayout();
         this.setLayout(layout);
         rMap = gameMap;
-        setPanels(width, height);
+        initialComponents(width, height);
         setLocationRelativeTo(null);
         setVisible(true);
 
 
 
 
-
+        super.setBackground(imgPath);
     }
 
-    private void setPanels(int width, int height) {
+    private void initialComponents(int width, int height) {
         // 主面板配置（保持原有代码不变）
         mainPanel = new JPanel();
         gamePanel = new GamePanel(rMap, this);
@@ -75,10 +91,10 @@ public class GameFrame extends FrameBase {
         JButton backButton = new JButton("Back");
         JButton aiMoveButton = new JButton("AI Move");
         movePanel = new JPanel();
-        JButton downbtn = new JButton("Down");
-        JButton leftbtn = new JButton("Left");
-        JButton rightbtn = new JButton("Right");
-        JButton upbtn = new JButton("Up");
+        JButton downbtn = new JButton();
+        JButton leftbtn = new JButton();
+        JButton rightbtn = new JButton();
+        JButton upbtn = new JButton();
         JButton nothingButton = new JButton("/");
         JButton nothingButton2 = new JButton("/");
         infoPanel = new JPanel();
@@ -158,9 +174,14 @@ public class GameFrame extends FrameBase {
 
         nothingButton.setVisible(false);
         nothingButton2.setVisible(false);
+
         movePanel.add(nothingButton);
         movePanel.add(upbtn);
         movePanel.add(nothingButton2);
+
+
+
+        super.setButtonBackground(upbtn,upPath,upRolloverPath,upPressedPath);
 
         upbtn.addActionListener(e -> gamePanel.doMoveUp(gamePanel.getSelectedBlock(), true));
         downbtn.addActionListener(e -> gamePanel.doMoveDown(gamePanel.getSelectedBlock(), true));
@@ -170,22 +191,42 @@ public class GameFrame extends FrameBase {
         movePanel.add(downbtn);
         movePanel.add(rightbtn);
 
+        super.setButtonBackground(leftbtn,leftPath,leftRolloverPath,leftPressedPath);
+        super.setButtonBackground(rightbtn,rightPath,rightRolloverPath,rightPressedPath);
+        super.setButtonBackground(downbtn,downPath,downRolloverPath,downPressedPath);
+        movePanel.setOpaque(false);
+
+
+
         // info panel配置
         mainPanel.add(infoPanel);
         infoPanel.setLayout(new GridLayout(3, 1));
         infoPanel.setBounds(width *55/100, height *60/100, width /3, height /5);
         this.stepLabel = stepsLabel;
+        stepsLabel.setFont(new Font("Algerian", Font.BOLD, 25));
+        stepsLabel.setForeground(Color.darkGray);
+
+
         infoPanel.add(stepsLabel);
         timeLabel = new JLabel(formatTime(elapsedTime));
+        timeLabel.setFont(new Font("Algerian", Font.BOLD, 25));
+        timeLabel.setForeground(Color.darkGray);
         infoPanel.add(timeLabel);
+
+        infoPanel.setOpaque(false);
+
 
 
         timeInfoPanel.setLayout(new BorderLayout()); // 增加一行用于模式选择
+        timeInfoPanel.setOpaque(false);
         // 剩余时间标签
-        remainingTimeLabel = new JLabel("Remaining Time : --:--");
-        remainingTimeLabel.setForeground(new Color(0, 100, 0));
+        remainingTimeLabel = new JLabel("RemainTime : --:--");
+        remainingTimeLabel.setFont(new Font("Algerian", Font.BOLD, 20));
         remainingTimeLabel.setMinimumSize(new Dimension(120, 25));
         remainingTimeLabel.setPreferredSize(new Dimension(120, 25));
+
+
+        remainingTimeLabel.setOpaque(false);
         timeInfoPanel.add(remainingTimeLabel,BorderLayout.CENTER);
 
         //是限时模式才添加剩余时间UI
@@ -200,6 +241,8 @@ public class GameFrame extends FrameBase {
         saveTipLabel.setVisible(false);
         saveTipLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         infoPanel.add(saveTipLabel);
+
+        mainPanel.setOpaque(false);
     }
 
     public void showSaveInfo() {
@@ -257,13 +300,13 @@ public class GameFrame extends FrameBase {
             long minutes = totalMs / (1000 * 60);
             long seconds = (totalMs % (1000 * 60)) / 1000;
 
-            remainingTimeLabel.setText("Remaining time : " + String.format("%02d:%02d", minutes, seconds));
+            remainingTimeLabel.setText("Remain time : " + String.format("%02d:%02d", minutes, seconds));
 
             // 根据剩余时间改变颜色
             if (remainingMs <= 60000) {
                 remainingTimeLabel.setForeground(Color.RED);
             } else {
-                remainingTimeLabel.setForeground(Color.BLACK);
+                remainingTimeLabel.setForeground(Color.darkGray);
             }
 
             // 确保UI刷新
