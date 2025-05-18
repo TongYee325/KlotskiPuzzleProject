@@ -1,10 +1,15 @@
 package frame.block;
 
+import controller.BlockType;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 
 public class Block extends JComponent {
@@ -18,29 +23,51 @@ public class Block extends JComponent {
 
     private int id;
 
+    private final String imgPath = "./img/person/";
+    private String name;
+    private Image image;
 
-    public Block(Color color, int row, int col,int id) {
+    public Block(Color color, int row, int col, int id) {
         super();
         this.anim = new Animator();
-        this.id =id;
+        this.id = id;
         this.color = color;
         this.row = row;
         this.col = col;
         isSelected = false;
+        this.name = BlockType.getName(id);
+        loadImg();
+    }
+
+    private void loadImg() {
+        String path = imgPath + name + ".png";
+        image = Toolkit.getDefaultToolkit().getImage(path);
     }
 
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(color);
-        g.fillRect(0, 0, getWidth(), getHeight());
-        Border border ;
-        if(isSelected){
-            border = BorderFactory.createLineBorder(Color.red,2);
-        }else {
-            border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
+        if (id == 0) {
+            g.setColor(color);
+
+            g.fillRect(0, 0, getWidth(), getHeight());
+            Border border;
+            if (isSelected) {
+                border = BorderFactory.createLineBorder(Color.red, 2);
+            } else {
+                border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
+            }
+            this.setBorder(border);
+        } else {
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            Border border;
+            if (isSelected) {
+                border = BorderFactory.createLineBorder(Color.red, 2);
+            } else {
+                border = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
+            }
+            this.setBorder(border);
         }
-        this.setBorder(border);
     }
 
     public void setSelected(boolean selected) {
@@ -49,19 +76,17 @@ public class Block extends JComponent {
     }
 
 
-    public void moveTo(int x ,int y )
-    {
-        System.out.println("From "+getLocation().x+" "+getLocation().y);
-        System.out.println("Move to "+x+" "+y);
-        if(isMoving)
-        {
+    public void moveTo(int x, int y) {
+        System.out.println("From " + getLocation().x + " " + getLocation().y);
+        System.out.println("Move to " + x + " " + y);
+        if (isMoving) {
             anim.stopAnimation();
-            setLocation(x,y);
+            setLocation(x, y);
             repaint();
             return;
         }
         isMoving = true;
-        anim.startAnimation(getLocation(),x,y);
+        anim.startAnimation(getLocation(), x, y);
 
     }
 
@@ -85,19 +110,19 @@ public class Block extends JComponent {
         return id;
     }
 
-    private class Animator implements ActionListener{
+    private class Animator implements ActionListener {
         private final int FRESH_DURATION = 16;//每16ms刷新一次，即60fps
         private float count = 0.0f;
-        private final Timer timer = new Timer(FRESH_DURATION,this);
+        private final Timer timer = new Timer(FRESH_DURATION, this);
         private Point targetPoint;
         private Point startPoint;
 
-        public void startAnimation(Point startPoint,int endx , int  endy) {
+        public void startAnimation(Point startPoint, int endx, int endy) {
             this.startPoint = startPoint;
             targetPoint = new Point(endx, endy);
-            System.out.println("startPoint "+startPoint.x+" "+startPoint.y);
-            System.out.println("targetPoint "+targetPoint.x+" "+targetPoint.y);
-            if(!timer.isRunning()) {
+            System.out.println("startPoint " + startPoint.x + " " + startPoint.y);
+            System.out.println("targetPoint " + targetPoint.x + " " + targetPoint.y);
+            if (!timer.isRunning()) {
                 timer.start();
             }
         }
@@ -112,16 +137,16 @@ public class Block extends JComponent {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            count +=0.1f; // 调整此值改变动画速度
-            if (count>=1.1f) {
+            count += 0.1f; // 调整此值改变动画速度
+            if (count >= 1.1f) {
                 count = 0.0f;
                 timer.stop();
-                startPoint=null;
-                setLocation(targetPoint.x,targetPoint.y);
-                targetPoint=null;
+                startPoint = null;
+                setLocation(targetPoint.x, targetPoint.y);
+                targetPoint = null;
                 isMoving = false;
-            }else{
-                setLocation((int) (startPoint.x+(targetPoint.x-startPoint.x)*count), (int) (startPoint.y+(targetPoint.y-startPoint.y)*count));
+            } else {
+                setLocation((int) (startPoint.x + (targetPoint.x - startPoint.x) * count), (int) (startPoint.y + (targetPoint.y - startPoint.y) * count));
                 repaint();
             }
         }

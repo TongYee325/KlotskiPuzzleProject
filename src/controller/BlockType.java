@@ -35,4 +35,29 @@ public enum BlockType {
     public int getCode() {
         return code;
     }
+
+    public static String getName(int code) {
+        switch (code) {
+            case 7 -> {
+                return"CAO_CAO";
+            }
+            case 2 -> {
+                return "GUAN_YU";
+            }case 3 -> {
+                return "ZHANG_FEI";
+            }case 4 -> {
+                return "ZHAO_YUN";
+            }case 5 -> {
+                return "MA_CHAO";
+            }case 6 -> {
+                return "HUANG_ZHONG";
+            }case 1 -> {
+                return "SOLDIER";
+            }case 0-> {
+                return "EXIT";
+            }default -> {
+                return "EXIT";
+            }
+        }
+    }
 }
