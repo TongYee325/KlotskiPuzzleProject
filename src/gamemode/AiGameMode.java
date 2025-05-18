@@ -38,6 +38,12 @@ public class AiGameMode extends GameModeBase {
         executeSteps(solvePaths, blocks);
     }
 
+    public void stopExecutingSteps() {
+        if(moveTimer != null&&moveTimer.isRunning()) {
+            moveTimer.stop();
+        }
+    }
+
     public void executeSteps(List<Path> solvePaths,ArrayList<Block> blocks) {
         currentStepIndex = 0; // 重置索引
         if (moveTimer != null) {

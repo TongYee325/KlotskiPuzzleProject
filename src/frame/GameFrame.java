@@ -146,6 +146,7 @@ public class GameFrame extends FrameBase {
         restartButton.addActionListener(e -> {
             rlevel.getrGameState().getMyLogSystem().printAllSteps();
             rlevel.getrGameState().getMyLogSystem().clearSteps();
+            ((AiGameMode) ((GameLevel) rlevel).getrGameModeBase()).stopExecutingSteps();
             if(gamePanel!=null){
                 mainPanel.remove(gamePanel);
                 gamePanel=null;
@@ -157,6 +158,9 @@ public class GameFrame extends FrameBase {
             gameRestart();
             revokeButton.setEnabled(true);
             aiMoveButton.setEnabled(true);
+            if(rlevel.getrGameState().getCurrentUserId() != null) {
+                saveButton.setEnabled(true);
+            }
         });
         super.setButtonBackground(restartButton,restartPath,restartRolloverPath,restartPressedPath);
 
@@ -170,6 +174,7 @@ public class GameFrame extends FrameBase {
         // back button配置（保持原有代码不变）
         toolsPanel.add(backButton);
         backButton.addActionListener(e -> {
+            ((AiGameMode) ((GameLevel) rlevel).getrGameModeBase()).stopExecutingSteps();
             rlevel.getrGameState().startLevel(1);
         });
         super.setButtonBackground(backButton,backPath,backRolloverPath,backPressedPath);
