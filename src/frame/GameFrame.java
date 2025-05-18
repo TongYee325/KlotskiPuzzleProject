@@ -474,7 +474,13 @@ public class GameFrame extends FrameBase {
     private void gameOver() {
         if (gameTimer != null) gameTimer.stop();
         if (countdownTimer != null) countdownTimer.stop();
-        SwingUtilities.invokeLater(() -> {
+        gamePanel.updateStepsAndTotalTime();
+        showTimeOutInfo();
+
+    }
+
+    private void showTimeOutInfo() {
+/*        SwingUtilities.invokeLater(() -> {
             // 调用 DefaultDialog
             new DefaultDialog(
                     this,
@@ -485,11 +491,59 @@ public class GameFrame extends FrameBase {
                     "OK",
                     new Dimension(350, 200)
             );
+        });*/
+
+        SwingUtilities.invokeLater(() -> {
+            // 构建胜利对话框的中间内容面板（统计信息）
+            JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
+
+            // 总步数面板
+            JPanel stepsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            JLabel stepsLabel = new JLabel("Total Steps:");
+            stepsLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
+            JTextField stepsField = new JTextField(String.valueOf(gamePanel.getTotalSteps()), 15);
+            stepsField.setEditable(false);
+            stepsField.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            ));
+            stepsField.setBackground(Color.WHITE);
+            stepsField.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
+            stepsPanel.add(stepsLabel);
+            stepsPanel.add(stepsField);
+
+            // 总时间面板
+            JPanel timePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            JLabel timeLabel = new JLabel("Total Time:");
+            timeLabel.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
+            JTextField timeField = new JTextField(formatTime(gamePanel.getTotalTime()), 15);
+            timeField.setEditable(false);
+            timeField.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                    BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            ));
+            timeField.setBackground(Color.WHITE);
+            timeField.setFont(new Font("Microsoft YaHei", Font.PLAIN, 16));
+            timePanel.add(timeLabel);
+            timePanel.add(timeField);
+
+
+
+            contentPanel.add(stepsPanel, BorderLayout.NORTH);
+            contentPanel.add(timePanel, BorderLayout.CENTER);
+
+            // 调用 DefaultDialog
+            new DefaultDialog(
+                    this,
+                    "Game Over!",
+                    true,
+                    "Time Out!",
+                    contentPanel,
+                    "OK",
+                    new Dimension(450, 250)
+            );
         });
-
     }
-
-
 
 
 }
