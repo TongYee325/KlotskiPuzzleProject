@@ -11,8 +11,7 @@ import level.map.GameMap;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GamePanel extends JPanel {
@@ -49,7 +48,6 @@ public class GamePanel extends JPanel {
         enableEvents(AWTEvent.MOUSE_EVENT_MASK);
         this.setFocusable(true);
         this.setVisible(true);
-        this.setFocusable(true);
         this.setLayout(null);
         this.selectedBlock = null;
         this.rMap = gameMap;
@@ -58,7 +56,21 @@ public class GamePanel extends JPanel {
         this.setBounds(20, 20, rMap.getMapCol() * BLOCK_SIZE + 4, rMap.getMapRow() * BLOCK_SIZE + 4);
 
         this.audioManager = new AudioManager();
+
+
+        // 确保面板可获取焦点
+        this.requestFocusInWindow();
+        this.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                requestFocusInWindow(); // 失去焦点后重新请求
+            }
+        });
+
+
     }
+
+
     /** 将毫秒时间格式化为 "分:秒" 或 "时:分:秒" */
     private String formatTime(long elapsedTime) {
         long seconds = (elapsedTime / 1000) % 60;
@@ -226,11 +238,11 @@ public class GamePanel extends JPanel {
         }
     }
 
-
     //处理鼠标键盘事件响应
     @Override
     protected void processKeyEvent(KeyEvent e) {
         super.processKeyEvent(e);
+        this.requestFocusInWindow();
         //System.out.println(e.getKeyChar());
         if (e.getID() == KeyEvent.KEY_PRESSED) {
             switch (e.getKeyCode()) {
