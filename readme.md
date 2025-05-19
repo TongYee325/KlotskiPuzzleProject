@@ -14,7 +14,6 @@
   ![start.png](docs/start.png)
   ![login.png](docs/login.png)
   ![menu.png](docs/menu.png)
-  ![menu.png](docs/menu.png)
   ![game.png](docs/game.png)
 ## 功能特性
 
