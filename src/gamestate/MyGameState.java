@@ -1,7 +1,7 @@
 package gamestate;
 
-import Save.GameSave;
-import Save.SaveManager;
+import save.GameSave;
+import save.SaveManager;
 import audio.AudioManager;
 import frame.MenuFrame;
 import frame.dialog.DefaultDialog;
