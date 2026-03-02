@@ -5,6 +5,9 @@
 
 一款基于Java Swing开发的经典华容道益智游戏，集成AI自动求解算法，支持撤销功能。
 
+# Demo
+![Demo GIF](videos/demo1.gif)
+![Demo GIF](videos/demo2.gif)
 
 ## 目录
 - [功能特性](#功能特性)
