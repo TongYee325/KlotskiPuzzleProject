@@ -1,7 +1,6 @@
 # 华容道游戏 - Klotski Puzzle Game
 
 [![Java Version](https://img.shields.io/badge/Java-17%2B-orange)](https://openjdk.org/)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/yourname/klotski/build.yml?logo=github)](https://github.com/TongYee325/KlotskiPuzzleProject)
 
 一款基于Java Swing开发的经典华容道益智游戏，集成AI自动求解算法，支持撤销功能。
 
