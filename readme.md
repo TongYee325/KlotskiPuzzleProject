@@ -1,56 +1,56 @@
-# 华容道游戏 - Klotski Puzzle Game
+# Klotski Puzzle Game
 
 [![Java Version](https://img.shields.io/badge/Java-17%2B-orange)](https://openjdk.org/)
 
-一款基于Java Swing开发的经典华容道益智游戏，集成AI自动求解算法，支持撤销功能。
+A classic Klotski puzzle game developed based on Java Swing, integrating an AI automatic solving algorithm and supporting undo functionality. The algorithm adopts A* algorithm + Manhattan distance.
 
 # Demo
 ![Demo GIF](videos/demo1.gif)
 ![Demo GIF](videos/demo2.gif)
 
-## 目录
-- [功能特性](#功能特性)
-- [快速开始](#快速开始)
+## Table of Contents
+- [Features](#features)
+- [Quick Start](#quick-start)
 
-## 游戏截图
+## Game Screenshots
   ![start.png](docs/start.png)
   ![login.png](docs/login.png)
   ![menu.png](docs/menu.png)
   ![game.png](docs/game.png)
-## 功能特性
+## Features
 
-### 核心玩法
-- 🧩 标准4x5棋盘布局
-- 🪀 七类经典角色方块
-    - 曹操 (2x2)
-    - 关羽 (2x1)
-    - 五虎将 (1x2)
-    - 士兵 (1x1)
-- 🎮 多种操作方式
-    - 键盘方向键控制
-    - 上下左右按钮控制
+### Core Gameplay
+- 🧩 Standard 4x5 board layout
+- 🪀 Seven types of classic character blocks
+    - Cao Cao (2x2)
+    - Guan Yu (2x1)
+    - Five Tiger Generals (1x2)
+    - Soldiers (1x1)
+- 🎮 Multiple control methods
+    - Keyboard arrow keys control
+    - Up/Down/Left/Right button control
 
-### 进阶功能
-- 🤖 **AI自动求解**
-    - A*算法 + 曼哈顿距离启发式
-    - 求解步数为最优解
-- 📊 游戏数据统计
-    - 移动步数记录
-    - 时间统计
-- 🎧 沉浸式体验
-    - 背景音乐支持
-    - 滑块音效
-    - 可调节音量控制
+### Advanced Features
+- 🤖 **AI Automatic Solving**
+    - A* algorithm + Manhattan distance heuristic
+    - Solves for the optimal number of steps
+- 📊 Game Statistics
+    - Move count tracking
+    - Time tracking
+- 🎧 Immersive Experience
+    - Background music support
+    - Sliding sound effects
+    - Adjustable volume control
 
-## 快速开始
+## Quick Start
 
-### 环境要求
+### Requirements
 - JDK 17+
 
-### 安装步骤
+### Installation Steps
 ```bash
-# 克隆仓库
+# Clone the repository
 git clone https://github.com/TongYee325/KlotskiPuzzleProject.git
 
-# 运行游戏
-编译并运行Main.java中的main方法
+# Run the game
+Compile and run the main method in Main.java
